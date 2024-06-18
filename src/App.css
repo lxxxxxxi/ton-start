@@ -1,5 +1,16 @@
 :root {
-  --tg-theme-bg-color: #efeff3;
-  --tg-theme-button-color: #2eaddc;
-  --tg-theme-button-text-color: white;
+    --tg-theme-bg-color: #efeff3;
+    --tg-theme-button-color: #2eaddc;
+    --tg-theme-button-text-color: white;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
 }
