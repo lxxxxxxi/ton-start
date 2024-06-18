@@ -57,10 +57,10 @@ export default function AccountCenter() {
                         <li className="selected">
                             <DollarSign width={18} /> 充值记录
                         </li>
-                        <li>
+                        <li onClick={() => navigate("/withdraw")}>
                             <Upload width={18} /> 提现记录
                         </li>
-                        <li>
+                        <li onClick={() => navigate("/bettinglist")}>
                             <List width={18} /> 投注明细
                         </li>
                     </ul>

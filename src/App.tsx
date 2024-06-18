@@ -14,6 +14,7 @@ import AccountCenter from "./pages/AccountCenter";
 import GameList from "./pages/GameList";
 import Pay from "./pages/Pay";
 import Withdraw from "./pages/Withdraw";
+import BettingList from "./pages/BettingList";
 
 const StyledApp = styled.div`
     /* background-color: #e8e8e8; */
@@ -54,6 +55,7 @@ function App() {
                             <Route path="/gamelist" element={<GameList />} />
                             <Route path="/pay" element={<Pay />} />
                             <Route path="/withdraw" element={<Withdraw />} />
+                            <Route path="/bettinglist" element={<BettingList />} />
                             {/* <Route component={NotFound} /> */}
                         </Routes>
                     </FlexBoxCol>
