@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/ton-start/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ton Sample TWA</title>
-    <script type="module" crossorigin src="/ton-start/assets/index-13b9cd5e.js"></script>
-    <link rel="stylesheet" href="/ton-start/assets/index-b41033e1.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/ton-start/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ton Sample TWA</title>
+  <script type="module" crossorigin src="/ton-start/assets/index-3999e871.js"></script>
+  <link rel="stylesheet" href="/ton-start/assets/index-c3063652.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  
+  <script type="text/javascript">
+    function onTelegramAuth(user) {
+      alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+    }
+  </script>
+</body>
+
 </html>
