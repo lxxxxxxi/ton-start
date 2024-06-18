@@ -12,6 +12,8 @@ import "@twa-dev/sdk";
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import AccountCenter from "./pages/AccountCenter";
 import GameList from "./pages/GameList";
+import Pay from "./pages/Pay";
+import Withdraw from "./pages/Withdraw";
 
 const StyledApp = styled.div`
     /* background-color: #e8e8e8; */
@@ -33,8 +35,6 @@ const AppContainer = styled.div`
 function App() {
     const { network } = useTonConnect();
 
-    console.log(network);
-
     return (
         <Router>
             <StyledApp>
@@ -52,6 +52,8 @@ function App() {
                         <Routes>
                             <Route path="/" element={<AccountCenter />} />
                             <Route path="/gamelist" element={<GameList />} />
+                            <Route path="/pay" element={<Pay />} />
+                            <Route path="/withdraw" element={<Withdraw />} />
                             {/* <Route component={NotFound} /> */}
                         </Routes>
                     </FlexBoxCol>

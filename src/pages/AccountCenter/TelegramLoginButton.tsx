@@ -1,25 +1,3 @@
-// import React, { useEffect, useRef } from "react";
-
-// export default function TelegramLoginButton() {
-//     const telegramWrapperRef = useRef<HTMLDivElement>(null);
-
-//     useEffect(() => {
-//         const scriptElement = document.createElement("script");
-//         scriptElement.src = "https://telegram.org/js/telegram-widget.js?22";
-//         scriptElement.setAttribute("data-telegram-login", "twastarttest_bot");
-//         scriptElement.setAttribute("data-size", "large");
-//         scriptElement.setAttribute("data-request-access", "write");
-//         scriptElement.setAttribute("data-onauth", "onTelegramAuth(user)");
-//         scriptElement.setAttribute("data-auth-url", "https://lxiiiixi.github.io/ton-start/");
-//         scriptElement.async = true;
-
-//         telegramWrapperRef?.current?.appendChild(scriptElement);
-//     }, []);
-
-//     return <div ref={telegramWrapperRef}></div>;
-// }
-
-// import PropTypes from "prop-types";
 import React, { useRef, useEffect } from "react";
 
 export interface TelegramUser {
@@ -75,7 +53,11 @@ const TelegramLoginButton: React.FC<Props> = ({
 
         if (typeof dataOnauth === "function") {
             window.TelegramLoginWidget = {
-                dataOnauth: (user: TelegramUser) => dataOnauth(user),
+                dataOnauth: (user: TelegramUser) => {
+                    console.log(user);
+
+                    dataOnauth(user);
+                },
             };
         }
 
@@ -107,17 +89,5 @@ const TelegramLoginButton: React.FC<Props> = ({
 
     return <div ref={ref} className={className} {...wrapperProps} />;
 };
-
-// TelegramLoginButton.propTypes = {
-//     botName: PropTypes.string.isRequired,
-//     usePic: PropTypes.bool,
-//     className: PropTypes.string,
-//     cornerRadius: PropTypes.number,
-//     requestAccess: PropTypes.bool,
-//     wrapperProps: PropTypes.object,
-//     dataOnauth: PropTypes.func,
-//     dataAuthUrl: PropTypes.string,
-//     buttonSize: PropTypes.oneOf(["large", "medium", "small"]),
-// };
 
 export default TelegramLoginButton;

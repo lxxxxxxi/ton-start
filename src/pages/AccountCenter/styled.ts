@@ -51,22 +51,39 @@ export const AccountCenterWrapper = styled.div`
     .actions {
         padding: 10px 50px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        gap: 10px;
     }
 
     .menu {
         margin-top: 20px;
+        border-radius: 10px;
+
         ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
+
         li {
+            border-radius: 8px;
             padding: 10px;
             cursor: pointer;
-            border-bottom: 1px solid #ccc;
+            margin: 6px 0;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+
+        li:hover {
+            background-color: #f0f0f0;
+            color: var(--tg-theme-button-color);
+        }
+
         li.selected {
             background-color: #f0f0f0;
+            color: var(--tg-theme-button-color);
         }
     }
 `;

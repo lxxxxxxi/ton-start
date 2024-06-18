@@ -1,14 +1,26 @@
 import React from "react";
 import { AccountCenterWrapper } from "./styled";
 import { TButton } from "../../components/TButton";
-import TelegramLoginButton from "./TelegramLoginButton";
+import TelegramLoginButton, { TelegramUser } from "./TelegramLoginButton";
+import { TBox } from "../../components/TBox";
+import { DollarSign, List, Play, Upload } from "react-feather";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountCenter() {
+    const navigate = useNavigate();
+
+    const dataOnauth = (user: TelegramUser) => {
+        console.log("user", user);
+    };
     return (
         <AccountCenterWrapper>
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
-                dataAuthUrl={"https://lxiiiixi.github.io/ton-start/"}
+                // dataAuthUrl={"https://lxiiiixi.github.io/ton-start/"}
+                dataAuthUrl={"https://a35d-14-154-22-248.ngrok-free.app/"}
+                dataOnauth={dataOnauth}
+                usePic={true}
+                cornerRadius={10}
             />
             <div className="user-profile">
                 <div className="profile-header">
@@ -18,21 +30,41 @@ export default function AccountCenter() {
                         <p>ID: 55278973</p>
                     </div>
                 </div>
-                <div className="balance-info">
+                <TBox className="balance-info">
                     <p>人民币余额 (￥): 22,234.00</p>
                     <div className="actions">
-                        <TButton>充值</TButton>
-                        <TButton>提现</TButton>
+                        <TButton
+                            onClick={() => {
+                                navigate("/pay");
+                            }}
+                        >
+                            充值
+                        </TButton>
+                        <TButton
+                            onClick={() => {
+                                navigate("/withdraw");
+                            }}
+                        >
+                            提现
+                        </TButton>
                     </div>
-                </div>
-                <div className="menu">
+                </TBox>
+                <TBox className="menu">
                     <ul>
-                        <li>开始游戏</li>
-                        <li className="selected">充值记录</li>
-                        <li>提现记录</li>
-                        <li>投注明细</li>
+                        <li onClick={() => navigate("/gamelist")}>
+                            <Play width={18} /> 开始游戏
+                        </li>
+                        <li className="selected">
+                            <DollarSign width={18} /> 充值记录
+                        </li>
+                        <li>
+                            <Upload width={18} /> 提现记录
+                        </li>
+                        <li>
+                            <List width={18} /> 投注明细
+                        </li>
                     </ul>
-                </div>
+                </TBox>
             </div>
         </AccountCenterWrapper>
     );
