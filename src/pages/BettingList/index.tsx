@@ -6,12 +6,26 @@ import TDropdown from "../../components/TDropDown";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
+
+    .dropdown-wrapper {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+    }
 `;
 
-const options = [
-    { key: "1", label: "Option 1", value: "1" },
-    { key: "2", label: "Option 2", value: "2" },
-    { key: "3", label: "Option 3", value: "3" },
+const options1 = [
+    { key: "1", label: "今日" },
+    { key: "2", label: "一周以内" },
+    { key: "3", label: "一个月以内" },
+    { key: "4", label: "一年以内" },
+];
+
+const options2 = [
+    { key: "1", label: "全部状态" },
+    { key: "2", label: "赢" },
+    { key: "3", label: "输" },
 ];
 
 export default function BettingList() {
@@ -26,7 +40,10 @@ export default function BettingList() {
     return (
         <AppWrapper title="投注记录">
             <BettingListWrapper>
-                <TDropdown defaultValue={"1"} options={options} />
+                <div className="dropdown-wrapper">
+                    <TDropdown defaultValue={"1"} options={options1} />
+                    <TDropdown defaultValue={"1"} options={options2} />
+                </div>
                 <PaginatedList itemsPerPage={5} data={mockList}></PaginatedList>
             </BettingListWrapper>
         </AppWrapper>

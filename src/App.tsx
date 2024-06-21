@@ -15,6 +15,8 @@ import GameList from "./pages/GameList";
 import Pay from "./pages/Pay";
 import Withdraw from "./pages/Withdraw";
 import BettingList from "./pages/BettingList";
+import PayHistory from "./pages/PayHistory";
+import WithdrawHistory from "./pages/WithdrawHistory";
 
 const StyledApp = styled.div`
     /* background-color: #e8e8e8; */
@@ -54,7 +56,9 @@ function App() {
                             <Route path="/" element={<AccountCenter />} />
                             <Route path="/gamelist" element={<GameList />} />
                             <Route path="/pay" element={<Pay />} />
+                            <Route path="/pay/history" element={<PayHistory />} />
                             <Route path="/withdraw" element={<Withdraw />} />
+                            <Route path="/withdraw/history" element={<WithdrawHistory />} />
                             <Route path="/bettinglist" element={<BettingList />} />
                             {/* <Route component={NotFound} /> */}
                         </Routes>

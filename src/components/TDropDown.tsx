@@ -9,14 +9,15 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.button`
     width: 100%;
-    padding: 10px;
+    padding: 8px 10px;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 14px;
 `;
 
 const DropdownList = styled.ul`
@@ -26,12 +27,14 @@ const DropdownList = styled.ul`
     width: 100%;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 5px;
     padding: 0;
     list-style: none;
     z-index: 1000;
+    font-size: 14px;
+    overflow: hidden;
 `;
 
 const DropdownItem = styled.li`
@@ -60,7 +63,7 @@ const TDropdown = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<string | null>(defaultValue);
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleToggleDropdown = () => {
         setIsOpen(!isOpen);

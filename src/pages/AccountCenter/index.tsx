@@ -54,10 +54,10 @@ export default function AccountCenter() {
                         <li onClick={() => navigate("/gamelist")}>
                             <Play width={18} /> 开始游戏
                         </li>
-                        <li className="selected">
+                        <li className="selected" onClick={() => navigate("/pay/history")}>
                             <DollarSign width={18} /> 充值记录
                         </li>
-                        <li onClick={() => navigate("/withdraw")}>
+                        <li onClick={() => navigate("/withdraw/history")}>
                             <Upload width={18} /> 提现记录
                         </li>
                         <li onClick={() => navigate("/bettinglist")}>
