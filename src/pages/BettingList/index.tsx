@@ -32,9 +32,10 @@ export default function BettingList() {
     const mockList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
         return {
             id: item,
-            date: "2022-01-01",
-            win: 20,
-            amount: 100,
+            contentTopLeft: "No.1",
+            contentTopRight: "2022-01-01",
+            contentBottomLeft: "有效投注金额：¥100.00",
+            contentBottomRight: "输赢：¥20.00",
         };
     });
     return (

@@ -20,6 +20,10 @@ const ListItem = styled.div`
     .top {
         margin-bottom: 16px;
     }
+
+    .right {
+        text-align: right;
+    }
 `;
 
 const Pagination = styled.div`
@@ -46,7 +50,21 @@ const PageInfo = styled.span`
     margin: 0 10px;
 `;
 
-const PaginatedList = ({ data, itemsPerPage }: { data: any[]; itemsPerPage: number }) => {
+export interface PaginatedListData {
+    id: number;
+    contentTopLeft: React.ReactNode;
+    contentTopRight: React.ReactNode;
+    contentBottomLeft: React.ReactNode;
+    contentBottomRight: React.ReactNode;
+}
+
+const PaginatedList = ({
+    data,
+    itemsPerPage,
+}: {
+    data: PaginatedListData[];
+    itemsPerPage: number;
+}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -65,17 +83,13 @@ const PaginatedList = ({ data, itemsPerPage }: { data: any[]; itemsPerPage: numb
         <ListContainer>
             {currentItems.map((item, index) => (
                 <ListItem key={index}>
-                    <div>
-                        <div className="top">No. {item.id}</div>
-                        <div>
-                            有效投注金额: <strong>{item.amount}</strong>
-                        </div>
+                    <div className="left">
+                        <div className="top">{item.contentTopLeft}</div>
+                        <div>{item.contentTopRight}</div>
                     </div>
-                    <div>
-                        <div className="top">{item.date}</div>
-                        <div>
-                            输赢: <strong>{item.win}</strong>
-                        </div>
+                    <div className="right">
+                        <div className="top">{item.contentBottomLeft}</div>
+                        <div>{item.contentBottomRight}</div>
                     </div>
                 </ListItem>
             ))}
