@@ -71,14 +71,13 @@ export default function AccountCenter() {
     return (
         <AccountCenterWrapper>
             {/* {<button onClick={login}> login by telegram </button>} */}
-            <button
+            {/* <button
                 onClick={() => {
                     openAlert("test alert", "info");
                 }}
             >
-                {" "}
-                test alert{" "}
-            </button>
+                test alert
+            </button> */}
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
                 // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
@@ -129,10 +128,11 @@ export default function AccountCenter() {
                 </TBox>
                 <TBox className="menu">
                     <ul>
+                        {/* className="selected" */}
                         <li onClick={() => navigate("/gamelist")}>
                             <Play width={18} /> 开始游戏
                         </li>
-                        <li className="selected" onClick={() => navigate("/pay/history")}>
+                        <li onClick={() => navigate("/pay/history")}>
                             <DollarSign width={18} /> 充值记录
                         </li>
                         <li onClick={() => navigate("/withdraw/history")}>

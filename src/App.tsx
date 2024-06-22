@@ -18,18 +18,11 @@ import BettingList from "./pages/BettingList";
 import PayHistory from "./pages/PayHistory";
 import WithdrawHistory from "./pages/WithdrawHistory";
 import TAlert from "./components/TAlert";
-import { useAtomValue } from "jotai";
-import { alertStateAtom } from "./states/atoms";
 import { useAlertState } from "./states/useAlertState";
 
 const StyledApp = styled.div`
-    /* background-color: #e8e8e8; */
-    color: black;
-
-    @media (prefers-color-scheme: dark) {
-        background-color: #222;
-        color: white;
-    }
+    background-color: #222;
+    color: #d6d6d6;
     min-height: 100vh;
     padding: 20px 20px;
 `;

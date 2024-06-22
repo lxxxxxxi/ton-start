@@ -21,8 +21,12 @@ const apiRequest = (needToken: boolean = false) => {
             if (needToken && !token) {
                 // throw new Error("Please login first");
                 console.log("Please login first");
+                return new Promise(() => {});
             }
             if (needToken && token) {
+                if (!config.headers) {
+                    config.headers = {};
+                }
                 config.headers["Authorization"] = `Bearer ${token}`;
             }
 
