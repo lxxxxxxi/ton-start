@@ -17,6 +17,10 @@ import Withdraw from "./pages/Withdraw";
 import BettingList from "./pages/BettingList";
 import PayHistory from "./pages/PayHistory";
 import WithdrawHistory from "./pages/WithdrawHistory";
+import TAlert from "./components/TAlert";
+import { useAtomValue } from "jotai";
+import { alertStateAtom } from "./states/atoms";
+import { useAlertState } from "./states/useAlertState";
 
 const StyledApp = styled.div`
     /* background-color: #e8e8e8; */
@@ -37,6 +41,7 @@ const AppContainer = styled.div`
 
 function App() {
     const { network } = useTonConnect();
+    const { alertState, resetAlertState } = useAlertState();
 
     return (
         <Router>
@@ -52,6 +57,13 @@ function App() {
                     <Counter />
                     <TransferTon />
                     <Jetton /> */}
+                        {alertState.isVisible && (
+                            <TAlert
+                                type={alertState.type}
+                                message={alertState.message}
+                                onClose={resetAlertState}
+                            />
+                        )}
                         <Routes>
                             <Route path="/" element={<AccountCenter />} />
                             <Route path="/gamelist" element={<GameList />} />

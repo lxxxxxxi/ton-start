@@ -7,6 +7,7 @@ import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
 import { getAccountList, getBalance, loginByTelegram } from "../../request/requests";
+import { useAlertState } from "../../states/useAlertState";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function AccountCenter() {
 
     const [balance, setBalance] = useState(0);
     const [accountList, setAccountList] = useState([]);
+    const { openAlert } = useAlertState();
 
     console.log(user);
 
@@ -69,6 +71,14 @@ export default function AccountCenter() {
     return (
         <AccountCenterWrapper>
             {/* {<button onClick={login}> login by telegram </button>} */}
+            <button
+                onClick={() => {
+                    openAlert("test alert", "info");
+                }}
+            >
+                {" "}
+                test alert{" "}
+            </button>
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
                 // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
