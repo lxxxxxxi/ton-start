@@ -1,32 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AccountCenterWrapper } from "./styled";
 import { TButton } from "../../components/TButton";
 import TelegramLoginButton, { TelegramUser } from "./TelegramLoginButton";
 import { TBox } from "../../components/TBox";
-import { DollarSign, List, Play, Upload } from "react-feather";
+import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
+import { getAccountList, getBalance, loginByTelegram } from "../../request/requests";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
 
+    const [balance, setBalance] = useState(0);
+    const [accountList, setAccountList] = useState([]);
+
     console.log(user);
+
+    const fetchBalance = async () => {
+        try {
+            const response = await getBalance();
+            setBalance(response.data);
+        } catch (error) {
+            console.error("Error fetching balance:", error);
+        }
+    };
+
+    useEffect(() => {
+        const fetchAccountList = async () => {
+            try {
+                const response = await getAccountList();
+                setAccountList(response.data);
+            } catch (error) {
+                console.error("Error fetching account list:", error);
+            }
+        };
+
+        fetchBalance();
+        fetchAccountList();
+    }, []);
+
+    const login = () => {
+        if (!user) {
+            throw new Error("Please login by telegram first");
+        }
+        loginByTelegram(user)
+            .then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    const result = res.data;
+                    if (result.access_token)
+                        localStorage.setItem("access_token", result.access_token);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
 
     const dataOnauth = (user: TelegramUser) => {
         if (user) {
             console.log("update user info", user);
             updateUserInfo(user);
+            login();
         }
     };
 
     return (
         <AccountCenterWrapper>
+            {/* {<button onClick={login}> login by telegram </button>} */}
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
-                // dataAuthUrl={"https://lxiiiixi.github.io/ton-start/"}
                 // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
                 dataOnauth={dataOnauth}
+                // dataAuthUrl="http://47.115.201.164:8080/api/v1/auth/tg_login/"
                 usePic={true}
                 cornerRadius={10}
             />
@@ -45,7 +92,14 @@ export default function AccountCenter() {
                     </div>
                 )}
                 <TBox className="balance-info">
-                    <p>人民币余额 (￥): 22,234.00</p>
+                    <div className="balance">
+                        人民币余额 (￥): {balance}{" "}
+                        <RefreshCw
+                            onClick={fetchBalance}
+                            width={16}
+                            style={{ cursor: "pointer" }}
+                        />
+                    </div>
                     <div className="actions">
                         <TButton
                             onClick={() => {

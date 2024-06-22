@@ -47,6 +47,12 @@ export const AccountCenterWrapper = styled.div`
     .balance-info {
         margin-top: 20px;
         text-align: center;
+        .balance {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
     }
 
     .actions {
