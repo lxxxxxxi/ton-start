@@ -5,31 +5,45 @@ import TelegramLoginButton, { TelegramUser } from "./TelegramLoginButton";
 import { TBox } from "../../components/TBox";
 import { DollarSign, List, Play, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
+import { useUserInfo } from "../../states/useUserInfo";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
+    const { user, updateUserInfo } = useUserInfo();
+
+    console.log(user);
 
     const dataOnauth = (user: TelegramUser) => {
-        console.log("user", user);
+        if (user) {
+            console.log("update user info", user);
+            updateUserInfo(user);
+        }
     };
+
     return (
         <AccountCenterWrapper>
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
                 // dataAuthUrl={"https://lxiiiixi.github.io/ton-start/"}
-                dataAuthUrl={"https://a35d-14-154-22-248.ngrok-free.app/"}
+                // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
                 dataOnauth={dataOnauth}
                 usePic={true}
                 cornerRadius={10}
             />
             <div className="user-profile">
-                <div className="profile-header">
-                    <div className="avatar">头像</div>
-                    <div className="user-info">
-                        <h2>Hi, sam</h2>
-                        <p>ID: 55278973</p>
+                {user && (
+                    <div className="profile-header">
+                        <div className="avatar">
+                            <img src={user.photo_url} width={"100%"} />
+                        </div>
+                        <div className="user-info">
+                            <h2>
+                                Hi, {user.first_name} {user.last_name}
+                            </h2>
+                            <p>ID: {user.id}</p>
+                        </div>
                     </div>
-                </div>
+                )}
                 <TBox className="balance-info">
                     <p>人民币余额 (￥): 22,234.00</p>
                     <div className="actions">

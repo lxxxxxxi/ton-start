@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 export interface TelegramUser {
     id: number;
     first_name: string;
+    last_name: string;
     username: string;
     photo_url: string;
     auth_date: number;
@@ -54,8 +55,6 @@ const TelegramLoginButton: React.FC<Props> = ({
         if (typeof dataOnauth === "function") {
             window.TelegramLoginWidget = {
                 dataOnauth: (user: TelegramUser) => {
-                    console.log(user);
-
                     dataOnauth(user);
                 },
             };

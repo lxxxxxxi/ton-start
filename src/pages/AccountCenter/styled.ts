@@ -30,6 +30,7 @@ export const AccountCenterWrapper = styled.div`
             justify-content: center;
             font-size: 18px;
             margin-right: 20px;
+            overflow: hidden;
         }
 
         h2 {
