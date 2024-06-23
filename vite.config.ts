@@ -4,8 +4,6 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log(((process.env.VITE_GITHUB_REPOSITORY ?? "") + "/").match(/(\/.*)/)?.[1]);
-
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react(), nodePolyfills()],
