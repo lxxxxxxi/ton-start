@@ -16,7 +16,7 @@ const apiRequest = (needToken: boolean = false) => {
         config => {
             // do something before request is sent
             const token = localStorage.getItem("access_token");
-            console.log(token, config);
+            console.log(token);
 
             if (needToken && !token) {
                 // throw new Error("Please login first");
