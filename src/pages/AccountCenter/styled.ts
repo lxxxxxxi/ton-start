@@ -8,6 +8,15 @@ export const AccountCenterWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
+    .login {
+        width: 100vw;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     .user-profile {
         width: 100%;
     }

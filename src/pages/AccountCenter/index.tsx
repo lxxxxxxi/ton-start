@@ -6,7 +6,7 @@ import { TBox } from "../../components/TBox";
 import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
-import { getAccountList, getBalance, loginByTelegram } from "../../request/requests";
+import { getAccountList, getBalance, loginByTelegram, getTgProfile } from "../../request/requests";
 import { useAlertState } from "../../states/useAlertState";
 
 export default function AccountCenter() {
@@ -28,6 +28,17 @@ export default function AccountCenter() {
         }
     };
 
+    const fetchTgProfile = async () => {
+        try {
+            const response = await getTgProfile();
+            if (response.data) {
+                updateUserInfo(response.data);
+            }
+        } catch (error) {
+            console.error("Error fetching balance:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchAccountList = async () => {
             try {
@@ -40,9 +51,10 @@ export default function AccountCenter() {
 
         fetchBalance();
         fetchAccountList();
+        fetchTgProfile();
     }, []);
 
-    const login = () => {
+    const login = (user: TelegramUser) => {
         if (!user) {
             throw new Error("Please login by telegram first");
         }
@@ -53,6 +65,7 @@ export default function AccountCenter() {
                     const result = res.data;
                     if (result.access_token)
                         localStorage.setItem("access_token", result.access_token);
+                    fetchTgProfile();
                 }
             })
             .catch(err => {
@@ -63,8 +76,7 @@ export default function AccountCenter() {
     const dataOnauth = (user: TelegramUser) => {
         if (user) {
             console.log("update user info", user);
-            updateUserInfo(user);
-            login();
+            login(user);
         }
     };
 
@@ -78,16 +90,22 @@ export default function AccountCenter() {
             >
                 test alert
             </button> */}
-            <TelegramLoginButton
-                botName={"twastarttest_bot"}
-                // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
-                dataOnauth={dataOnauth}
-                // dataAuthUrl="http://47.115.201.164:8080/api/v1/auth/tg_login/"
-                usePic={true}
-                cornerRadius={10}
-            />
-            <div className="user-profile">
-                {user && (
+
+            {!user ? (
+                <div className="login">
+                    <TelegramLoginButton
+                        botName={"twastarttest_bot"}
+                        // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
+                        dataOnauth={dataOnauth}
+                        // dataAuthUrl="http://47.115.201.164:8080/api/v1/auth/tg_login/"
+                        usePic={true}
+                        cornerRadius={10}
+                    />
+                </div>
+            ) : null}
+
+            {user && (
+                <div className="user-profile">
                     <div className="profile-header">
                         <div className="avatar">
                             <img src={user.photo_url} width={"100%"} />
@@ -99,51 +117,52 @@ export default function AccountCenter() {
                             <p>ID: {user.id}</p>
                         </div>
                     </div>
-                )}
-                <TBox className="balance-info">
-                    <div className="balance">
-                        人民币余额 (￥): {balance}{" "}
-                        <RefreshCw
-                            onClick={fetchBalance}
-                            width={16}
-                            style={{ cursor: "pointer" }}
-                        />
-                    </div>
-                    <div className="actions">
-                        <TButton
-                            onClick={() => {
-                                navigate("/pay");
-                            }}
-                        >
-                            充值
-                        </TButton>
-                        <TButton
-                            onClick={() => {
-                                navigate("/withdraw");
-                            }}
-                        >
-                            提现
-                        </TButton>
-                    </div>
-                </TBox>
-                <TBox className="menu">
-                    <ul>
-                        {/* className="selected" */}
-                        <li onClick={() => navigate("/gamelist")}>
-                            <Play width={18} /> 开始游戏
-                        </li>
-                        <li onClick={() => navigate("/pay/history")}>
-                            <DollarSign width={18} /> 充值记录
-                        </li>
-                        <li onClick={() => navigate("/withdraw/history")}>
-                            <Upload width={18} /> 提现记录
-                        </li>
-                        <li onClick={() => navigate("/bettinglist")}>
-                            <List width={18} /> 投注明细
-                        </li>
-                    </ul>
-                </TBox>
-            </div>
+
+                    <TBox className="balance-info">
+                        <div className="balance">
+                            人民币余额 (￥): {balance}{" "}
+                            <RefreshCw
+                                onClick={fetchBalance}
+                                width={16}
+                                style={{ cursor: "pointer" }}
+                            />
+                        </div>
+                        <div className="actions">
+                            <TButton
+                                onClick={() => {
+                                    navigate("/pay");
+                                }}
+                            >
+                                充值
+                            </TButton>
+                            <TButton
+                                onClick={() => {
+                                    navigate("/withdraw");
+                                }}
+                            >
+                                提现
+                            </TButton>
+                        </div>
+                    </TBox>
+                    <TBox className="menu">
+                        <ul>
+                            {/* className="selected" */}
+                            <li onClick={() => navigate("/gamelist")}>
+                                <Play width={18} /> 开始游戏
+                            </li>
+                            <li onClick={() => navigate("/pay/history")}>
+                                <DollarSign width={18} /> 充值记录
+                            </li>
+                            <li onClick={() => navigate("/withdraw/history")}>
+                                <Upload width={18} /> 提现记录
+                            </li>
+                            <li onClick={() => navigate("/bettinglist")}>
+                                <List width={18} /> 投注明细
+                            </li>
+                        </ul>
+                    </TBox>
+                </div>
+            )}
         </AccountCenterWrapper>
     );
 }

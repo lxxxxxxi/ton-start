@@ -9,6 +9,8 @@ export function Counter() {
     const { connected } = useTonConnect();
     const { value, address, sendIncrement } = useCounterContract();
 
+    console.log(value);
+
     return (
         <div className="Container">
             <TonConnectButton />

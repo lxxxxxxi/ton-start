@@ -9,12 +9,16 @@ export const getBalance = () => {
     return apiWithToken.get("/api/v1/account/balance");
 };
 
+export const getTgProfile = () => {
+    return apiWithToken.get("/api/v1/auth/tg_profile");
+};
+
 export const checkWithdraw = () => {
     return apiWithToken.get("/api/v1/account/check_withdraw");
 };
 
 export const createRechargeOrder = (orderData: { amount: number }) => {
-    return apiWithToken.post("/v1/account/create_recharge_order", orderData);
+    return apiWithToken.post("/api/v1/account/create_recharge_order", orderData);
 };
 
 export const createWithdrawOrder = (orderData: { address: string; amount: number }) => {

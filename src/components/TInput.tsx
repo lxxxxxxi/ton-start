@@ -1,4 +1,4 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const InputContainer = styled.div`
@@ -37,6 +37,7 @@ const TInput = ({
 }: {
     prefix: React.ReactNode;
     placeholder: string;
+    props: InputHTMLAttributes<HTMLInputElement>;
 }) => (
     <InputContainer>
         {prefix && <Prefix>{prefix}</Prefix>}

@@ -3,6 +3,7 @@ import { useTonConnect } from "../hooks/useTonConnect";
 import { useFaucetJettonContract } from "../hooks/useFaucetJettonContract";
 import { Card, FlexBoxCol, FlexBoxRow, Ellipsis } from "./styled/styled";
 import { TButton } from "./TButton";
+import { USDT_ADDRESS } from "../utils/constant";
 
 export function Jetton() {
     const { connected } = useTonConnect();
