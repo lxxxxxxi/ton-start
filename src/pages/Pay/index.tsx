@@ -3,13 +3,14 @@ import styled from "styled-components";
 import TInput from "../../components/TInput";
 import { TButton } from "../../components/TButton";
 import AppWrapper from "../../components/AppWrapper";
-import { TonConnectButton, useTonWallet } from "@tonconnect/ui-react";
+import { TonConnectButton, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
-import { USDT_ADDRESS } from "../../utils/constant";
+import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
 import { Counter } from "../../components/Counter";
 import TNumberInput from "../../components/TNumberInput";
 import { createRechargeOrder } from "../../request/requests";
+import { Address, beginCell, toNano } from "ton-core";
 
 const PayWrapper = styled.div`
     display: flex;
@@ -50,8 +51,11 @@ export default function Pay() {
     // console.log(balance);
     const [amount, setAmount] = useState(0);
     const [order, setOrder] = useState<{ amount: number; order_no: string } | null>(null);
+    const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
 
-    console.log("wallet", wallet);
+    const [tonConnectUI, setOptions] = useTonConnectUI();
+
+    console.log("wallet", jettonWalletAddress, wallet);
 
     const handleRecharge = () => {
         console.log(amount);
@@ -69,6 +73,57 @@ export default function Pay() {
         } else {
             console.log("金额无效");
         }
+    };
+
+    // 现在现有的地址：
+    // jetton 的 master 地址（仅用来获取用户对应的 wallet 地址）
+    // 用户钱包地址
+    // 用户的 jetton 钱包地址
+    // 接收 USDT 的钱包地址
+
+    const handleTransfer = () => {
+        // const Wallet_DST = "UQDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa_uk";
+        // const Wallet_SRC = wallet?.account?.address?.toString() || "";
+        const TRANSFER = 0xf8a7ea5; // transfer operation code
+        const destinationAddress = Address.parse(
+            "UQDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa_uk"
+        );
+
+        if (!jettonWalletAddress) return;
+
+        const forwardPayload = beginCell()
+            .storeUint(0, 32) // 0 opcode means we have a comment
+            .storeStringTail("Hello, TON!")
+            .endCell();
+
+        // https://github.com/ton-blockchain/TEPs/blob/master/text/0074-jettons-standard.md#1-transfer
+        const body = beginCell()
+            .storeUint(TRANSFER, 32) // jetton 转账操作码
+            .storeUint(0, 64) // query_id:uint64
+            .storeCoins(1000000000000) // amount:(VarUInteger 16) -  转账的 Jetton 金额（小数位 = 6 - jUSDT, 9 - 默认）
+            .storeAddress(destinationAddress) // destination:MsgAddress
+            .storeAddress(destinationAddress) // response_destination:MsgAddress
+            .storeBit(0)
+            .storeCoins(toNano("0.02")) // forward amount (if >0, will send notification message)
+            .storeBit(1) // we store forwardPayload as a reference
+            .storeRef(forwardPayload)
+            .endCell();
+        // .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
+        // .storeCoins(toNano("0.1")) // forward_ton_amount:(VarUInteger 16)
+        // .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
+        // .storeStringTail("comment")
+        // .endCell();
+        const myTransaction = {
+            validUntil: Math.floor(Date.now() / 1000) + 360,
+            messages: [
+                {
+                    address: jettonWalletAddress,
+                    amount: toNano("0.1").toString(),
+                    payload: body.toBoc().toString("base64"), // body中带有评论的载荷
+                },
+            ],
+        };
+        tonConnectUI.sendTransaction(myTransaction);
     };
 
     return (
@@ -91,6 +146,7 @@ export default function Pay() {
                     <TonConnectButton />
                 </div>
                 <TButton onClick={handleRecharge}>立即充值</TButton>
+                <TButton onClick={handleTransfer}>transfer</TButton>
                 <Jetton />
                 {/* <Counter /> */}
             </PayWrapper>

@@ -3,11 +3,11 @@ import { useTonConnect } from "../hooks/useTonConnect";
 import { useFaucetJettonContract } from "../hooks/useFaucetJettonContract";
 import { Card, FlexBoxCol, FlexBoxRow, Ellipsis } from "./styled/styled";
 import { TButton } from "./TButton";
-import { USDT_ADDRESS } from "../utils/constant";
+import { USDT_MASTER_ADDRESS } from "../utils/constant";
 
 export function Jetton() {
     const { connected } = useTonConnect();
-    const { mint, jettonWalletAddress, balance } = useFaucetJettonContract();
+    const { transfer, jettonWalletAddress, balance } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
 
     return (
         <Card title="Jetton">
@@ -24,10 +24,10 @@ export function Jetton() {
                 <TButton
                     disabled={!connected}
                     onClick={async () => {
-                        mint();
+                        transfer("0QDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa0Au");
                     }}
                 >
-                    Get jettons from faucet
+                    transfer
                 </TButton>
             </FlexBoxCol>
         </Card>

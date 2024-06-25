@@ -5,15 +5,21 @@ import FaucetJetton from "../contracts/faucetJetton";
 import { Address, OpenedContract } from "ton-core";
 import FaucetJettonWallet from "../contracts/faucetJettonWallet";
 import { useQuery } from "@tanstack/react-query";
+import { useTonWallet } from "@tonconnect/ui-react";
 
-export function useFaucetJettonContract() {
+export function useFaucetJettonContract(jettonMasterAddress: string) {
     const { wallet, sender } = useTonConnect();
+    const walletInstance = useTonWallet();
+
     const { client } = useTonClient();
+    if (!jettonMasterAddress) {
+        throw new Error("jettonMasterAddress is required");
+    }
 
     const faucetJettonContract = useAsyncInitialize(async () => {
         if (!client || !wallet) return;
         const contract = new FaucetJetton(
-            Address.parse("EQB8StgTQXidy32a8xfu7j4HMoWYV0b0cFM8nXsP2cza_b7Y") // replace with your address from tutorial 2 step 8
+            Address.parse(jettonMasterAddress) // replace with your address from tutorial 2 step 8
         );
         return client.open(contract) as OpenedContract<FaucetJetton>;
     }, [client, wallet]);
@@ -41,6 +47,15 @@ export function useFaucetJettonContract() {
     return {
         mint: () => {
             faucetJettonContract?.sendMintFromFaucet(sender, Address.parse(wallet!));
+        },
+        transfer: (toAddress: string) => {
+            jwContract?.sendTransfer(
+                sender,
+                Address.parse(toAddress!),
+                1,
+                Address.parse(jwContract?.address.toString()!),
+                "comment text"
+            );
         },
         jettonWalletAddress: jwContract?.address.toString(),
         balance: isFetching ? null : data,
