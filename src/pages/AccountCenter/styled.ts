@@ -10,7 +10,7 @@ export const AccountCenterWrapper = styled.div`
 
     .login {
         width: 100vw;
-        height: 80vh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;

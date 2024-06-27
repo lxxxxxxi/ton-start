@@ -81,6 +81,8 @@ export default function Pay() {
     // 用户的 jetton 钱包地址
     // 接收 USDT 的钱包地址
 
+    // https://docs.ton.org/develop/dapps/ton-connect/message-builders
+
     const handleTransfer = () => {
         // const Wallet_DST = "UQDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa_uk";
         // const Wallet_SRC = wallet?.account?.address?.toString() || "";

@@ -1,44 +1,40 @@
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import apiRequest from "./apiRequest";
 
-const token = "your_token_here";
-const apiWithoutToken = apiRequest();
-const apiWithToken = apiRequest(true);
-
 export const getBalance = () => {
-    return apiWithToken.get("/api/v1/account/balance");
+    return apiRequest.get("/api/v1/account/balance");
 };
 
 export const getTgProfile = () => {
-    return apiWithToken.get("/api/v1/auth/tg_profile");
+    return apiRequest.get("/api/v1/auth/tg_profile");
 };
 
 export const checkWithdraw = () => {
-    return apiWithToken.get("/api/v1/account/check_withdraw");
+    return apiRequest.get("/api/v1/account/check_withdraw");
 };
 
 export const createRechargeOrder = (orderData: { amount: number }) => {
-    return apiWithToken.post("/api/v1/account/create_recharge_order", orderData);
+    return apiRequest.post("/api/v1/account/create_recharge_order", orderData);
 };
 
 export const createWithdrawOrder = (orderData: { address: string; amount: number }) => {
-    return apiWithToken.post("/v1/account/create_withdraw_order", orderData);
+    return apiRequest.post("/v1/account/create_withdraw_order", orderData);
 };
 
 export const getAccountList = (days: number = 7) => {
-    return apiWithToken.get(`/api/v1/account/list?day=${days}`);
+    return apiRequest.get(`/api/v1/account/list?day=${days}`);
 };
 
 export const getRechargeList = () => {
-    return apiWithToken.get("/v1/account/recharge_list");
+    return apiRequest.get("/v1/account/recharge_list");
 };
 
 export const getWithdrawList = () => {
-    return apiWithToken.get("/v1/account/withdraw_list");
+    return apiRequest.get("/v1/account/withdraw_list");
 };
 
 export const loginByTelegram = (params: TelegramUser) => {
-    return apiWithoutToken.get("/api/v1/auth/tg_login", {
+    return apiRequest.get("/api/v1/auth/tg_login", {
         params,
         paramsSerializer: params => {
             return new URLSearchParams(params).toString();

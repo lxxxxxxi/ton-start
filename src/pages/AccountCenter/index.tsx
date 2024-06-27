@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AccountCenterWrapper } from "./styled";
 import { TButton } from "../../components/TButton";
-import TelegramLoginButton, { TelegramUser } from "./TelegramLoginButton";
 import { TBox } from "../../components/TBox";
 import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
 import { getAccountList, getBalance, loginByTelegram, getTgProfile } from "../../request/requests";
-import { useAlertState } from "../../states/useAlertState";
+import TelegramLoginButton from "./TelegramLoginButton";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
@@ -15,9 +14,6 @@ export default function AccountCenter() {
 
     const [balance, setBalance] = useState(0);
     const [accountList, setAccountList] = useState([]);
-    const { openAlert } = useAlertState();
-
-    console.log(user);
 
     const fetchBalance = async () => {
         try {
@@ -49,36 +45,10 @@ export default function AccountCenter() {
             }
         };
 
-        fetchBalance();
-        fetchAccountList();
-        fetchTgProfile();
+        // fetchBalance();
+        // fetchAccountList();
+        // fetchTgProfile();
     }, []);
-
-    const login = (user: TelegramUser) => {
-        if (!user) {
-            throw new Error("Please login by telegram first");
-        }
-        loginByTelegram(user)
-            .then(res => {
-                console.log(res);
-                if (res.status === 200) {
-                    const result = res.data;
-                    if (result.access_token)
-                        localStorage.setItem("access_token", result.access_token);
-                    fetchTgProfile();
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
-
-    const dataOnauth = (user: TelegramUser) => {
-        if (user) {
-            console.log("update user info", user);
-            login(user);
-        }
-    };
 
     return (
         <AccountCenterWrapper>
@@ -92,19 +62,8 @@ export default function AccountCenter() {
             </button> */}
 
             {!user ? (
-                <div className="login">
-                    <TelegramLoginButton
-                        botName={"twastarttest_bot"}
-                        // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}
-                        dataOnauth={dataOnauth}
-                        // dataAuthUrl="http://47.115.201.164:8080/api/v1/auth/tg_login/"
-                        usePic={true}
-                        cornerRadius={10}
-                    />
-                </div>
-            ) : null}
-
-            {user && (
+                <></>
+            ) : (
                 <div className="user-profile">
                     <div className="profile-header">
                         <div className="avatar">
