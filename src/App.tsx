@@ -5,16 +5,9 @@ import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
-import AccountCenter from "./pages/AccountCenter";
-import GameList from "./pages/GameList";
-import Pay from "./pages/Pay";
-import Withdraw from "./pages/Withdraw";
-import Login from "./pages/Login";
-import BettingList from "./pages/BettingList";
-import PayHistory from "./pages/PayHistory";
-import WithdrawHistory from "./pages/WithdrawHistory";
 import TAlert from "./components/TAlert";
 import { useAlertState } from "./states/useAlertState";
+import { routes } from "./utils/routes";
 
 const StyledApp = styled.div`
     background-color: #222;
@@ -45,15 +38,15 @@ function App() {
                             />
                         )}
                         <Routes>
-                            <Route path="/" element={<AccountCenter />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/gamelist" element={<GameList />} />
-                            <Route path="/pay" element={<Pay />} />
-                            <Route path="/pay/history" element={<PayHistory />} />
-                            <Route path="/withdraw" element={<Withdraw />} />
-                            <Route path="/withdraw/history" element={<WithdrawHistory />} />
-                            <Route path="/bettinglist" element={<BettingList />} />
-                            {/* <Route component={NotFound} /> */}
+                            {routes.map(route => {
+                                return (
+                                    <Route
+                                        key={route.key}
+                                        path={route.path}
+                                        element={route.component}
+                                    />
+                                );
+                            })}
                         </Routes>
                     </FlexBoxCol>
                 </AppContainer>

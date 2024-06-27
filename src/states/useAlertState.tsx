@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { alertStateAtom } from "./atoms";
+import { alertStateAtom, initialAlertState } from "./atoms";
 import { AlertType } from "../components/TAlert";
 
 export interface AlertState {
@@ -7,12 +7,6 @@ export interface AlertState {
     message: string;
     type: AlertType;
 }
-
-export const initialAlertState: AlertState = {
-    isVisible: false,
-    message: "",
-    type: "info",
-};
 
 export const useAlertState = () => {
     const [alertState, setAlertState] = useAtom(alertStateAtom);

@@ -45,9 +45,9 @@ export default function AccountCenter() {
             }
         };
 
-        // fetchBalance();
-        // fetchAccountList();
-        // fetchTgProfile();
+        fetchBalance();
+        fetchAccountList();
+        fetchTgProfile();
     }, []);
 
     return (
@@ -62,7 +62,7 @@ export default function AccountCenter() {
             </button> */}
 
             {!user ? (
-                <></>
+                <>Please Login By Telegram First</>
             ) : (
                 <div className="user-profile">
                     <div className="profile-header">
