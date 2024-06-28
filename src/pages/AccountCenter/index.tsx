@@ -5,50 +5,26 @@ import { TBox } from "../../components/TBox";
 import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
-import { getAccountList, getBalance, loginByTelegram, getTgProfile } from "../../request/requests";
-import TelegramLoginButton from "./TelegramLoginButton";
+import {
+    getAccountList,
+    getBalance,
+    loginByTelegram,
+    getTgProfile,
+    getRechargeList,
+    getWithdrawList,
+} from "../../request/requests";
+import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
 
-    const [balance, setBalance] = useState(0);
-    const [accountList, setAccountList] = useState([]);
-
-    const fetchBalance = async () => {
-        try {
-            const response = await getBalance();
-            setBalance(response.data);
-        } catch (error) {
-            console.error("Error fetching balance:", error);
-        }
-    };
-
-    const fetchTgProfile = async () => {
-        try {
-            const response = await getTgProfile();
-            if (response.data) {
-                updateUserInfo(response.data);
-            }
-        } catch (error) {
-            console.error("Error fetching balance:", error);
-        }
-    };
-
-    useEffect(() => {
-        const fetchAccountList = async () => {
-            try {
-                const response = await getAccountList();
-                setAccountList(response.data);
-            } catch (error) {
-                console.error("Error fetching account list:", error);
-            }
-        };
-
-        fetchBalance();
-        fetchAccountList();
-        fetchTgProfile();
-    }, []);
+    // fetch data
+    const { data: tgProfile } = useAsyncRequest(getTgProfile, [], updateUserInfo);
+    const { data: balance, execute: fetchBalance } = useAsyncRequest(getBalance, []);
+    const { data: accountList } = useAsyncRequest(getAccountList, []);
+    const { data: rechargeList } = useAsyncRequest(getRechargeList, []);
+    const { data: withdrawList } = useAsyncRequest(getWithdrawList, []);
 
     return (
         <AccountCenterWrapper>
@@ -79,7 +55,7 @@ export default function AccountCenter() {
 
                     <TBox className="balance-info">
                         <div className="balance">
-                            人民币余额 (￥): {balance}{" "}
+                            人民币余额 (￥): {balance?.balance}{" "}
                             <RefreshCw
                                 onClick={fetchBalance}
                                 width={16}

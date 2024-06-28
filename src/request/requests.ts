@@ -1,5 +1,10 @@
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import apiRequest from "./apiRequest";
+import axios from "axios";
+
+export const getExchangeRate = () => {
+    return axios.get("https://api.coinbase.com/v2/exchange-rates?currency=USDT");
+};
 
 export const getBalance = () => {
     return apiRequest.get("/api/v1/account/balance");
@@ -18,7 +23,7 @@ export const createRechargeOrder = (orderData: { amount: number }) => {
 };
 
 export const createWithdrawOrder = (orderData: { address: string; amount: number }) => {
-    return apiRequest.post("/v1/account/create_withdraw_order", orderData);
+    return apiRequest.post("/api/v1/account/create_withdraw_order", orderData);
 };
 
 export const getAccountList = (days: number = 7) => {
@@ -26,11 +31,20 @@ export const getAccountList = (days: number = 7) => {
 };
 
 export const getRechargeList = () => {
-    return apiRequest.get("/v1/account/recharge_list");
+    return apiRequest.get("/api/v1/account/recharge_list");
 };
 
 export const getWithdrawList = () => {
-    return apiRequest.get("/v1/account/withdraw_list");
+    return apiRequest.get("/api/v1/account/withdraw_list");
+};
+
+export const getGameList = (code: string, gametype: string) => {
+    return apiRequest.get(`/api/v1/game/list`, {
+        params: {
+            code,
+            gametype,
+        },
+    });
 };
 
 export const loginByTelegram = (params: TelegramUser) => {

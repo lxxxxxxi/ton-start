@@ -14,12 +14,14 @@ import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
 import { Counter } from "../../components/Counter";
 import TNumberInput from "../../components/TNumberInput";
-import { createRechargeOrder } from "../../request/requests";
+import { createRechargeOrder, getExchangeRate } from "../../request/requests";
 import { Address, beginCell, toNano } from "ton-core";
 import { DESTINATION_ADDRESS } from "../../utils/envs";
 import { useAlertState } from "../../states/useAlertState";
 import type { AlertType } from "../../components/TAlert";
 import TonWeb from "tonweb";
+import { useAsyncRequest } from "../../hooks/useAsyncRequest";
+import { formatNum } from "../../utils/format";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -38,23 +40,32 @@ const PayWrapper = styled.div`
     border-radius: 8px;
     padding: 20px;
 
-    .header {
+    .input {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        gap: 10px;
 
-        a {
-            color: #0066cc;
-            text-decoration: none;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 0 5px;
+
+            a {
+                color: #0066cc;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
         }
 
-        a:hover {
-            text-decoration: underline;
+        .rate {
+            padding-left: 5px;
+            color: #666;
         }
-    }
-
-    .rate {
-        color: #666;
     }
 
     .ton-button {
@@ -72,8 +83,10 @@ export default function Pay() {
     const [amount, setAmount] = useState(0);
     const [order, setOrder] = useState<{ amount: number; order_no: string } | null>(null);
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
-
     const [tonConnectUI, setOptions] = useTonConnectUI();
+
+    const { data: fullExchangeRate } = useAsyncRequest(getExchangeRate, []);
+    const exchangeRate = fullExchangeRate?.data?.rates?.CNY;
 
     // console.log("wallet", jettonWalletAddress, wallet);
 
@@ -96,7 +109,7 @@ export default function Pay() {
                     console.log(res);
                     if (res.status === 200) {
                         setOrder(res.data);
-                        handleTransfer(res.data.order_no, res.data.amount);
+                        // handleTransfer(res.data.order_no, res.data.amount);
                     }
                 })
                 .catch(err => {
@@ -152,7 +165,7 @@ export default function Pay() {
             messages: [
                 {
                     address: jettonWalletAddress,
-                    amount: toNano("0.001").toString(),
+                    amount: toNano("0.1").toString(),
                     payload: body.toBoc().toString("base64"),
                 },
             ],
@@ -166,19 +179,21 @@ export default function Pay() {
     return (
         <AppWrapper title="充值">
             <PayWrapper>
-                <div className="header">
-                    <span>充值金额</span>
-                    <a href="#">充值记录</a>
+                <div className="input">
+                    <div className="header">
+                        <span>充值金额</span>
+                        <a href="#">充值记录</a>
+                    </div>
+                    <TNumberInput
+                        minNumber={10}
+                        maxNumber={10000}
+                        prefix="¥"
+                        placeholder="最低10，最高10000"
+                        value={amount}
+                        handleValueChange={value => setAmount(value)}
+                    />
+                    <div className="rate">汇率: 1U = ¥{formatNum(exchangeRate)}</div>
                 </div>
-                <TNumberInput
-                    minNumber={10}
-                    maxNumber={10000}
-                    prefix="U"
-                    placeholder="最低10，最高10000"
-                    value={amount}
-                    handleValueChange={value => setAmount(value)}
-                />
-                <div className="rate">汇率: 1U = ¥7.38</div>
                 <div className="ton-button">
                     <TonConnectButton />
                 </div>
