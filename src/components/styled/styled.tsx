@@ -10,10 +10,11 @@ export const Card = styled.div`
     }
 `;
 
-export const FlexBoxRow = styled.div`
+export const FlexBoxRow = styled.div<{ justify?: string; gap?: string }>`
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    justify-content: ${props => props.justify || "flex-start"};
+    gap: ${props => props.gap || "10px"};
     align-items: center;
 `;
 

@@ -3,7 +3,12 @@ import styled from "styled-components";
 import TInput from "../../components/TInput";
 import { TButton } from "../../components/TButton";
 import AppWrapper from "../../components/AppWrapper";
-import { TonConnectButton, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import {
+    TonConnectButton,
+    useTonAddress,
+    useTonConnectUI,
+    useTonWallet,
+} from "@tonconnect/ui-react";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
@@ -11,6 +16,19 @@ import { Counter } from "../../components/Counter";
 import TNumberInput from "../../components/TNumberInput";
 import { createRechargeOrder } from "../../request/requests";
 import { Address, beginCell, toNano } from "ton-core";
+import { DESTINATION_ADDRESS } from "../../utils/envs";
+import { useAlertState } from "../../states/useAlertState";
+import type { AlertType } from "../../components/TAlert";
+import TonWeb from "tonweb";
+
+// {
+//     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
+//     "name": "pg USDT",
+//     "symbol": "USDT",
+//     "decimals": "9",
+//     "image": "https://cache.tonapi.io/imgproxy/cOMlJuViiVXDCkAghnyNj7plX8pAZ9pv3WhklvebpTY/rs:fill:200:200:1/g:no/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3RvbmtlZXBlci9vcGVudG9uYXBpL21hc3Rlci9wa2cvcmVmZXJlbmNlcy9tZWRpYS90b2tlbl9wbGFjZWhvbGRlci5wbmc.webp",
+//     "description": "dfd"
+// }
 
 const PayWrapper = styled.div`
     display: flex;
@@ -47,31 +65,46 @@ const PayWrapper = styled.div`
 
 export default function Pay() {
     const wallet = useTonWallet();
+    const address = useTonAddress();
     // const { balance } = useFaucetJettonContract(USDT_ADDRESS);
     // console.log(balance);
+    const { openAlert } = useAlertState();
     const [amount, setAmount] = useState(0);
     const [order, setOrder] = useState<{ amount: number; order_no: string } | null>(null);
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
 
     const [tonConnectUI, setOptions] = useTonConnectUI();
 
-    console.log("wallet", jettonWalletAddress, wallet);
+    // console.log("wallet", jettonWalletAddress, wallet);
 
     const handleRecharge = () => {
         console.log(amount);
+        // const msg = {
+        //     boc: "te6cckECBAEAASAAAeGIAaQsvdvbDSILDtSLaG8CHteh7akbbhlJQxD4PUOZ3o5gAhePWLqRcdnW7kFPShRSXRh9WpMxeWba/iKvPbonjKMm8/EyDbg1G13onatekhAR8YtROEBIXJk4GfzvYBR1qEFNTRi7M+auWAAAAFAAHAEBaGIAUH40SnHsm73+MA8CD7320XF8GRQ7p54DXNyF3oI9UCggL68IAAAAAAAAAAAAAAAAAAECAbIPin6lAAAAAAAAAABQMxQFbQgBnGjapO4zpXkxklK5yDIBXCSBS76jL+6xt0MnTTUtKNcAM40bVJ3GdK8mMkpXOQZAK4SQKXfUZf3WNuhk6aalpRrIAmJaAQMALgAAAAAyMDI0MDYyNzAyNTUxODEwOTQ5NOemuA==",
+        //     // boc: "te6cckECBAEAARAAAeGIAaQsvdvbDSILDtSLaG8CHteh7akbbhlJQxD4PUOZ3o5gBuuSjgsZg4fRiZldXya4u64MW+sdnI9sdbIG7kQ7DBedBidViNMYjOI1Br7sBixh4OUW7QxZ1diB3xdVxG8t0GFNTRi7M+bN+AAAAFgAHAEBZmIAUH40SnHsm73+MA8CD7320XF8GRQ7p54DXNyF3oI9UCgYehIAAAAAAAAAAAAAAAAAAQIBsg+KfqUAAAAAAAAAAFH9Gw76CAGcaNqk7jOleTGSUrnIMgFcJIFLvqMv7rG3QydNNS0o1wAzjRtUncZ0ryYySlc5BkArhJApd9Rl/dY26GTppqWlGsgCYloBAwAQAAAAAHRlc3SIZXXv",
+        // };
+        // const msgBody = TonWeb.utils.base64ToBytes(msg.boc);
+        // const cell: any = TonWeb.boc.Cell.oneFromBoc(msgBody);
+        // const slice = cell.beginParse();
+        // const op = slice.loadUint(32);
+        // console.log(slice, op);
+        // console.log(!op.eq(new TonWeb.utils.BN(0xf8a7ea5)));
+
         if (amount >= 10 && amount < 10000) {
             createRechargeOrder({ amount })
                 .then(res => {
                     console.log(res);
                     if (res.status === 200) {
                         setOrder(res.data);
+                        handleTransfer(res.data.order_no, res.data.amount);
                     }
                 })
                 .catch(err => {
                     console.log(err);
                 });
+            // handleTransfer("2024062702483638032", 136.66202);
         } else {
-            console.log("金额无效");
+            openAlert("请输入有效金额", "warning");
         }
     };
 
@@ -83,26 +116,30 @@ export default function Pay() {
 
     // https://docs.ton.org/develop/dapps/ton-connect/message-builders
 
-    const handleTransfer = () => {
-        // const Wallet_DST = "UQDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa_uk";
-        // const Wallet_SRC = wallet?.account?.address?.toString() || "";
+    const handleTransfer = (orderNo: string, amount: number) => {
         const TRANSFER = 0xf8a7ea5; // transfer operation code
-        const destinationAddress = Address.parse(
-            "UQDONG1SdxnSvJjJKVzkGQCuEkCl31GX91jboZOmmpaUa_uk"
-        );
+        const destinationAddress = Address.parse(DESTINATION_ADDRESS);
 
-        if (!jettonWalletAddress) return;
+        const amountToTransfer = Math.floor(amount * 10 ** 9);
+
+        if (!jettonWalletAddress || !orderNo || !destinationAddress) {
+            throw new Error(
+                `Please check the param ${jettonWalletAddress} ${orderNo} ${destinationAddress}`
+            );
+        }
+
+        console.log(orderNo, amountToTransfer);
 
         const forwardPayload = beginCell()
             .storeUint(0, 32) // 0 opcode means we have a comment
-            .storeStringTail("Hello, TON!")
+            .storeStringTail(orderNo)
             .endCell();
 
         // https://github.com/ton-blockchain/TEPs/blob/master/text/0074-jettons-standard.md#1-transfer
         const body = beginCell()
             .storeUint(TRANSFER, 32) // jetton 转账操作码
             .storeUint(0, 64) // query_id:uint64
-            .storeCoins(1000000000000) // amount:(VarUInteger 16) -  转账的 Jetton 金额（小数位 = 6 - jUSDT, 9 - 默认）
+            .storeCoins(amountToTransfer) // amount:(VarUInteger 16) -  转账的 Jetton 金额（decimals 默认为 9）
             .storeAddress(destinationAddress) // destination:MsgAddress
             .storeAddress(destinationAddress) // response_destination:MsgAddress
             .storeBit(0)
@@ -110,22 +147,20 @@ export default function Pay() {
             .storeBit(1) // we store forwardPayload as a reference
             .storeRef(forwardPayload)
             .endCell();
-        // .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
-        // .storeCoins(toNano("0.1")) // forward_ton_amount:(VarUInteger 16)
-        // .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
-        // .storeStringTail("comment")
-        // .endCell();
         const myTransaction = {
             validUntil: Math.floor(Date.now() / 1000) + 360,
             messages: [
                 {
                     address: jettonWalletAddress,
-                    amount: toNano("0.1").toString(),
-                    payload: body.toBoc().toString("base64"), // body中带有评论的载荷
+                    amount: toNano("0.001").toString(),
+                    payload: body.toBoc().toString("base64"),
                 },
             ],
         };
-        tonConnectUI.sendTransaction(myTransaction);
+        tonConnectUI.sendTransaction(myTransaction).then(res => {
+            console.log(res);
+            setAmount(0);
+        });
     };
 
     return (
@@ -148,7 +183,6 @@ export default function Pay() {
                     <TonConnectButton />
                 </div>
                 <TButton onClick={handleRecharge}>立即充值</TButton>
-                <TButton onClick={handleTransfer}>transfer</TButton>
                 <Jetton />
                 {/* <Counter /> */}
             </PayWrapper>

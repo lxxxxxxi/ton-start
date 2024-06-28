@@ -38,7 +38,6 @@ export function useFaucetJettonContract(jettonMasterAddress: string) {
         ["jetton"],
         async () => {
             if (!jwContract) return null;
-
             return (await jwContract.getBalance()).toString();
         },
         { refetchInterval: 3000 }
