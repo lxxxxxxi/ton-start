@@ -22,6 +22,7 @@ import type { AlertType } from "../../components/TAlert";
 import TonWeb from "tonweb";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { formatNum } from "../../utils/format";
+import BigNumber from "bignumber.js";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -62,8 +63,12 @@ const PayWrapper = styled.div`
             }
         }
 
-        .rate {
-            padding-left: 5px;
+        .sub {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 0 5px;
             color: #666;
         }
     }
@@ -87,6 +92,7 @@ export default function Pay() {
 
     const { data: fullExchangeRate } = useAsyncRequest(getExchangeRate, []);
     const exchangeRate = fullExchangeRate?.data?.rates?.CNY;
+    const usdAmount = exchangeRate ? new BigNumber(amount).div(exchangeRate).toFixed(2) : 0;
 
     // console.log("wallet", jettonWalletAddress, wallet);
 
@@ -109,7 +115,7 @@ export default function Pay() {
                     console.log(res);
                     if (res.status === 200) {
                         setOrder(res.data);
-                        // handleTransfer(res.data.order_no, res.data.amount);
+                        handleTransfer(res.data.order_no, res.data.amount);
                     }
                 })
                 .catch(err => {
@@ -192,7 +198,10 @@ export default function Pay() {
                         value={amount}
                         handleValueChange={value => setAmount(value)}
                     />
-                    <div className="rate">汇率: 1U = ¥{formatNum(exchangeRate)}</div>
+                    <div className="sub">
+                        <span>汇率: 1U = ¥{formatNum(exchangeRate)}</span>
+                        <span>~${usdAmount}</span>
+                    </div>
                 </div>
                 <div className="ton-button">
                     <TonConnectButton />
