@@ -1,7 +1,7 @@
 export interface GameListItem {
     code: string;
-    gameCode: string;
-    gameType: string;
+    gamecode: string;
+    gametype: string;
     img: string;
     name: string;
 }
