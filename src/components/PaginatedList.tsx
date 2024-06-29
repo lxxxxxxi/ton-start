@@ -51,7 +51,7 @@ const PageInfo = styled.span`
 `;
 
 export interface PaginatedListData {
-    id: number;
+    id: string;
     contentTopLeft: React.ReactNode;
     contentTopRight: React.ReactNode;
     contentBottomLeft: React.ReactNode;

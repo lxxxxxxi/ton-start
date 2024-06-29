@@ -31,8 +31,8 @@ export const getAccountList = (days: number = 7) => {
     return apiRequest.get(`/api/v1/account/list?day=${days}`);
 };
 
-export const getRechargeList = () => {
-    return apiRequest.get("/api/v1/account/recharge_list");
+export const getRechargeList = (days: number = 1) => {
+    return apiRequest.get(`/api/v1/account/recharge_list?day=${days}`);
 };
 
 export const getWithdrawList = () => {

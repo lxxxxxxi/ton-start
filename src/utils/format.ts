@@ -4,7 +4,7 @@
  * @param {Number}        index      保留小数位数
  * @param {Boolean}       isConvert  添加逗号
  */
-export const formatNum = (num: string | number, index = 2, isConvert = true) => {
+export const formatPrice = (num: string | number, index = 2, isConvert = true) => {
     const isNegative = Number(num) < 0;
     let str = num ? num.toString() : "0";
     str = isNegative ? str.replace("-", "") : str;
@@ -41,4 +41,23 @@ export const formatNum = (num: string | number, index = 2, isConvert = true) => 
         if (index === 0) str = str.split(".")[0];
         return `${isNegative ? "-" : ""}${str}`;
     }
+};
+
+export const truncateHash = (hash: string, start: number = 5, end: number = 7) => {
+    if (!hash || typeof hash !== "string") {
+        return "";
+    }
+
+    const startLength = Math.max(0, start);
+    const endLength = Math.max(0, end);
+    const totalLength = startLength + endLength;
+
+    if (totalLength >= hash.length) {
+        return hash;
+    }
+
+    const startChars = hash.slice(0, startLength);
+    const endChars = hash.slice(-endLength);
+
+    return `${startChars}...${endChars}`;
 };

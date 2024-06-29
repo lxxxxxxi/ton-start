@@ -46,35 +46,31 @@ const DropdownItem = styled.li`
 `;
 
 type Option = {
-    key: string;
+    key: number;
     label: string;
 };
 
 const TDropdown = ({
     options,
-    defaultValue,
-    onSelect,
+    value,
+    changeSelected,
     placeholder,
 }: {
     options: Option[];
-    defaultValue: string;
-    onSelect?: (option: any) => void;
+    value: number;
+    changeSelected: (key: number) => void;
     placeholder?: string;
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<string | null>(defaultValue);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleToggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleOptionClick = (key: string) => {
-        setSelectedOption(key);
+    const handleOptionClick = (key: number) => {
         setIsOpen(false);
-        if (onSelect) {
-            onSelect(key);
-        }
+        changeSelected(key);
     };
 
     const handleClickOutside = (event: any) => {
@@ -90,7 +86,7 @@ const TDropdown = ({
         };
     }, []);
 
-    const selectedOptionLabel = options.filter(option => option.key === selectedOption)[0].label;
+    const selectedOptionLabel = options.filter(option => option.key === value)[0].label;
 
     return (
         <DropdownContainer ref={dropdownRef}>

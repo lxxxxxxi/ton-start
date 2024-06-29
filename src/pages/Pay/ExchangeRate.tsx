@@ -1,6 +1,6 @@
 import React from "react";
 import { FlexBoxRow } from "../../components/styled/styled";
-import { formatNum } from "../../utils/format";
+import { formatPrice } from "../../utils/format";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getExchangeRate } from "../../request/requests";
 import BigNumber from "bignumber.js";
@@ -14,7 +14,7 @@ export default function ExchangeRate({ amount }: { amount?: number }) {
 
     return (
         <FlexBoxRow justify="space-between">
-            <TText color="secondary">汇率: 1U = ¥{formatNum(exchangeRate)}</TText>
+            <TText color="secondary">汇率: 1U = ¥{formatPrice(exchangeRate)}</TText>
             <TText color="secondary">~${usdAmount}</TText>
         </FlexBoxRow>
     );
