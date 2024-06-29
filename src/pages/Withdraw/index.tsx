@@ -54,7 +54,7 @@ export default function Withdraw() {
     };
 
     return (
-        <AppWrapper title={"提现"}>
+        <AppWrapper title={"提现"} isNeedTonConnectButton>
             <PayWrapper>
                 <div className="header">
                     <span>账户余额 1000.00</span>

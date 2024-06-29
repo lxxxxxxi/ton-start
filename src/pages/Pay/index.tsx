@@ -84,7 +84,6 @@ export default function Pay() {
     // console.log("wallet", jettonWalletAddress, wallet);
 
     const handleRecharge = () => {
-        console.log(amount);
         // const msg = {
         //     boc: "te6cckECBAEAASAAAeGIAaQsvdvbDSILDtSLaG8CHteh7akbbhlJQxD4PUOZ3o5gAhePWLqRcdnW7kFPShRSXRh9WpMxeWba/iKvPbonjKMm8/EyDbg1G13onatekhAR8YtROEBIXJk4GfzvYBR1qEFNTRi7M+auWAAAAFAAHAEBaGIAUH40SnHsm73+MA8CD7320XF8GRQ7p54DXNyF3oI9UCggL68IAAAAAAAAAAAAAAAAAAECAbIPin6lAAAAAAAAAABQMxQFbQgBnGjapO4zpXkxklK5yDIBXCSBS76jL+6xt0MnTTUtKNcAM40bVJ3GdK8mMkpXOQZAK4SQKXfUZf3WNuhk6aalpRrIAmJaAQMALgAAAAAyMDI0MDYyNzAyNTUxODEwOTQ5NOemuA==",
         //     // boc: "te6cckECBAEAARAAAeGIAaQsvdvbDSILDtSLaG8CHteh7akbbhlJQxD4PUOZ3o5gBuuSjgsZg4fRiZldXya4u64MW+sdnI9sdbIG7kQ7DBedBidViNMYjOI1Br7sBixh4OUW7QxZ1diB3xdVxG8t0GFNTRi7M+bN+AAAAFgAHAEBZmIAUH40SnHsm73+MA8CD7320XF8GRQ7p54DXNyF3oI9UCgYehIAAAAAAAAAAAAAAAAAAQIBsg+KfqUAAAAAAAAAAFH9Gw76CAGcaNqk7jOleTGSUrnIMgFcJIFLvqMv7rG3QydNNS0o1wAzjRtUncZ0ryYySlc5BkArhJApd9Rl/dY26GTppqWlGsgCYloBAwAQAAAAAHRlc3SIZXXv",
@@ -96,7 +95,7 @@ export default function Pay() {
         // console.log(slice, op);
         // console.log(!op.eq(new TonWeb.utils.BN(0xf8a7ea5)));
 
-        if (amount >= 10 && amount < 10000) {
+        if (amount >= 10 && amount <= 10000) {
             createRechargeOrder({ amount })
                 .then(res => {
                     console.log(res);
@@ -170,7 +169,7 @@ export default function Pay() {
     };
 
     return (
-        <AppWrapper title="充值">
+        <AppWrapper title="充值" isNeedTonConnectButton>
             <PayWrapper>
                 <div className="input">
                     <div className="header">

@@ -35,8 +35,21 @@ export const getRechargeList = (days: number = 1) => {
     return apiRequest.get(`/api/v1/account/recharge_list?day=${days}`);
 };
 
-export const getWithdrawList = () => {
-    return apiRequest.get("/api/v1/account/withdraw_list");
+export const getWithdrawList = (days: number = 1) => {
+    return apiRequest.get(`/api/v1/account/withdraw_list?day=${days}`);
+};
+
+interface BetRecordsParams {
+    limit?: number; // Actual limit applied to request
+    offset?: number;
+    type?: GameType;
+    orderDir?: "asc" | "desc";
+    day?: number;
+    status?: number;
+    code?: string;
+}
+export const getBetRecords = (data: BetRecordsParams) => {
+    return apiRequest.get("/api/v1/game/bet_records", { params: data });
 };
 
 type CodeList = "AG" | "PG" | "BBIN" | "BG";

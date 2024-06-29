@@ -86,7 +86,7 @@ const TDropdown = ({
         };
     }, []);
 
-    const selectedOptionLabel = options.filter(option => option.key === value)[0].label;
+    const selectedOptionLabel = options.filter(option => option.key === value)[0]?.label;
 
     return (
         <DropdownContainer ref={dropdownRef}>

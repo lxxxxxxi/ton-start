@@ -5,7 +5,7 @@ import axios from "axios";
 import { useAsyncInitialize } from "../../hooks/useAsyncInitialize";
 import { GameListItem } from "../../utils/interface";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { getGameList, playGame } from "../../request/requests";
+import { getBalance, getGameList, playGame } from "../../request/requests";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -43,7 +43,7 @@ const usePollingGameList = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const codes = ["AG"];
+        const codes = ["PG"];
         const gametypes = ["1", "2", "3", "4", "5", "6"];
         // const codes = ["AG", "PG", "BBIN", "BG"];
         // const gametypes = ["1", "2", "3", "4", "5", "6", "7"];
@@ -96,11 +96,21 @@ export default function GameList() {
                         onClick={() => {
                             console.log(item.code, item.gamecode, item.gametype);
                             if (item.code && item.gamecode && item.gametype) {
-                                playGame(item.code, item.gamecode, item.gametype).then(res => {
-                                    console.log(res);
-                                    const url = res.data.url;
-                                    if (url) {
-                                        window.open(url);
+                                getBalance().then(r => {
+                                    console.log(r.data.balance);
+                                    const balance = r.data.balance;
+                                    if (balance > 10) {
+                                        playGame(item.code, item.gamecode, item.gametype).then(
+                                            res => {
+                                                const url = res.data.url;
+                                                console.log(res, url);
+                                                if (url) {
+                                                    window.open(url);
+                                                }
+                                            }
+                                        );
+                                    } else {
+                                        console.log("余额不足10");
                                     }
                                 });
                             }
@@ -110,6 +120,15 @@ export default function GameList() {
                         <div className="title">{item.name}</div>
                     </div>
                 ))}
+                {/* <button
+                    onClick={() =>
+                        window.open(
+                            "https://gci.b777752.com/forwardGame.do?params=bJJ7qozamLJ8HT+4YobGbMqkB+eu7hBfgAedn3FjxE+cyQt9NHV4ou6oOphVMWsfs3cgf2GQZe/fAIXXYfMw5Qn7gjhDzWEXFrUu7bviteDPaj6mIDZr4Qw60MmanxKYT4IogWHJAacbAVwNhztEh38khiZRwJ2XkFXA4NTjbJEbt9Cp19hYaZ9vqISxZLD1I/QkRa/Pd4bxYPMawFA+XqQtbguQ0nfsqsreL5SNx4vNWcMlFciVIjtnjDaT5hK8q0TNZejwye15SitNKDxo9JtfZtHjpcr17l1L022MuII=&key=3ea8e2ba833fe0fa4564f13fd2025822"
+                        )
+                    }
+                >
+                    open
+                </button> */}
             </GameListWrapper>
         </AppWrapper>
     );

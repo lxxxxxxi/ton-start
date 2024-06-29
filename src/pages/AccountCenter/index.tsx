@@ -29,7 +29,6 @@ export default function AccountCenter() {
         updateUserBalance
     );
     const { data: accountList } = useAsyncRequest(getAccountList, []);
-    const { data: withdrawList } = useAsyncRequest(getWithdrawList, []);
 
     return (
         <AccountCenterWrapper>
