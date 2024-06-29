@@ -37,7 +37,7 @@ const TInput = ({
 }: {
     prefix: React.ReactNode;
     placeholder: string;
-    props: InputHTMLAttributes<HTMLInputElement>;
+    props?: InputHTMLAttributes<HTMLInputElement>;
 }) => (
     <InputContainer>
         {prefix && <Prefix>{prefix}</Prefix>}

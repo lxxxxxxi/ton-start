@@ -11,13 +11,14 @@ const rotate = keyframes`
   }
 `;
 
-const LoaderWrapper = styled.div`
-    animation: ${rotate} 1s linear infinite;
+const LoaderWrapper = styled.div<{ size: number }>`
+    ${({ theme }) => theme.FlexCenter}
+    animation: ${rotate} 2s linear infinite;
 `;
 
-const TLoader = ({ size }: { size?: number }) => {
+const TLoader = ({ size = 16 }: { size?: number }) => {
     return (
-        <LoaderWrapper>
+        <LoaderWrapper size={size}>
             <Loader width={size} height={size} />
         </LoaderWrapper>
     );

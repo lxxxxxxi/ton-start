@@ -4,7 +4,7 @@ import { TButton } from "../../components/TButton";
 import { TBox } from "../../components/TBox";
 import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
-import { useUserInfo } from "../../states/useUserInfo";
+import { useBalance, useUserInfo } from "../../states/useUserInfo";
 import {
     getAccountList,
     getBalance,
@@ -14,14 +14,20 @@ import {
     getWithdrawList,
 } from "../../request/requests";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
+import TLoader from "../../components/TLoader";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
+    const { balance, updateUserBalance } = useBalance();
 
     // fetch data
-    const { data: tgProfile } = useAsyncRequest(getTgProfile, [], updateUserInfo);
-    const { data: balance, execute: fetchBalance } = useAsyncRequest(getBalance, []);
+    useAsyncRequest(getTgProfile, [], updateUserInfo);
+    const { execute: fetchBalance, loading: isLoadingBalance } = useAsyncRequest(
+        getBalance,
+        [],
+        updateUserBalance
+    );
     const { data: accountList } = useAsyncRequest(getAccountList, []);
     const { data: rechargeList } = useAsyncRequest(getRechargeList, []);
     const { data: withdrawList } = useAsyncRequest(getWithdrawList, []);
@@ -55,7 +61,7 @@ export default function AccountCenter() {
                 )}
                 <TBox className="balance-info">
                     <div className="balance">
-                        人民币余额 (￥): {balance?.balance || 0}{" "}
+                        人民币余额 (￥): {isLoadingBalance ? <TLoader /> : balance || 0}
                         <RefreshCw
                             onClick={fetchBalance}
                             width={16}

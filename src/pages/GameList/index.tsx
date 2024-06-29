@@ -97,7 +97,11 @@ export default function GameList() {
                             console.log(item.code, item.gamecode, item.gametype);
                             if (item.code && item.gamecode && item.gametype) {
                                 playGame(item.code, item.gamecode, item.gametype).then(res => {
-                                    console.log(res.url);
+                                    console.log(res);
+                                    const url = res.data.url;
+                                    if (url) {
+                                        window.open(url);
+                                    }
                                 });
                             }
                         }}

@@ -1,5 +1,5 @@
 import "./App.css";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
@@ -8,6 +8,7 @@ import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import TAlert from "./components/TAlert";
 import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
+import { theme } from "./utils/theme";
 
 const StyledApp = styled.div`
     background-color: #222;
@@ -26,32 +27,34 @@ function App() {
     const { alertState, resetAlertState } = useAlertState();
 
     return (
-        <Router>
-            <StyledApp>
-                <AppContainer>
-                    <FlexBoxCol>
-                        {alertState.isVisible && (
-                            <TAlert
-                                type={alertState.type}
-                                message={alertState.message}
-                                onClose={resetAlertState}
-                            />
-                        )}
-                        <Routes>
-                            {routes.map(route => {
-                                return (
-                                    <Route
-                                        key={route.key}
-                                        path={route.path}
-                                        element={route.component}
-                                    />
-                                );
-                            })}
-                        </Routes>
-                    </FlexBoxCol>
-                </AppContainer>
-            </StyledApp>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <StyledApp>
+                    <AppContainer>
+                        <FlexBoxCol>
+                            {alertState.isVisible && (
+                                <TAlert
+                                    type={alertState.type}
+                                    message={alertState.message}
+                                    onClose={resetAlertState}
+                                />
+                            )}
+                            <Routes>
+                                {routes.map(route => {
+                                    return (
+                                        <Route
+                                            key={route.key}
+                                            path={route.path}
+                                            element={route.component}
+                                        />
+                                    );
+                                })}
+                            </Routes>
+                        </FlexBoxCol>
+                    </AppContainer>
+                </StyledApp>
+            </Router>
+        </ThemeProvider>
     );
 }
 

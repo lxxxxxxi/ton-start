@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { userInfoAtom } from "./atoms";
+import { userBalanceAtom, userInfoAtom } from "./atoms";
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 
 export const useUserInfo = () => {
@@ -14,4 +14,18 @@ export const useUserInfo = () => {
     };
 
     return { user, updateUserInfo, clearUserInfo };
+};
+
+export const useBalance = () => {
+    const [balance, setBalance] = useAtom(userBalanceAtom);
+
+    const updateUserBalance = (balance: { balance: number }) => {
+        setBalance(balance.balance);
+    };
+
+    const clearUserBalance = () => {
+        setBalance(null);
+    };
+
+    return { balance, updateUserBalance, clearUserBalance };
 };

@@ -21,8 +21,8 @@ import { useAlertState } from "../../states/useAlertState";
 import type { AlertType } from "../../components/TAlert";
 import TonWeb from "tonweb";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { formatNum } from "../../utils/format";
 import BigNumber from "bignumber.js";
+import ExchangeRate from "./ExchangeRate";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -62,15 +62,6 @@ const PayWrapper = styled.div`
                 text-decoration: underline;
             }
         }
-
-        .sub {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            padding: 0 5px;
-            color: #666;
-        }
     }
 
     .ton-button {
@@ -85,14 +76,10 @@ export default function Pay() {
     // const { balance } = useFaucetJettonContract(USDT_ADDRESS);
     // console.log(balance);
     const { openAlert } = useAlertState();
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(10);
     const [order, setOrder] = useState<{ amount: number; order_no: string } | null>(null);
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
     const [tonConnectUI, setOptions] = useTonConnectUI();
-
-    const { data: fullExchangeRate } = useAsyncRequest(getExchangeRate, []);
-    const exchangeRate = fullExchangeRate?.data?.rates?.CNY;
-    const usdAmount = exchangeRate ? new BigNumber(amount).div(exchangeRate).toFixed(2) : 0;
 
     // console.log("wallet", jettonWalletAddress, wallet);
 
@@ -198,10 +185,7 @@ export default function Pay() {
                         value={amount}
                         handleValueChange={value => setAmount(value)}
                     />
-                    <div className="sub">
-                        <span>汇率: 1U = ¥{formatNum(exchangeRate)}</span>
-                        <span>~${usdAmount}</span>
-                    </div>
+                    <ExchangeRate amount={amount} />
                 </div>
                 <div className="ton-button">
                     <TonConnectButton />

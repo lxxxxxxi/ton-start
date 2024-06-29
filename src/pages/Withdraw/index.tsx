@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TInput from "../../components/TInput";
 import { TButton } from "../../components/TButton";
 import AppWrapper from "../../components/AppWrapper";
+import ExchangeRate from "../Pay/ExchangeRate";
+import TNumberInput from "../../components/TNumberInput";
+import { createWithdrawOrder } from "../../request/requests";
+import { USDT_MASTER_ADDRESS } from "../../utils/constant";
+import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 
 const PayWrapper = styled.div`
     display: flex;
@@ -33,6 +38,21 @@ const PayWrapper = styled.div`
 `;
 
 export default function Withdraw() {
+    const [amount, setAmount] = useState(10);
+    const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
+
+    const handleComfirm = () => {
+        console.log(jettonWalletAddress, amount);
+        if (!jettonWalletAddress || !amount || amount < 10) return;
+        const orderData = {
+            address: jettonWalletAddress,
+            amount,
+        };
+        createWithdrawOrder(orderData).then(res => {
+            console.log(res);
+        });
+    };
+
     return (
         <AppWrapper title={"提现"}>
             <PayWrapper>
@@ -42,10 +62,17 @@ export default function Withdraw() {
                 </div>
                 <div>
                     {/* <span>还需投注100才能提现</span> */}
-                    <TInput prefix="¥" placeholder="最低10，最高10000" />
+                    <TNumberInput
+                        minNumber={10}
+                        maxNumber={10000}
+                        prefix="¥"
+                        placeholder="最低10，最高10000"
+                        value={amount}
+                        handleValueChange={value => setAmount(value)}
+                    />
                 </div>
-                <div className="rate">汇率: 1U = ¥7.38</div>
-                <TButton>确定</TButton>
+                <ExchangeRate amount={amount} />
+                <TButton onClick={handleComfirm}>确定</TButton>
             </PayWrapper>
         </AppWrapper>
     );
