@@ -72,10 +72,6 @@ export const loginByTelegram = (params: TelegramUser) => {
             return new URLSearchParams(params).toString();
         },
     });
-
-    // return apiWithoutToken.get(
-    //     "/v1/auth/tg_login?id=5434528858&first_name=xixi&last_name=Liu&username=xixiliuooo&photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2FuusA1uYd2mE4gApmxaYKM_8dUQ-uPVh1WmabYqtsNgUTPPTR0BYqVqlN7gDX75yW.jpg&auth_date=1719046266&hash=b6f788a7731acd91de43da63db4122e4f7579376e774283a829a0dc9af35c762"
-    // );
 };
 
 export const playGame = (apiCode: string, gameCode: string, gameType: string) => {
