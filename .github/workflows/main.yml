@@ -3,28 +3,31 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
-      - name: install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-        env:
-          CI: false
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: dist # The folder the action should deploy.
+        steps:
+            - name: Checkout 🛎️
+              uses: actions/checkout@v2.3.1
+            - name: install dependencies
+              run: npm install
+            - name: Build
+              run: npm run build
+              env:
+                  CI: false
+                  VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+                  VITE_GITHUB_REPOSITORY: ${{ secrets.VITE_GITHUB_REPOSITORY }}
+                  VITE_DESTINATION_ADDRESS: ${{ secrets.VITE_DESTINATION_ADDRESS }}
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@4.1.4
+              with:
+                  branch: gh-pages # The branch the action should deploy to.
+                  folder: dist # The folder the action should deploy.
 
 permissions:
-  contents: write
+    contents: write
