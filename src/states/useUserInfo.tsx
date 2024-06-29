@@ -1,6 +1,8 @@
 import { useAtom } from "jotai";
 import { userBalanceAtom, userInfoAtom } from "./atoms";
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
+import { useAsyncRequest } from "../hooks/useAsyncRequest";
+import { getBalance } from "../request/requests";
 
 export const useUserInfo = () => {
     const [user, setUser] = useAtom(userInfoAtom);
@@ -27,5 +29,7 @@ export const useBalance = () => {
         setBalance(null);
     };
 
-    return { balance, updateUserBalance, clearUserBalance };
+    const { execute: fetchBalance, loading } = useAsyncRequest(getBalance, [], updateUserBalance);
+
+    return { balance, fetchAndUpdateUserBalance: fetchBalance, clearUserBalance, loading };
 };

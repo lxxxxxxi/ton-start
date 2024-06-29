@@ -4,12 +4,12 @@ import styled from "styled-components";
 import PaginatedList from "../../components/PaginatedList";
 import TDropdown from "../../components/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { getWithdrawList } from "../../request/requests";
 import { RechargeList } from "../../utils/interface";
 import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
 import { FlexBoxRow } from "../../components/styled/styled";
+import { getWithdrawList } from "@/request/requests";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;

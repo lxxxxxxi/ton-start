@@ -19,15 +19,10 @@ import TLoader from "../../components/TLoader";
 export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
-    const { balance, updateUserBalance } = useBalance();
+    const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
     // fetch data
     useAsyncRequest(getTgProfile, [], updateUserInfo);
-    const { execute: fetchBalance, loading: isLoadingBalance } = useAsyncRequest(
-        getBalance,
-        [],
-        updateUserBalance
-    );
     const { data: accountList } = useAsyncRequest(getAccountList, []);
 
     return (
@@ -61,7 +56,7 @@ export default function AccountCenter() {
                     <div className="balance">
                         人民币余额 (￥): {isLoadingBalance ? <TLoader /> : balance || 0}
                         <RefreshCw
-                            onClick={fetchBalance}
+                            onClick={fetchAndUpdateUserBalance}
                             width={16}
                             style={{ cursor: "pointer" }}
                         />

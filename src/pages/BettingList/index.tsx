@@ -34,7 +34,7 @@ export default function BettingList() {
 
     const mockList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
         return {
-            id: Number(item),
+            id: String(item),
             contentTopLeft: "No.1",
             contentTopRight: "2022-01-01",
             contentBottomLeft: "有效投注金额：¥100.00",

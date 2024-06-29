@@ -47,7 +47,7 @@ const usePollingGameList = () => {
         const gametypes = ["1", "2", "3", "4", "5", "6"];
         // const codes = ["AG", "PG", "BBIN", "BG"];
         // const gametypes = ["1", "2", "3", "4", "5", "6", "7"];
-        const combinations = [];
+        const combinations: any[] = [];
 
         codes.forEach(code => {
             gametypes.forEach(gametype => {

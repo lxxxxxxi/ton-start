@@ -8,6 +8,8 @@ import TNumberInput from "../../components/TNumberInput";
 import { createWithdrawOrder } from "../../request/requests";
 import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
+import { useBalance } from "../../states/useUserInfo";
+import { formatPrice } from "../../utils/format";
 
 const PayWrapper = styled.div`
     display: flex;
@@ -40,6 +42,7 @@ const PayWrapper = styled.div`
 export default function Withdraw() {
     const [amount, setAmount] = useState(10);
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
+    const { balance } = useBalance();
 
     const handleComfirm = () => {
         console.log(jettonWalletAddress, amount);
@@ -57,7 +60,7 @@ export default function Withdraw() {
         <AppWrapper title={"提现"} isNeedTonConnectButton>
             <PayWrapper>
                 <div className="header">
-                    <span>账户余额 1000.00</span>
+                    <span>账户余额 {balance ? formatPrice(balance) : 0}</span>
                     <a href="#">提现记录</a>
                 </div>
                 <div>
