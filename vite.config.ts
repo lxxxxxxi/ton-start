@@ -16,16 +16,16 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [react(), nodePolyfills()],
         base: process.env.VITE_GITHUB_REPOSITORY,
-        server: {
-            proxy: {
-                "/pgapi": {
-                    target: process.env.VITE_API_BASE_URL,
-                    changeOrigin: true,
-                    secure: false,
-                    rewrite: path => path.replace(/^\/pgapi/, ""),
-                },
-            },
-        },
+        // server: {
+        //     proxy: {
+        //         "/pgapi": {
+        //             target: process.env.VITE_API_BASE_URL,
+        //             changeOrigin: true,
+        //             secure: false,
+        //             rewrite: path => path.replace(/^\/pgapi/, ""),
+        //         },
+        //     },
+        // },
         esbuild: {
             drop: mode === "prod" ? ["console", "debugger"] : [],
         },

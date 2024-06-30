@@ -4,8 +4,8 @@ import { API_BASE_URL } from "../utils/envs";
 
 const headers: AxiosRequestHeaders = { "Content-Type": "application/json" };
 const instance = axios.create({
-    // baseURL: API_BASE_URL + "api",
-    baseURL: "/pgapi",
+    baseURL: API_BASE_URL,
+    // baseURL: "/pgapi",
     headers,
 });
 

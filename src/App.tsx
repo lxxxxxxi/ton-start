@@ -10,6 +10,7 @@ import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
 import { useEffect } from "react";
+import { API_BASE_URL } from "./utils/envs";
 
 const StyledApp = styled.div`
     background-color: #222;
@@ -29,6 +30,7 @@ function App() {
 
     useEffect(() => {
         alert(window.Telegram.WebApp.initData);
+        alert(API_BASE_URL);
     }, []);
 
     return (
