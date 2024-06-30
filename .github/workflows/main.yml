@@ -7,20 +7,23 @@ on:
         branches:
             - main
 
+# 👇 global env
+env:
+    VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+    VITE_GITHUB_REPOSITORY: ${{ secrets.VITE_GITHUB_REPOSITORY }}
+    VITE_DESTINATION_ADDRESS: ${{ secrets.VITE_DESTINATION_ADDRESS }}
+
 jobs:
     build:
         runs-on: ubuntu-latest
-        env:
-            CI: false
-            VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-            VITE_GITHUB_REPOSITORY: ${{ secrets.VITE_GITHUB_REPOSITORY }}
-            VITE_DESTINATION_ADDRESS: ${{ secrets.VITE_DESTINATION_ADDRESS }}
 
         steps:
             - name: Checkout 🛎️
               uses: actions/checkout@v2.3.1
             - name: install dependencies
               run: npm install
+              env:
+                  CI: false
             - name: Build
               run: npm run build
             - name: Deploy 🚀
