@@ -28,6 +28,7 @@ export default function PayHistory() {
         () => getRechargeList(selectedOption),
         [selectedOption]
     );
+
     const usefulList =
         rechargeList && rechargeList.length > 0
             ? rechargeList.filter(item => !!item.transaction_id)
