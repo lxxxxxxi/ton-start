@@ -66,6 +66,8 @@ let githubUsername, githubRepo, botUsername;
 
   console.log(`\n\nSetting bot ${botUsername} webapp url to ${url}`);
 
+  // https://lxxxxxxi.github.io/ton-start 
+
   const resp = await axios.post(
     `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
     {

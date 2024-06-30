@@ -9,6 +9,7 @@ import TAlert from "./components/TAlert";
 import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
+import { useEffect } from "react";
 
 const StyledApp = styled.div`
     background-color: #222;
@@ -25,6 +26,10 @@ const AppContainer = styled.div`
 function App() {
     const { network } = useTonConnect();
     const { alertState, resetAlertState } = useAlertState();
+
+    useEffect(() => {
+        alert(window.Telegram.WebApp.initData);
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
