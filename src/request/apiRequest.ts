@@ -2,11 +2,14 @@ import axios from "axios";
 import type { AxiosRequestHeaders } from "axios";
 import { API_BASE_URL } from "../utils/envs";
 
-const headers: AxiosRequestHeaders = { "Content-Type": "application/json" };
+const headers: AxiosRequestHeaders = {
+    "Content-Type": "application/json",
+};
 const instance = axios.create({
     baseURL: API_BASE_URL,
     // baseURL: "/pgapi",
     headers,
+    timeout: 60000,
 });
 
 // interceptors
@@ -20,6 +23,8 @@ instance.interceptors.request.use(
             }
             config.headers["Authorization"] = `Bearer ${token}`;
         }
+        console.log(config.headers);
+
         return config;
     },
     error => {

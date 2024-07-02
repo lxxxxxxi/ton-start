@@ -29,8 +29,16 @@ function App() {
     const { alertState, resetAlertState } = useAlertState();
 
     useEffect(() => {
-        alert(window.Telegram.WebApp.initData);
-        alert(API_BASE_URL);
+        // alert(
+        //     <span
+        //         onClick={() =>
+        //             navigator.clipboard.writeText(window.Telegram.WebApp.initData.toString())
+        //         }
+        //     >
+        //         {window.Telegram.WebApp.initData}
+        //     </span>
+        // );
+        // alert(API_BASE_URL);
     }, []);
 
     return (

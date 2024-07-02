@@ -24,6 +24,7 @@ export default function AccountCenter() {
     // fetch data
     useAsyncRequest(getTgProfile, [], updateUserInfo);
     const { data: accountList } = useAsyncRequest(getAccountList, []);
+    console.log(window.Telegram.WebApp.initData);
 
     return (
         <AccountCenterWrapper>
@@ -38,7 +39,11 @@ export default function AccountCenter() {
 
             <div className="user-profile">
                 {!user ? (
-                    <>Please Login By Telegram First</>
+                    <>
+                        Please Login By Telegram First
+                        <button onClick={() => navigate("/login")}>login</button>{" "}
+                        <button onClick={() => fetchAndUpdateUserBalance()}>getBalance</button>{" "}
+                    </>
                 ) : (
                     <div className="profile-header">
                         <div className="avatar">

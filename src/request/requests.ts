@@ -2,6 +2,7 @@ import isMobile from "is-mobile";
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import apiRequest from "./apiRequest";
 import axios from "axios";
+import { errorMonitor } from "events";
 
 export const getExchangeRate = () => {
     return axios.get("https://api.coinbase.com/v2/exchange-rates?currency=USDT");
@@ -56,7 +57,7 @@ type CodeList = "AG" | "PG" | "BBIN" | "BG";
 type GameType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
 
 // gameType = 游戏类型：1真人,2捕鱼,3电子,4彩票,5体育,6棋牌,7电竞
-export const getGameList = (code: CodeList, gametype: GameType) => {
+export const getGameList = (code?: CodeList, gametype?: GameType) => {
     return apiRequest.get(`/api/v1/game/list`, {
         params: {
             code,
@@ -66,12 +67,18 @@ export const getGameList = (code: CodeList, gametype: GameType) => {
 };
 
 export const loginByTelegram = (params: TelegramUser) => {
-    return apiRequest.get("/api/v1/auth/tg_login", {
+    // tg_web_login
+    return apiRequest.get("/api/v1/auth/tg_web_login", {
+        // return apiRequest.get("/api/v1/auth/tg_login", {
         params,
         paramsSerializer: params => {
             return new URLSearchParams(params).toString();
         },
     });
+};
+
+export const loginByTelegramAuthData = (initData: string) => {
+    return apiRequest.get(`/api/v1/auth/tg_miniapp_login?initData=${initData}`);
 };
 
 export const playGame = (apiCode: string, gameCode: string, gameType: string) => {

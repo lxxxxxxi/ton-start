@@ -44,8 +44,11 @@ export default function Login() {
         }
     };
 
+    console.log(window.Telegram.WebApp.initData);
+
     return (
         <Wrapper>
+            <button onClick={() => loginByTelegram(window.Telegram.WebApp.initData)}>login</button>
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
                 // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}

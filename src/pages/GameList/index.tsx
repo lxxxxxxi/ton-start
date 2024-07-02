@@ -80,9 +80,9 @@ const usePollingGameList = () => {
 };
 
 export default function GameList() {
-    // const { data: gameList } = useAsyncRequest(() => getGameList("BBIN", "6"), []);
+    const { data: gameList } = useAsyncRequest<GameListItem[]>(() => getGameList(), []);
 
-    const { gameList } = usePollingGameList();
+    // const { gameList } = usePollingGameList();
 
     console.log(gameList);
 
