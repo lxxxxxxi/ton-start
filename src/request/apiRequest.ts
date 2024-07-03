@@ -23,8 +23,6 @@ instance.interceptors.request.use(
             }
             config.headers["Authorization"] = `Bearer ${token}`;
         }
-        console.log(config.headers);
-
         return config;
     },
     error => {
@@ -44,8 +42,7 @@ instance.interceptors.response.use(
         const currentPath = window.location.pathname;
         if (error.response && error.response.status === 401 && !currentPath.includes("login")) {
             console.log("Unauthorized, redirecting to login");
-            // window.location.href = "/ton-start/login/"; // Redirect to login page
-            window.location.href = window.location.origin + "/ton-start/#/login";
+            // window.location.href = window.location.origin + "/ton-start/#/login";
         }
         return Promise.reject(error);
     }

@@ -1,4 +1,5 @@
 import "./App.css";
+// import "@telegram-apps/telegram-ui/dist/styles.css";
 import styled, { ThemeProvider } from "styled-components";
 import { FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
@@ -10,7 +11,6 @@ import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
 import { useEffect } from "react";
-import { API_BASE_URL } from "./utils/envs";
 
 const StyledApp = styled.div`
     background-color: #222;

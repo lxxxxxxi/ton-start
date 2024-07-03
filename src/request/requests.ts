@@ -78,7 +78,14 @@ export const loginByTelegram = (params: TelegramUser) => {
 };
 
 export const loginByTelegramAuthData = (initData: string) => {
-    return apiRequest.get(`/api/v1/auth/tg_miniapp_login?initData=${initData}`);
+    return apiRequest.get(`/api/v1/auth/tg_miniapp_login`, {
+        params: {
+            initData,
+        },
+        paramsSerializer: params => {
+            return new URLSearchParams(params).toString();
+        },
+    });
 };
 
 export const playGame = (apiCode: string, gameCode: string, gameType: string) => {

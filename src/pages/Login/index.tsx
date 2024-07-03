@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import TelegramLoginButton, { TelegramUser } from "../AccountCenter/TelegramLoginButton";
-import { loginByTelegram } from "../../request/requests";
+import { loginByTelegramAuthData, loginByTelegram } from "../../request/requests";
 import { PageKey, useNavigateTo } from "../../utils/routes";
+import { TELE, TELE_MAINBUTTON } from "@/utils/tele";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -15,6 +16,11 @@ const Wrapper = styled.div`
 
 export default function Login() {
     const navigate = useNavigateTo();
+
+    useEffect(() => {
+        // TELE.ready();
+    }, []);
+
     const login = (user: TelegramUser) => {
         if (!user) {
             throw new Error("Please login by telegram first");
@@ -48,7 +54,17 @@ export default function Login() {
 
     return (
         <Wrapper>
-            <button onClick={() => loginByTelegram(window.Telegram.WebApp.initData)}>login</button>
+            <button onClick={() => loginByTelegramAuthData(window.Telegram.WebApp.initData)}>
+                login
+            </button>
+            <button
+                onClick={() => {
+                    TELE_MAINBUTTON.show();
+                }}
+            >
+                test
+            </button>
+
             <TelegramLoginButton
                 botName={"twastarttest_bot"}
                 // dataAuthUrl={"https://5c90-223-104-77-187.ngrok-free.app"}

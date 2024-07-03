@@ -24,6 +24,7 @@
     "react-feather": "^2.0.10",
     "react-router-dom": "^6.23.1",
     "styled-components": "^5.3.6",
+    "telegraf": "^4.16.3",
     "ton": "13.3.0",
     "ton-core": "^0.46.0",
     "ton-crypto": "^3.2.0",
