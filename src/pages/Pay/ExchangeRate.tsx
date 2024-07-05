@@ -4,7 +4,7 @@ import { formatPrice } from "../../utils/format";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getExchangeRate } from "../../request/requests";
 import BigNumber from "bignumber.js";
-import TText from "../../components/TText";
+import TText from "../../components/Common/TText";
 
 export default function ExchangeRate({ amount }: { amount?: number }) {
     const { data: fullExchangeRate } = useAsyncRequest(getExchangeRate, []);

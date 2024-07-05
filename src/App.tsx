@@ -6,7 +6,7 @@ import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
-import TAlert from "./components/TAlert";
+import TAlert from "./components/Common/TAlert";
 import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";

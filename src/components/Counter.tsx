@@ -3,7 +3,7 @@ import { useCounterContract } from "../hooks/useCounterContract";
 import { useTonConnect } from "../hooks/useTonConnect";
 
 import { Card, FlexBoxCol, FlexBoxRow, Ellipsis } from "./styled/styled";
-import { TButton } from "./TButton";
+import { TButton } from "./Common/TButton";
 
 export function Counter() {
     const { connected } = useTonConnect();

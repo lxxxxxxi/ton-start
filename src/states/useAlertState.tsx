@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { alertStateAtom, initialAlertState } from "./atoms";
-import { AlertType } from "../components/TAlert";
+import { AlertType } from "../components/Common/TAlert";
 
 export interface AlertState {
     isVisible: boolean;

@@ -2,11 +2,11 @@ import { beginCell, toNano, Address, Cell, fromNano } from "ton";
 import { useTonConnect } from "../hooks/useTonConnect";
 import { useFaucetJettonContract } from "../hooks/useFaucetJettonContract";
 import { Card, FlexBoxCol, FlexBoxRow, Ellipsis } from "./styled/styled";
-import { TButton } from "./TButton";
+import { TButton } from "./Common/TButton";
 import { USDT_MASTER_ADDRESS } from "../utils/constant";
-import TText from "./TText";
+import TText from "./Common/TText";
 import { Loader } from "react-feather";
-import TLoader from "./TLoader";
+import TLoader from "./Common/TLoader";
 
 export function Jetton() {
     const { connected } = useTonConnect();

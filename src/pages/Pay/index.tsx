@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TInput from "../../components/TInput";
-import { TButton } from "../../components/TButton";
+import TInput from "../../components/Common/TInput";
+import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
 import {
     TonConnectButton,
@@ -13,12 +13,12 @@ import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
 import { Counter } from "../../components/Counter";
-import TNumberInput from "../../components/TNumberInput";
+import TNumberInput from "../../components/Common/TNumberInput";
 import { createRechargeOrder, getExchangeRate } from "../../request/requests";
 import { Address, beginCell, toNano } from "ton-core";
 import { DESTINATION_ADDRESS } from "../../utils/envs";
 import { useAlertState } from "../../states/useAlertState";
-import type { AlertType } from "../../components/TAlert";
+import type { AlertType } from "../../components/Common/TAlert";
 import TonWeb from "tonweb";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import BigNumber from "bignumber.js";

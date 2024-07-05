@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TInput from "../../components/TInput";
-import { TButton } from "../../components/TButton";
+import TInput from "../../components/Common/TInput";
+import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
 import ExchangeRate from "../Pay/ExchangeRate";
-import TNumberInput from "../../components/TNumberInput";
+import TNumberInput from "../../components/Common/TNumberInput";
 import { createWithdrawOrder } from "../../request/requests";
 import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";

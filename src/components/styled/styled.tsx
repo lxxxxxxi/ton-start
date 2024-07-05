@@ -40,3 +40,17 @@ export const Input = styled("input")`
         border: 1px solid #fefefe;
     }
 `;
+
+export const CoinWrapper = styled.div`
+    width: 30px;
+    height: 30px;
+    line-height: 25px;
+    border-radius: 100%;
+    border: 4px solid #691010;
+    background-color: #f7405e;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0px 2px 6px white;
+    font-size: 16px;
+`;

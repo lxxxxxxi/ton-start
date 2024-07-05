@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AppWrapper from "../../components/AppWrapper";
 import styled from "styled-components";
 import PaginatedList from "../../components/PaginatedList";
-import TDropdown from "../../components/TDropDown";
+import TDropdown from "../../components/Common/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getRechargeList } from "../../request/requests";
 import { RechargeList } from "../../utils/interface";

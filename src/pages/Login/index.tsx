@@ -129,7 +129,6 @@ export default function Login() {
             /> */}
             <div className="login-banner">
                 <LoginBannerImg width="280px" />
-
                 <div className="shadow"></div>
             </div>
             <div>

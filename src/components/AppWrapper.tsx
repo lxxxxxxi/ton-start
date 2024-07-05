@@ -1,5 +1,5 @@
 import React from "react";
-import TNavBar from "./TNavBar";
+import TNavBar from "./Common/TNavBar";
 import { TonConnectButton } from "@tonconnect/ui-react";
 import styled from "styled-components";
 
