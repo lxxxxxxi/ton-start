@@ -4,6 +4,7 @@ import TelegramLoginButton, { TelegramUser } from "../AccountCenter/TelegramLogi
 import { loginByTelegramAuthData, loginByTelegram } from "../../request/requests";
 import { PageKey, useNavigateTo } from "../../utils/routes";
 import { TELE, TELE_MAINBUTTON } from "@/utils/tele";
+import { CoinIcon1, CoinIcon1Img } from "@/assets/imgs";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -54,6 +55,8 @@ export default function Login() {
 
     return (
         <Wrapper>
+            <CoinIcon1 />
+            <CoinIcon1Img width={100} />
             <button onClick={() => loginByTelegramAuthData(window.Telegram.WebApp.initData)}>
                 login
             </button>

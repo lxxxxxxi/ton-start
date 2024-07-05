@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import dotenv from "dotenv";
 import path from "path";
+import svgr from "@svgr/rollup";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => {
                 "@": path.resolve(__dirname, "./src"),
             },
         },
-        plugins: [react(), nodePolyfills()],
+        plugins: [react(), svgr(), nodePolyfills()],
         base: process.env.VITE_GITHUB_REPOSITORY,
         // server: {
         //     proxy: {
