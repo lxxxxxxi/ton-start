@@ -16,7 +16,6 @@ const StyledApp = styled.div`
     background-color: ${({ theme }) => theme.Colors.Bg1};
     color: #d6d6d6;
     min-height: 100vh;
-    padding: 20px 20px;
 `;
 
 const AppContainer = styled.div`
