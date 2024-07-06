@@ -32,6 +32,8 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
     position: relative;
     overflow: hidden;
 
+    z-index: 0;
+
     .header {
         position: relative;
         display: flex;
@@ -51,6 +53,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
     }
 
     .children {
+        position: relative;
         height: ${({ isNeedStartButton }) => (isNeedStartButton ? "calc(100vh - 300px)" : "80vh")};
         overflow: scroll;
         z-index: 100;

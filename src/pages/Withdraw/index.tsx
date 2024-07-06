@@ -10,34 +10,10 @@ import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 import { useBalance } from "../../states/useUserInfo";
 import { formatPrice } from "../../utils/format";
-
-const PayWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    width: 100%;
-    border-radius: 8px;
-    padding: 20px;
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .rate {
-        color: #666;
-    }
-`;
+import PageLayout from "@/components/Layouts/PageLayout";
+import { CoinWrapper } from "@/components/styled/styled";
+import { PayWrapper } from "../Pay";
+import { Jetton } from "@/components/Jetton";
 
 export default function Withdraw() {
     const [amount, setAmount] = useState(10);
@@ -57,26 +33,31 @@ export default function Withdraw() {
     };
 
     return (
-        <AppWrapper title={"提现"} isNeedTonConnectButton>
+        <PageLayout header={"提现"}>
             <PayWrapper>
-                <div className="header">
-                    <span>账户余额 {balance ? formatPrice(balance) : 0}</span>
-                    <a href="#">提现记录</a>
+                <Jetton />
+                <div className="input">
+                    <div className="header">
+                        <span>账户余额 {balance ? formatPrice(balance) : 0}</span>
+                        <a href="#">提现记录</a>
+                    </div>
+                    <div>
+                        {/* <span>还需投注100才能提现</span> */}
+                        <TNumberInput
+                            minNumber={10}
+                            maxNumber={10000}
+                            prefix={<CoinWrapper>¥</CoinWrapper>}
+                            placeholder="最低10，最高10000"
+                            value={amount}
+                            handleValueChange={value => setAmount(value)}
+                        />
+                    </div>
+                    <div style={{ padding: "0px 5px" }}>
+                        <ExchangeRate amount={amount} />
+                    </div>
                 </div>
-                <div>
-                    {/* <span>还需投注100才能提现</span> */}
-                    <TNumberInput
-                        minNumber={10}
-                        maxNumber={10000}
-                        prefix="¥"
-                        placeholder="最低10，最高10000"
-                        value={amount}
-                        handleValueChange={value => setAmount(value)}
-                    />
-                </div>
-                <ExchangeRate amount={amount} />
                 <TButton onClick={handleComfirm}>确定</TButton>
             </PayWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }

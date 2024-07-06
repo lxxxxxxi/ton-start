@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 
 export const Button = styled.button`
     height: 100%;
+    width: 100%;
     background-color: ${props => (props.disabled ? "#6e6e6e" : "#7c85ed")};
     color: white;
     font-weight: 700;
@@ -28,15 +29,19 @@ export const Button = styled.button`
 
 export const TButton = ({
     disabled = false,
+    onClick,
     children,
 }: {
     disabled?: boolean;
+    onClick?: () => void;
     children?: React.ReactNode;
 }) => {
     return (
         <Wrapper>
             <div className="shadow-box">
-                <Button disabled={disabled}>{children}</Button>
+                <Button disabled={disabled} onClick={onClick}>
+                    {children}
+                </Button>
             </div>
         </Wrapper>
     );

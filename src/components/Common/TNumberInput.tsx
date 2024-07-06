@@ -5,15 +5,23 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     width: 130px;
-    height: 36px;
-    padding: 0px 10px;
+    height: 60px;
+    padding: 10px 16px;
     gap: 6px;
-    border-radius: 10px;
-    border: 1px solid var(--Black, #24282b);
-    background: var(--White, #fefefe);
+
+    border-radius: 14px;
+    border: 2px solid #422e34;
+
+    background-color: #887c7b;
+    box-shadow: inset 0px 5px 0px 0px #655756;
 
     @media screen and (max-width: 740px) {
         width: 100%;
+    }
+
+    &:focus-within {
+        background-color: #655756;
+        box-shadow: inset 0px -5px 0px 0px #4a4141;
     }
 `;
 
@@ -23,11 +31,16 @@ const Prefix = styled.span`
 `;
 
 const Input = styled.input`
+    caret-color: #f04e56; /* 修改光标颜色 */
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: 600;
     width: 100%;
     background: transparent;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 1px 4px 1px #1b1919;
 `;
 
 const TNumberInput = ({

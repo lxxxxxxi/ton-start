@@ -3,12 +3,7 @@ import styled from "styled-components";
 import TInput from "../../components/Common/TInput";
 import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
-import {
-    TonConnectButton,
-    useTonAddress,
-    useTonConnectUI,
-    useTonWallet,
-} from "@tonconnect/ui-react";
+import { useTonAddress, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 import { USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
@@ -23,6 +18,8 @@ import TonWeb from "tonweb";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import BigNumber from "bignumber.js";
 import ExchangeRate from "./ExchangeRate";
+import PageLayout from "@/components/Layouts/PageLayout";
+import { CoinWrapper } from "@/components/styled/styled";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -33,7 +30,7 @@ import ExchangeRate from "./ExchangeRate";
 //     "description": "dfd"
 // }
 
-const PayWrapper = styled.div`
+export const PayWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -47,14 +44,16 @@ const PayWrapper = styled.div`
         gap: 10px;
 
         .header {
+            height: 10px;
+            font-size: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-
+            color: grey;
             padding: 0 5px;
 
             a {
-                color: #0066cc;
+                color: ${({ theme }) => theme.Colors.Text2};
                 text-decoration: none;
             }
 
@@ -62,11 +61,6 @@ const PayWrapper = styled.div`
                 text-decoration: underline;
             }
         }
-    }
-
-    .ton-button {
-        display: flex;
-        justify-content: center;
     }
 `;
 
@@ -169,8 +163,10 @@ export default function Pay() {
     };
 
     return (
-        <AppWrapper title="充值" isNeedTonConnectButton>
+        <PageLayout header="充值">
+            {/* isNeedTonConnectButton */}
             <PayWrapper>
+                <Jetton />
                 <div className="input">
                     <div className="header">
                         <span>充值金额</span>
@@ -179,20 +175,17 @@ export default function Pay() {
                     <TNumberInput
                         minNumber={10}
                         maxNumber={10000}
-                        prefix="¥"
+                        prefix={<CoinWrapper>¥</CoinWrapper>}
                         placeholder="最低10，最高10000"
                         value={amount}
                         handleValueChange={value => setAmount(value)}
                     />
-                    <ExchangeRate amount={amount} />
-                </div>
-                <div className="ton-button">
-                    <TonConnectButton />
+                    <div style={{ padding: "0px 5px" }}>
+                        <ExchangeRate amount={amount} />
+                    </div>
                 </div>
                 <TButton onClick={handleRecharge}>立即充值</TButton>
-                <Jetton />
-                {/* <Counter /> */}
             </PayWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }

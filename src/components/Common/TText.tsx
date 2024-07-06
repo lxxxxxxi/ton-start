@@ -1,8 +1,10 @@
+import { Colors } from "@/utils/theme";
 import styled from "styled-components";
 
 const themeColors: { [key: string]: string } = {
-    primary: "#007bff",
-    secondary: "#6c757d",
+    primary: Colors.Primary,
+    secondary: Colors.Secondary,
+    gray: "#6c757d",
     success: "#28a745",
     danger: "#dc3545",
     warning: "#ffc107",

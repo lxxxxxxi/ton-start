@@ -10,6 +10,9 @@ import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
 import { FlexBoxRow } from "../../components/styled/styled";
 import { getWithdrawList } from "@/request/requests";
+import PageLayout from "@/components/Layouts/PageLayout";
+import TText from "@/components/Common/TText";
+import { TButton } from "@/components/Common/TButton";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -57,7 +60,7 @@ export default function WithdrawHistory() {
     const cumulativeRechargeAmount = usefulList.reduce((pre, item) => item.amount + pre, 0);
 
     return (
-        <AppWrapper title="提现记录">
+        <PageLayout header="提现记录">
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown
@@ -67,10 +70,17 @@ export default function WithdrawHistory() {
                         }}
                         options={CommonDayOptions}
                     />
-                    <div>累计充值：¥{formatPrice(cumulativeRechargeAmount)}</div>
+                    <TButton>
+                        <FlexBoxRow>
+                            <TText fontSize="12px" color="#d0d0d0">
+                                累计提现{" "}
+                            </TText>{" "}
+                            ¥ {formatPrice(cumulativeRechargeAmount)}
+                        </FlexBoxRow>
+                    </TButton>
                 </div>
                 <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList>
             </BettingListWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }

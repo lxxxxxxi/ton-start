@@ -9,7 +9,7 @@ const instance = axios.create({
     baseURL: API_BASE_URL,
     // baseURL: "/pgapi",
     headers,
-    timeout: 60000,
+    timeout: 5000,
 });
 
 // interceptors

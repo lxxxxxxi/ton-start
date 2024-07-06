@@ -7,8 +7,9 @@ const FlexCenter = css`
     align-items: center;
 `;
 
-const Colors = {
+export const Colors = {
     Primary: "#f2ac47",
+    Secondary: "#AB1C34",
 
     Bg1: "#fbf4c2",
     Bg2: "#dff2ae",

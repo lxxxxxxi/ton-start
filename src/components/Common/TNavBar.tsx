@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ArrowLeft } from "react-feather";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 const NavbarContainer = styled.div`
     display: flex;
@@ -26,14 +27,17 @@ const NavbarExtra = styled.div`
     align-items: center;
 `;
 
-const TNavBar = ({ title, extra }: { title: string; extra?: React.ReactNode }) => (
-    <NavbarContainer>
-        <NavbarTitle>
-            <ArrowLeft style={{ cursor: "pointer" }} onClick={() => window.history.go(-1)} />
-            {title}
-        </NavbarTitle>
-        {extra && <NavbarExtra>{extra}</NavbarExtra>}
-    </NavbarContainer>
-);
+const TNavBar = ({ title, extra }: { title: string; extra?: React.ReactNode }) => {
+    const navigate = useNavigate();
+    return (
+        <NavbarContainer>
+            <NavbarTitle>
+                <ArrowLeft style={{ cursor: "pointer" }} onClick={() => navigate(-1)} />
+                {title}
+            </NavbarTitle>
+            {extra && <NavbarExtra>{extra}</NavbarExtra>}
+        </NavbarContainer>
+    );
+};
 
 export default TNavBar;

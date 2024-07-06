@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const Card = styled.div`
     padding: 18px 20px;
-    border-radius: 8px;
-    background-color: white;
+    border-radius: 10px;
 
-    @media (prefers-color-scheme: dark) {
-        background-color: #111;
-    }
+    border: 3px solid #341d1a;
+    box-shadow: 4px 4px 2px #341d1a;
+    background-color: white;
 `;
 
 export const FlexBoxRow = styled.div<{ justify?: string; gap?: string }>`
@@ -48,9 +47,9 @@ export const CoinWrapper = styled.div`
     border-radius: 100%;
     border: 4px solid #691010;
     background-color: #f7405e;
-    color: white;
+    color: #691010;
     font-weight: 500;
     text-align: center;
-    box-shadow: 0px 2px 6px white;
+    box-shadow: 0px 4px 2px #645d5c;
     font-size: 16px;
 `;
