@@ -31,7 +31,6 @@ const AlertWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: Arial, sans-serif;
     animation: ${slideInRight} 0.5s ease-out;
 
     &.alert-success {

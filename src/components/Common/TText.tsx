@@ -19,6 +19,7 @@ const getColor = (color: string): string => {
 
 interface TTextProps {
     color?: string;
+    noWrap?: boolean;
     fontSize?: string;
     lineHeight?: string;
     textAlign?: "left" | "right" | "center" | "justify";
@@ -37,6 +38,8 @@ const TText = styled.div<TTextProps>`
     margin: ${props => props.margin || "0"};
     padding: ${props => props.padding || "0"};
     text-transform: ${props => props.textTransform || "none"};
+
+    ${props => (props.noWrap ? "white-space:nowrap" : "")};
 `;
 
 export default TText;

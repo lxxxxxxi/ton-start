@@ -28,7 +28,6 @@ export function Counter() {
                     </FlexBoxRow>
                     <TButton
                         disabled={!connected}
-                        className={`Button ${connected ? "Active" : "Disabled"}`}
                         onClick={() => {
                             sendIncrement();
                         }}

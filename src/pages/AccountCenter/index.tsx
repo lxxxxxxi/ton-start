@@ -34,7 +34,7 @@ export default function AccountCenter() {
                     {!user ? (
                         <>
                             {/* Please Login By Telegram First */}
-                            <button onClick={() => navigate("/login")}>login</button>{" "}
+                            {/* <button onClick={() => navigate("/login")}>login</button>{" "} */}
                         </>
                     ) : (
                         <div className="profile-header">

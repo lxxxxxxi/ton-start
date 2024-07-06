@@ -54,9 +54,9 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
 
     .children {
         position: relative;
-        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "calc(100vh - 300px)" : "80vh")};
+        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "70vh")};
         overflow: scroll;
-        z-index: 100;
+        z-index: 80;
 
         ::-webkit-scrollbar {
             display: none;
@@ -83,7 +83,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
     .cloud-white {
         position: absolute;
         left: -10%;
-        z-index: 12;
+        z-index: 100;
         bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "0" : "-40px")};
     }
 
@@ -98,7 +98,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
         position: absolute;
         bottom: 0;
         left: 50%;
-        z-index: 20;
+        z-index: 110;
         transform: translateX(-50%);
 
         width: 60%;

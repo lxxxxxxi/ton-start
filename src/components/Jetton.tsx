@@ -18,7 +18,7 @@ export function Jetton() {
             <TonConnectButton style={{ width: "100%", marginBottom: "20px" }} />
             <FlexBoxCol>
                 <FlexBoxRow justify="space-between">
-                    Your USDT Balance
+                    USDT Balance
                     <TText color="info">{balance ?? <TLoader size={16} />}</TText>
                 </FlexBoxRow>
                 <FlexBoxRow justify="space-between" gap="20px">

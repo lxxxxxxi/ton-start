@@ -7,6 +7,10 @@ import { CommonDayOptions } from "../../utils/common";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getBetRecords } from "../../request/requests";
 import PageLayout from "@/components/Layouts/PageLayout";
+import TList from "@/components/Common/TList";
+import { BettingRecord, bettingStatus } from "@/utils/interface";
+import { formatDate, formatPrice, truncateHash } from "@/utils/format";
+import TText from "@/components/Common/TText";
 
 const BettingListWrapper = styled.div`
     .dropdown-wrapper {
@@ -30,7 +34,7 @@ export default function BettingList() {
     const selectedStatus = options2.find(item => item.key === selectedStatusOption);
     const selectedDay = CommonDayOptions.find(item => item.key === selectedDayOption);
 
-    const { data: betRecords } = useAsyncRequest(() =>
+    const { data: betRecords } = useAsyncRequest<BettingRecord[]>(() =>
         getBetRecords({
             // status: selectedStatus?.value,
             // day: selectedDay?.days,
@@ -39,15 +43,28 @@ export default function BettingList() {
 
     console.log(betRecords);
 
-    const mockList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
-        return {
-            id: String(item),
-            contentTopLeft: "No.1",
-            contentTopRight: "2022-01-01",
-            contentBottomLeft: "有效投注金额：¥100.00",
-            contentBottomRight: "输赢：¥20.00",
-        };
-    });
+    const list =
+        betRecords && betRecords.length
+            ? betRecords.map(item => {
+                  return {
+                      id: String(item.bill_no),
+                      contentTopLeft: (
+                          <TText noWrap>{`${formatDate(item.bet_time * 1000)}`} </TText>
+                      ),
+                      contentTopRight: <TText noWrap> {`${item.play_type}`} </TText>,
+                      contentBottomLeft: (
+                          <TText noWrap textAlign="right">{`下注金额：¥${formatPrice(
+                              item.bet_amount
+                          )}`}</TText>
+                      ),
+                      contentBottomRight: (
+                          <TText noWrap textAlign="right">{`净输赢：¥${formatPrice(
+                              item.net_amount
+                          )} (${bettingStatus[item.status as keyof typeof bettingStatus]})`}</TText>
+                      ),
+                  };
+              })
+            : [];
 
     return (
         <PageLayout header="投注记录">
@@ -64,7 +81,7 @@ export default function BettingList() {
                         options={options2}
                     />
                 </div>
-                <PaginatedList itemsPerPage={5} data={mockList}></PaginatedList>
+                <TList list={list}></TList>
             </BettingListWrapper>
         </PageLayout>
     );

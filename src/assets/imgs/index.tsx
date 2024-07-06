@@ -13,6 +13,7 @@ import { default as MenuIcon } from "@/assets/imgs/MenuIcon.png";
 import { default as BalanceBox } from "@/assets/imgs/BalanceBox.png";
 import { default as LottoGirIcon2 } from "@/assets/imgs/LottoGirIcon2.png";
 import { default as LottoGirlIcon1 } from "@/assets/imgs/LottoGirlIcon1.png";
+import { default as Gift } from "@/assets/imgs/Gift.png";
 
 // export ——————————————————
 
@@ -38,5 +39,6 @@ export const MenuIconImg = ({ ...props }) => <img src={MenuIcon} {...props} />;
 export const BalanceBoxImg = ({ ...props }) => <img src={BalanceBox} {...props} />;
 export const LottoGirIcon2Img = ({ ...props }) => <img src={LottoGirIcon2} {...props} />;
 export const LottoGirlIcon1Img = ({ ...props }) => <img src={LottoGirlIcon1} {...props} />;
+export const GiftImg = ({ ...props }) => <img src={Gift} {...props} />;
 
 export const CuteIcon1Img = ({ ...props }) => <img src={CuteIcon1} {...props} />;

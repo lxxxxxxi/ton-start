@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
     padding: 0 4px 4px 0px;
 
-    .shadow-box {
+    .button-shadow-box {
         height: 50px;
         box-shadow: 2px 4px 0px #525791;
         border-radius: 10px;
@@ -38,7 +38,7 @@ export const TButton = ({
 }) => {
     return (
         <Wrapper>
-            <div className="shadow-box">
+            <div className="button-shadow-box">
                 <Button disabled={disabled} onClick={onClick}>
                     {children}
                 </Button>

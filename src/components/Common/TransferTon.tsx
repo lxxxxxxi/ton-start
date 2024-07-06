@@ -36,7 +36,6 @@ export function TransferTon() {
                 </FlexBoxRow>
                 <TButton
                     disabled={!connected}
-                    style={{ marginTop: 18 }}
                     onClick={async () => {
                         sender.send({
                             to: Address.parse(tonRecipient),

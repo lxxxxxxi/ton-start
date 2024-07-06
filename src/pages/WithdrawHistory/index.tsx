@@ -13,6 +13,10 @@ import { getWithdrawList } from "@/request/requests";
 import PageLayout from "@/components/Layouts/PageLayout";
 import TText from "@/components/Common/TText";
 import { TButton } from "@/components/Common/TButton";
+import TList from "@/components/Common/TList";
+import { GiftImg } from "@/assets/imgs";
+import TEmptyBox from "@/components/Common/TEmptyBox";
+import { PageKey, useNavigateTo } from "@/utils/routes";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -27,6 +31,7 @@ const BettingListWrapper = styled.div`
 
 export default function WithdrawHistory() {
     const [selectedOption, setSelectedOption] = useState<number>(1);
+    const navigate = useNavigateTo();
 
     const { data: withdrawList } = useAsyncRequest<RechargeList[]>(
         () => getWithdrawList(selectedOption),
@@ -79,7 +84,19 @@ export default function WithdrawHistory() {
                         </FlexBoxRow>
                     </TButton>
                 </div>
-                <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList>
+                {displayList.length > 0 ? (
+                    <TList list={displayList} />
+                ) : (
+                    <div style={{ paddingTop: "20px" }}>
+                        <TEmptyBox
+                            text="去提现"
+                            handleClick={() => {
+                                navigate(PageKey.Withdraw);
+                            }}
+                        />
+                    </div>
+                )}
+                {/* <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList> */}
             </BettingListWrapper>
         </PageLayout>
     );

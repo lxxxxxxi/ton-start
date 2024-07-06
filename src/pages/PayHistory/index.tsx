@@ -13,6 +13,9 @@ import { FlexBoxRow } from "../../components/styled/styled";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { TButton } from "@/components/Common/TButton";
 import TText from "@/components/Common/TText";
+import TList from "@/components/Common/TList";
+import TEmptyBox from "@/components/Common/TEmptyBox";
+import { PageKey, useNavigateTo } from "@/utils/routes";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -26,7 +29,9 @@ const BettingListWrapper = styled.div`
 `;
 
 export default function PayHistory() {
-    const [selectedOption, setSelectedOption] = useState<number>(1);
+    const [selectedOption, setSelectedOption] = useState<number>(0);
+    const navigate = useNavigateTo();
+
     const { data: rechargeList } = useAsyncRequest<RechargeList[]>(
         () => getRechargeList(selectedOption),
         [selectedOption]
@@ -42,7 +47,7 @@ export default function PayHistory() {
     const displayList = usefulList.map(item => {
         return {
             id: item.order_no,
-            contentTopLeft: `No.${item.order_no}`,
+            contentTopLeft: `No.${truncateHash(item.order_no)}`,
             contentTopRight: `交易ID`,
             contentBottomLeft: `充值金额：¥${formatPrice(item.amount)}`,
             contentBottomRight: (
@@ -80,7 +85,19 @@ export default function PayHistory() {
                         </FlexBoxRow>
                     </TButton>
                 </div>
-                <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList>
+                {displayList.length > 0 ? (
+                    <TList list={displayList} />
+                ) : (
+                    <div style={{ paddingTop: "20px" }}>
+                        <TEmptyBox
+                            text="去充值"
+                            handleClick={() => {
+                                navigate(PageKey.Pay);
+                            }}
+                        />
+                    </div>
+                )}
+                {/* <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList> */}
             </BettingListWrapper>
         </PageLayout>
     );
