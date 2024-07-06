@@ -4,20 +4,24 @@ import styled from "styled-components";
 
 const DropdownContainer = styled.div`
     position: relative;
-    width: 150px;
+    width: 100%;
+    padding-right: 3px;
 `;
 
 const DropdownButton = styled.button`
     width: 100%;
-    padding: 8px 10px;
+    padding: 8px 16px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 3px solid #341d1a;
     border-radius: 10px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 2px 4px 0px #525791;
+    text-shadow: 2px 2px 1px #bebebf;
 `;
 
 const DropdownList = styled.ul`
@@ -26,9 +30,9 @@ const DropdownList = styled.ul`
     left: 0;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 3px solid #341d1a;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin-top: 5px;
     padding: 0;
     list-style: none;
@@ -93,7 +97,11 @@ const TDropdown = ({
             <DropdownButton onClick={handleToggleDropdown}>
                 {selectedOptionLabel ? selectedOptionLabel : placeholder}
                 <span>
-                    {isOpen ? <ChevronUp width={"16px"} /> : <ChevronDown width={"16px"} />}
+                    {isOpen ? (
+                        <ChevronUp width={"20px"} strokeWidth={4} />
+                    ) : (
+                        <ChevronDown width={"20px"} strokeWidth={4} />
+                    )}
                 </span>
             </DropdownButton>
             {isOpen && (

@@ -6,29 +6,36 @@ import TDropdown from "../../components/Common/TDropDown";
 import { CommonDayOptions } from "../../utils/common";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getBetRecords } from "../../request/requests";
+import PageLayout from "@/components/Layouts/PageLayout";
 
 const BettingListWrapper = styled.div`
-    padding: 20px 0px;
-
     .dropdown-wrapper {
         display: flex;
-        justify-content: start;
+        justify-content: space-between;
         align-items: center;
         gap: 20px;
     }
 `;
 
 const options2 = [
-    { key: 1, label: "全部状态" },
-    { key: 2, label: "赢" },
-    { key: 3, label: "输" },
+    { key: 1, label: "全部状态", value: 0 },
+    { key: 2, label: "赢", value: 1 },
+    { key: 3, label: "输", value: 2 },
 ];
 
 export default function BettingList() {
-    const [selectedDayOption, setSelectedDayOption] = useState<number>(1);
+    const [selectedDayOption, setSelectedDayOption] = useState<number>(0);
     const [selectedStatusOption, setSelectedStatusOption] = useState<number>(1);
 
-    const { data: betRecords } = useAsyncRequest(() => getBetRecords({}));
+    const selectedStatus = options2.find(item => item.key === selectedStatusOption);
+    const selectedDay = CommonDayOptions.find(item => item.key === selectedDayOption);
+
+    const { data: betRecords } = useAsyncRequest(() =>
+        getBetRecords({
+            // status: selectedStatus?.value,
+            // day: selectedDay?.days,
+        })
+    );
 
     console.log(betRecords);
 
@@ -41,8 +48,9 @@ export default function BettingList() {
             contentBottomRight: "输赢：¥20.00",
         };
     });
+
     return (
-        <AppWrapper title="投注记录">
+        <PageLayout header="投注记录">
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown
@@ -58,6 +66,6 @@ export default function BettingList() {
                 </div>
                 <PaginatedList itemsPerPage={5} data={mockList}></PaginatedList>
             </BettingListWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }

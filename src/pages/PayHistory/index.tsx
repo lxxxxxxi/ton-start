@@ -10,6 +10,9 @@ import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
 import { FlexBoxRow } from "../../components/styled/styled";
+import PageLayout from "@/components/Layouts/PageLayout";
+import { TButton } from "@/components/Common/TButton";
+import TText from "@/components/Common/TText";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -28,6 +31,8 @@ export default function PayHistory() {
         () => getRechargeList(selectedOption),
         [selectedOption]
     );
+
+    console.log(rechargeList);
 
     const usefulList =
         rechargeList && rechargeList.length > 0
@@ -56,7 +61,7 @@ export default function PayHistory() {
     const cumulativeRechargeAmount = usefulList.reduce((pre, item) => item.amount + pre, 0);
 
     return (
-        <AppWrapper title="充值记录">
+        <PageLayout header="充值记录">
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown
@@ -66,10 +71,17 @@ export default function PayHistory() {
                         }}
                         options={CommonDayOptions}
                     />
-                    <div>累计充值：¥{formatPrice(cumulativeRechargeAmount)}</div>
+                    <TButton>
+                        <FlexBoxRow>
+                            <TText fontSize="12px" color="#d0d0d0">
+                                累计充值{" "}
+                            </TText>{" "}
+                            ¥ {formatPrice(cumulativeRechargeAmount)}
+                        </FlexBoxRow>
+                    </TButton>
                 </div>
                 <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList>
             </BettingListWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }
