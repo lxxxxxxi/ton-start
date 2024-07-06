@@ -6,6 +6,7 @@ import { useAsyncInitialize } from "../../hooks/useAsyncInitialize";
 import { GameListItem } from "../../utils/interface";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getBalance, getGameList, playGame } from "../../request/requests";
+import PageLayout from "@/components/Layouts/PageLayout";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -13,7 +14,7 @@ const GameListWrapper = styled.div`
     justify-content: space-between;
     gap: 10px;
     row-gap: 20px;
-    padding: 30px 10px;
+    padding: 20px 10px;
 
     .card {
         width: 28%;
@@ -87,7 +88,7 @@ export default function GameList() {
     console.log(gameList);
 
     return (
-        <AppWrapper title="游戏中心">
+        <PageLayout header="游戏中心">
             <GameListWrapper>
                 {gameList?.map((item, index) => (
                     <div
@@ -130,6 +131,6 @@ export default function GameList() {
                     open
                 </button> */}
             </GameListWrapper>
-        </AppWrapper>
+        </PageLayout>
     );
 }

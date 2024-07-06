@@ -21,7 +21,7 @@ import { useBalance } from "@/states/useUserInfo";
 import { RefreshCw } from "react-feather";
 import MenuList from "../MenuList";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
     width: 100%;
     height: 100vh;
     padding: 20px;
@@ -51,7 +51,7 @@ const Wrapper = styled.div`
     }
 
     .children {
-        height: 50%;
+        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "calc(100vh - 300px)" : "80vh")};
         overflow: scroll;
         z-index: 100;
 
@@ -80,8 +80,8 @@ const Wrapper = styled.div`
     .cloud-white {
         position: absolute;
         left: -10%;
-        bottom: 0;
         z-index: 12;
+        bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "0" : "-40px")};
     }
 
     .cloud-green {
@@ -138,28 +138,35 @@ const MenuListContent = styled.div`
     }
 `;
 
-const menuLists = [
-    {
-        key: "1",
-        name: "投注列表",
-        path: PageKey.BettingList,
-    },
-];
-
 export default function PageLayout({
     header,
+    isNeedStartButton = false,
     children,
 }: {
     header: string;
+    isNeedStartButton?: boolean;
     children: React.ReactNode;
 }) {
     const navigate = useNavigateTo();
     const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
+    const menuLists = [
+        {
+            key: "1",
+            name: "个人中心",
+            path: PageKey.AccountCenter,
+        },
+        {
+            key: "2",
+            name: "投注列表",
+            path: PageKey.BettingList,
+        },
+    ];
+
     return (
-        <Wrapper>
+        <Wrapper isNeedStartButton={isNeedStartButton}>
             <div className="header">
-                <BackIconImg width={"50px"} />
+                <BackIconImg width={"50px"} onClick={() => window.history.go(-1)} />
                 <div className="text">{header}</div>
                 <LeaderImg width={"70%"} className="leader-img" />
                 <MenuList
@@ -181,18 +188,20 @@ export default function PageLayout({
                 </MenuList>
             </div>
             <div className="children">{children}</div>
-            <div>
-                <StartButtonImg width="250px" className="start-button" />
-                <StartImg
-                    width="90px"
-                    className="start-text"
-                    onClick={() => {
-                        navigate(PageKey.GameList);
-                    }}
-                />
-            </div>
+            {isNeedStartButton && (
+                <div>
+                    <StartButtonImg width="250px" className="start-button" />
+                    <StartImg
+                        width="90px"
+                        className="start-text"
+                        onClick={() => {
+                            navigate(PageKey.GameList);
+                        }}
+                    />
+                </div>
+            )}
+            {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
             <Cloud1Img width="110%" className="cloud-white" />
-            <Cloud2Img width="110%" className="cloud-green" />
             <div className="balance-box">
                 <div className="balance-text">
                     <CoinWrapper>¥</CoinWrapper>

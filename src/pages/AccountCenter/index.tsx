@@ -28,7 +28,7 @@ export default function AccountCenter() {
     const { data: accountList } = useAsyncRequest(getAccountList, []);
 
     return (
-        <PageLayout header="AccountCenter">
+        <PageLayout header="个人中心" isNeedStartButton>
             <AccountCenterWrapper>
                 <div className="user-profile">
                     {!user ? (
