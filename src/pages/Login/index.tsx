@@ -118,15 +118,14 @@ export default function Login() {
 
     return (
         <Wrapper>
-            {/* <button onClick={() => loginByTelegramAuthData(window.Telegram.WebApp.initData)}>
-                login
-            </button>
-            <TelegramLoginButton
-                botName={"twastarttest_bot"}
-                dataOnauth={dataOnauth}
-                usePic={true}
-                cornerRadius={10}
-            /> */}
+            <div style={{ zIndex: 40 }}>
+                <TelegramLoginButton
+                    botName={"twastarttest_bot"}
+                    dataOnauth={dataOnauth}
+                    usePic={true}
+                    cornerRadius={10}
+                />
+            </div>
             <div className="login-banner">
                 <LoginBannerImg width="280px" />
                 <div className="shadow"></div>

@@ -15,6 +15,11 @@ import {
     BalanceBoxImg,
 } from "@/assets/imgs";
 import { CoinWrapper } from "../styled/styled";
+import { PageKey, useNavigateTo } from "@/utils/routes";
+import TLoader from "../Common/TLoader";
+import { useBalance } from "@/states/useUserInfo";
+import { RefreshCw } from "react-feather";
+import MenuList from "../MenuList";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -30,22 +35,25 @@ const Wrapper = styled.div`
     .header {
         position: relative;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         height: 100px;
 
         .text {
             position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 22px;
             color: white;
+            text-align: center;
             font-weight: 600;
         }
     }
 
     .children {
-        background-color: pink;
         height: 50%;
         overflow: scroll;
+        z-index: 100;
 
         ::-webkit-scrollbar {
             display: none;
@@ -96,7 +104,7 @@ const Wrapper = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
 
             font-size: 24px;
             font-weight: 600;
@@ -111,6 +119,33 @@ const Wrapper = styled.div`
     }
 `;
 
+const MenuListContent = styled.div`
+    .item {
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 6px;
+        cursor: pointer;
+        padding: 0 6px;
+        border-radius: 8px;
+
+        :last-child {
+            margin-bottom: 0;
+        }
+
+        :hover {
+            background-color: rgba(202, 202, 202, 0.3);
+        }
+    }
+`;
+
+const menuLists = [
+    {
+        key: "1",
+        name: "投注列表",
+        path: PageKey.BettingList,
+    },
+];
+
 export default function PageLayout({
     header,
     children,
@@ -118,25 +153,56 @@ export default function PageLayout({
     header: string;
     children: React.ReactNode;
 }) {
+    const navigate = useNavigateTo();
+    const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
+
     return (
         <Wrapper>
             <div className="header">
                 <BackIconImg width={"50px"} />
-                <span className="text">{header}</span>
+                <div className="text">{header}</div>
                 <LeaderImg width={"70%"} className="leader-img" />
-                <MenuIconImg width={"50px"} />
+                <MenuList
+                    content={
+                        <MenuListContent>
+                            {menuLists.map(item => (
+                                <div
+                                    key={item.key}
+                                    className="item"
+                                    onClick={() => navigate(item.path)}
+                                >
+                                    {item.name}
+                                </div>
+                            ))}
+                        </MenuListContent>
+                    }
+                >
+                    <MenuIconImg width={"50px"} />
+                </MenuList>
             </div>
             <div className="children">{children}</div>
             <div>
                 <StartButtonImg width="250px" className="start-button" />
-                <StartImg width="90px" className="start-text" onClick={() => {}} />
+                <StartImg
+                    width="90px"
+                    className="start-text"
+                    onClick={() => {
+                        navigate(PageKey.GameList);
+                    }}
+                />
             </div>
             <Cloud1Img width="110%" className="cloud-white" />
             <Cloud2Img width="110%" className="cloud-green" />
             <div className="balance-box">
                 <div className="balance-text">
                     <CoinWrapper>¥</CoinWrapper>
-                    <span>123</span>
+                    <span>{isLoadingBalance ? <TLoader /> : balance || 0}</span>
+                    <RefreshCw
+                        onClick={fetchAndUpdateUserBalance}
+                        width={16}
+                        strokeWidth={4}
+                        style={{ cursor: "pointer" }}
+                    />
                 </div>
                 <BalanceBoxImg width="100%" />
             </div>

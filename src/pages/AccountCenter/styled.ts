@@ -1,3 +1,4 @@
+import { ListBox } from "@/assets/imgs";
 import styled from "styled-components";
 
 export const AccountCenterWrapper = styled.div`
@@ -23,15 +24,17 @@ export const AccountCenterWrapper = styled.div`
 
     .profile-header {
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
         align-items: center;
         justify-content: center;
         gap: 10px;
         text-align: center;
+        gap: 20px;
+        margin: 10px 0px 30px 0px;
 
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background-color: #ddd;
             display: flex;
@@ -40,6 +43,8 @@ export const AccountCenterWrapper = styled.div`
             font-size: 18px;
             margin-right: 20px;
             overflow: hidden;
+            border: 3px solid #341d1a;
+            box-shadow: 2px 2px 4px #8ea3ca;
         }
 
         h2 {
@@ -53,22 +58,35 @@ export const AccountCenterWrapper = styled.div`
         }
     }
 
-    .balance-info {
-        margin-top: 20px;
-        text-align: center;
-        .balance {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-    }
-
     .actions {
-        padding: 10px 50px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        gap: 10px;
+        gap: 20px;
+
+        .list {
+            width: 100%;
+            height: 100px;
+            background: url(${ListBox}) no-repeat center / contain;
+            padding-right: 36px;
+
+            font-size: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .text0 {
+                color: #d6d6d6;
+            }
+
+            .text1 {
+                font-size: 26px;
+                color: #341d1a;
+                text-shadow: #ffa826 3px 3px 4px;
+                font-weight: 600;
+            }
+        }
     }
 
     .menu {
