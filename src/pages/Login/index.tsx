@@ -143,7 +143,9 @@ export default function Login() {
             <div>
                 <StartButtonImg width="200px" className="start-button" />
                 {/* <StartImg width="90px" className="start-text" onClick={handleLogin} /> */}
-                <div className="start-text">START</div>
+                <div className="start-text" onClick={handleLogin}>
+                    START
+                </div>
             </div>
             <Cloud1Img width="110%" className="cloud-white" />
             <Cloud2Img width="110%" className="cloud-green" />
