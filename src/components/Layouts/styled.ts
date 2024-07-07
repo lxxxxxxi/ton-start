@@ -1,12 +1,13 @@
 import { Wave } from "@/assets/imgs";
 import styled from "styled-components";
 import ZIndexConfig from "./zIndexConfig";
+
 export const PageLayoutWrapper = styled.div<{
     isNeedStartButton: boolean;
-    isGameListPage: boolean;
+    shouldChildUnderCloud: boolean;
 }>`
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     padding: 20px;
 
     background: url(${Wave});
@@ -84,7 +85,7 @@ export const PageLayoutWrapper = styled.div<{
             position: absolute;
             bottom: 170px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) perspective(120px) rotateX(30deg);
             z-index: ${ZIndexConfig.button_text};
             cursor: pointer;
 
@@ -99,8 +100,8 @@ export const PageLayoutWrapper = styled.div<{
     .cloud-white {
         position: absolute;
         left: -10%;
-        z-index: ${({ isGameListPage }) =>
-            isGameListPage ? ZIndexConfig.cloud_white_1 : ZIndexConfig.cloud_white_2};
+        z-index: ${({ shouldChildUnderCloud }) =>
+            !shouldChildUnderCloud ? ZIndexConfig.cloud_white_1 : ZIndexConfig.cloud_white_2};
         bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
     }
 

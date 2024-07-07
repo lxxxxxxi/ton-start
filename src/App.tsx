@@ -15,7 +15,7 @@ import { useEffect } from "react";
 const StyledApp = styled.div`
     background-color: ${({ theme }) => theme.Colors.Bg1};
     font-weight: 500;
-    min-height: 100vh;
+    min-height: 100dvh;
 `;
 
 const AppContainer = styled.div`

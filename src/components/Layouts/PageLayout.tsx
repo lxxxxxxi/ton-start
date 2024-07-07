@@ -35,7 +35,12 @@ export default function PageLayout({
     const navigate = useNavigateTo();
     const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
-    const isGameListPage = window.location.href.includes(PageKey.GameList);
+    const location = window.location.href;
+    const shouldChildUnderCloud =
+        location.includes(PageKey.GameList) ||
+        location.includes(PageKey.BettingList) ||
+        location.includes(PageKey.PayHistory) ||
+        location.includes(PageKey.WithdrawHistory);
 
     const menuLists = [
         {
@@ -51,7 +56,10 @@ export default function PageLayout({
     ];
 
     return (
-        <PageLayoutWrapper isNeedStartButton={isNeedStartButton} isGameListPage={isGameListPage}>
+        <PageLayoutWrapper
+            isNeedStartButton={isNeedStartButton}
+            shouldChildUnderCloud={shouldChildUnderCloud}
+        >
             <div className="header">
                 <BackIconImg
                     width={"50px"}

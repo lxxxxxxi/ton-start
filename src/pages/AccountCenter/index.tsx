@@ -18,15 +18,21 @@ import TLoader from "../../components/Common/TLoader";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { LottoGirIcon2Img, LottoGirlIcon1Img } from "@/assets/imgs";
 import { PageKey } from "@/utils/routes";
+import { TelegramUser } from "./TelegramLoginButton";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
 
-    console.log(user);
+    const getTgProfileCallback = (data: TelegramUser) => {
+        if (data.id) {
+            updateUserInfo(data);
+        } else {
+            navigate(PageKey.Login);
+        }
+    };
+    useAsyncRequest(getTgProfile, [], getTgProfileCallback);
 
-    // fetch data
-    useAsyncRequest(getTgProfile, [], updateUserInfo);
     const { data: accountList } = useAsyncRequest(getAccountList, []);
 
     return (
@@ -79,37 +85,7 @@ export default function AccountCenter() {
                                 去提现
                             </span>
                         </div>
-                        {/* <TButton
-                            onClick={() => {
-                                navigate("/pay");
-                            }}
-                        >
-                            充值
-                        </TButton>
-                        <TButton
-                            onClick={() => {
-                                navigate("/withdraw");
-                            }}
-                        >
-                            提现
-                        </TButton> */}
                     </div>
-                    {/* <TBox className="menu">
-                        <ul>
-                            <li onClick={() => navigate("/gamelist")}>
-                                <Play width={18} /> 开始游戏
-                            </li>
-                            <li onClick={() => navigate("/pay/history")}>
-                                <DollarSign width={18} /> 充值记录
-                            </li>
-                            <li onClick={() => navigate("/withdraw/history")}>
-                                <Upload width={18} /> 提现记录
-                            </li>
-                            <li onClick={() => navigate("/bettinglist")}>
-                                <List width={18} /> 投注明细
-                            </li>
-                        </ul>
-                    </TBox> */}
                 </div>
             </AccountCenterWrapper>
         </PageLayout>
