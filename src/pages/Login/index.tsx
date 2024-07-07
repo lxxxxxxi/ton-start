@@ -122,7 +122,22 @@ export default function Login() {
         if (!initData) {
             console.error("initData is null");
         } else {
-            loginByTelegramAuthData(initData);
+            loginByTelegramAuthData(initData)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        const result = res.data;
+                        if (result.access_token) {
+                            localStorage.setItem("access_token", result.access_token);
+                            navigate(PageKey.AccountCenter);
+                        } else {
+                            console.log("not get access_token");
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     };
 
