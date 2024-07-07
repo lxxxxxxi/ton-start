@@ -40,9 +40,11 @@ export default function AccountCenter() {
                         </div>
                     ) : (
                         <div className="profile-header">
-                            <div className="avatar">
-                                <img src={user.photo_url} width={"100%"} />
-                            </div>
+                            {!!user.photo_url && (
+                                <div className="avatar">
+                                    <img src={user.photo_url} width={"100%"} />
+                                </div>
+                            )}
                             <div className="user-info">
                                 <h2>
                                     Hi, {user.first_name} {user.last_name}

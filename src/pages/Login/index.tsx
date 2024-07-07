@@ -10,9 +10,11 @@ import {
     LoginBannerImg,
     ShiningBgImg,
     StartButtonImg,
+    StartButtonPressedImg,
     StartImg,
 } from "@/assets/imgs";
 import PageLayout from "@/components/Layouts/PageLayout";
+import { PageLayoutWrapper } from "@/components/Layouts/styled";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -142,28 +144,28 @@ export default function Login() {
     };
 
     return (
-        <Wrapper>
-            <div style={{ zIndex: 40 }}>
+        <PageLayoutWrapper isGameListPage={false} isNeedStartButton>
+            {/* <div style={{ zIndex: 40 }}>
                 <TelegramLoginButton
                     botName={"twastarttest_bot"}
                     dataOnauth={dataOnauth}
                     usePic={true}
                     cornerRadius={10}
                 />
-            </div>
+            </div> */}
             <div className="login-banner">
                 <LoginBannerImg width="280px" />
                 <div className="shadow"></div>
             </div>
-            <div>
+            <div className="button-wrapper">
                 <StartButtonImg width="200px" className="start-button" />
-                {/* <StartImg width="90px" className="start-text" onClick={handleLogin} /> */}
+                <StartButtonPressedImg width="200px" className="start-button-pressed" />
                 <div className="start-text" onClick={handleLogin}>
                     START
                 </div>
             </div>
             <Cloud1Img width="110%" className="cloud-white" />
             <Cloud2Img width="110%" className="cloud-green" />
-        </Wrapper>
+        </PageLayoutWrapper>
     );
 }

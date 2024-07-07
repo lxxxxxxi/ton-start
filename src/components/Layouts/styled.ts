@@ -1,7 +1,10 @@
 import { Wave } from "@/assets/imgs";
 import styled from "styled-components";
 import ZIndexConfig from "./zIndexConfig";
-export const Wrapper = styled.div<{ isNeedStartButton: boolean; isGameListPage: boolean }>`
+export const PageLayoutWrapper = styled.div<{
+    isNeedStartButton: boolean;
+    isGameListPage: boolean;
+}>`
     width: 100%;
     height: 100vh;
     padding: 20px;
@@ -155,6 +158,25 @@ export const Wrapper = styled.div<{ isNeedStartButton: boolean; isGameListPage: 
 
         img {
             position: absolute;
+        }
+    }
+
+    /* login page */
+
+    .login-banner {
+        text-align: center;
+
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .shadow {
+            width: 300px;
+            height: 36px;
+            background-color: #f3ac47;
+            opacity: 20%;
+            border-radius: 100%;
         }
     }
 `;

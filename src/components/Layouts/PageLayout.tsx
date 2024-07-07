@@ -21,7 +21,7 @@ import TLoader from "../Common/TLoader";
 import { useBalance } from "@/states/useUserInfo";
 import { RefreshCw } from "react-feather";
 import MenuList from "../MenuList";
-import { MenuListContent, Wrapper } from "./styled";
+import { MenuListContent, PageLayoutWrapper } from "./styled";
 
 export default function PageLayout({
     header,
@@ -51,7 +51,7 @@ export default function PageLayout({
     ];
 
     return (
-        <Wrapper isNeedStartButton={isNeedStartButton} isGameListPage={isGameListPage}>
+        <PageLayoutWrapper isNeedStartButton={isNeedStartButton} isGameListPage={isGameListPage}>
             <div className="header">
                 <BackIconImg
                     width={"50px"}
@@ -115,6 +115,6 @@ export default function PageLayout({
                     <CuteIcon6Img width="80px" style={{ top: "70px", left: "10px" }} />
                 </div>
             )}
-        </Wrapper>
+        </PageLayoutWrapper>
     );
 }
