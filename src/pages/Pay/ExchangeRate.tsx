@@ -15,7 +15,7 @@ export default function ExchangeRate({ amount }: { amount?: number }) {
     return (
         <FlexBoxRow justify="space-between">
             <TText color="gray" fontSize="12px">
-                实时汇率: 1U = ¥{formatPrice(exchangeRate)}
+                Rate: 1U = ¥{formatPrice(exchangeRate)}
             </TText>
             <TText color="secondary" fontSize="14px" fontWeight="bold">
                 ~${usdAmount}

@@ -76,6 +76,28 @@ export const AccountCenterWrapper = styled.div`
             align-items: center;
             justify-content: space-between;
 
+            .text {
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .text:hover {
+                transform: translateY(-2px);
+            }
+
+            .text::after {
+                content: "";
+                display: block;
+                width: 0;
+                height: 2px; /* 下划线的高度 */
+                background: currentColor; /* 使用当前文本颜色 */
+                transition: width 0.3s ease; /* 下划线的过渡效果 */
+            }
+
+            .text:hover::after {
+                width: 100%; /* 下划线的宽度变为100% */
+            }
+
             .text0 {
                 color: #d6d6d6;
             }

@@ -3,3 +3,12 @@
     font-weight: 400;
     font-style: normal;
 }
+
+/* TonConnect UI */
+[data-tc-connect-button="true"] {
+    border-radius: 10px;
+    width: 100%;
+    background-image: linear-gradient(to right, #f7c98d, #f2a43e);
+}
+
+/* TonConnect UI */

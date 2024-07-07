@@ -23,6 +23,8 @@ export default function AccountCenter() {
     const navigate = useNavigate();
     const { user, updateUserInfo } = useUserInfo();
 
+    console.log(user);
+
     // fetch data
     useAsyncRequest(getTgProfile, [], updateUserInfo);
     const { data: accountList } = useAsyncRequest(getAccountList, []);
@@ -53,22 +55,25 @@ export default function AccountCenter() {
                     <div className="actions">
                         <div className="list">
                             <LottoGirIcon2Img width="100px" />
-                            <span className="text0" onClick={() => navigate(PageKey.PayHistory)}>
+                            <span
+                                className="text text0"
+                                onClick={() => navigate(PageKey.PayHistory)}
+                            >
                                 充值记录
                             </span>
-                            <span className="text1" onClick={() => navigate(PageKey.Pay)}>
+                            <span className="text text1" onClick={() => navigate(PageKey.Pay)}>
                                 去充值
                             </span>
                         </div>
                         <div className="list">
                             <LottoGirlIcon1Img width="100px" />
                             <span
-                                className="text0"
+                                className="text text0"
                                 onClick={() => navigate(PageKey.WithdrawHistory)}
                             >
                                 提现记录
                             </span>
-                            <span className="text1" onClick={() => navigate(PageKey.Withdraw)}>
+                            <span className="text text1" onClick={() => navigate(PageKey.Withdraw)}>
                                 去提现
                             </span>
                         </div>

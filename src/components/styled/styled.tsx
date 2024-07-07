@@ -50,6 +50,6 @@ export const CoinWrapper = styled.div`
     color: #691010;
     font-weight: 500;
     text-align: center;
-    box-shadow: 0px 4px 2px #645d5c;
+    box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.3);
     font-size: 16px;
 `;

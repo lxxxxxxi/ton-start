@@ -21,7 +21,7 @@ import { useBalance } from "@/states/useUserInfo";
 import { RefreshCw } from "react-feather";
 import MenuList from "../MenuList";
 
-const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
+const Wrapper = styled.div<{ isNeedStartButton: boolean; isGameListPage: boolean }>`
     width: 100%;
     height: 100vh;
     padding: 20px;
@@ -50,6 +50,11 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
             color: white;
             text-align: center;
             font-weight: 600;
+            text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            cursor: pointer;
         }
     }
 
@@ -77,7 +82,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
         bottom: 170px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 40;
+        z-index: 101;
         cursor: pointer;
 
         font-weight: 800;
@@ -89,7 +94,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
     .cloud-white {
         position: absolute;
         left: -10%;
-        z-index: 100;
+        z-index: ${({ isGameListPage }) => (isGameListPage ? "70" : "90")};
         bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
     }
 
@@ -116,7 +121,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
             gap: 16px;
 
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 500;
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
             color: white;
 
@@ -124,6 +129,10 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+
+            .balance-num {
+                text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+            }
         }
     }
 `;
@@ -159,6 +168,8 @@ export default function PageLayout({
     const navigate = useNavigateTo();
     const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
+    const isGameListPage = window.location.href.includes(PageKey.GameList);
+
     const menuLists = [
         {
             key: "1",
@@ -173,11 +184,15 @@ export default function PageLayout({
     ];
 
     return (
-        <Wrapper isNeedStartButton={isNeedStartButton}>
+        <Wrapper isNeedStartButton={isNeedStartButton} isGameListPage={isGameListPage}>
             <div className="header">
-                <BackIconImg width={"50px"} onClick={() => window.history.go(-1)} />
+                <BackIconImg
+                    width={"50px"}
+                    className="icon"
+                    onClick={() => window.history.go(-1)}
+                />
                 <div className="text">{header}</div>
-                <LeaderImg width={"70%"} className="leader-img" />
+                <LeaderImg width={"70%"} className="icon" />
                 <MenuList
                     content={
                         <MenuListContent>
@@ -200,7 +215,9 @@ export default function PageLayout({
             {isNeedStartButton && (
                 <div>
                     <StartButtonImg width="200px" className="start-button" />
-                    <div className="start-text">START</div>
+                    <div className="start-text" onClick={() => navigate(PageKey.GameList)}>
+                        PLAY
+                    </div>
                 </div>
             )}
             {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
@@ -208,7 +225,9 @@ export default function PageLayout({
             <div className="balance-box">
                 <div className="balance-text">
                     <CoinWrapper>¥</CoinWrapper>
-                    <span>{isLoadingBalance ? <TLoader /> : balance || 0}</span>
+                    <span className="balance-num">
+                        {isLoadingBalance ? <TLoader /> : balance || 0}
+                    </span>
                     <RefreshCw
                         onClick={fetchAndUpdateUserBalance}
                         width={16}
