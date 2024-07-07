@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import dotenv from "dotenv";
@@ -6,6 +6,21 @@ import path from "path";
 import svgr from "@svgr/rollup";
 
 dotenv.config();
+
+function erudaPlugin(): PluginOption {
+    return {
+        name: "vite-plugin-eruda",
+        apply: "build",
+        transformIndexHtml(html) {
+            return html.replace(
+                "</body>",
+                `<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+         <script>eruda.init();</script>
+         </body>`
+            );
+        },
+    };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -15,18 +30,8 @@ export default defineConfig(({ mode }) => {
                 "@": path.resolve(__dirname, "./src"),
             },
         },
-        plugins: [react(), svgr(), nodePolyfills()],
+        plugins: [react(), svgr(), nodePolyfills(), erudaPlugin()],
         base: process.env.VITE_GITHUB_REPOSITORY,
-        // server: {
-        //     proxy: {
-        //         "/pgapi": {
-        //             target: process.env.VITE_API_BASE_URL,
-        //             changeOrigin: true,
-        //             secure: false,
-        //             rewrite: path => path.replace(/^\/pgapi/, ""),
-        //         },
-        //     },
-        // },
         esbuild: {
             drop: mode === "prod" ? ["console", "debugger"] : [],
         },
