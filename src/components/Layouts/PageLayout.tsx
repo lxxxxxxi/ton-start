@@ -1,18 +1,19 @@
 import React from "react";
-import styled from "styled-components";
 import {
     BackIconImg,
     LeaderImg,
     MenuIconImg,
-    Wave,
     Cloud1Img,
     Cloud2Img,
-    LoginBannerImg,
-    QuestionIconImg,
-    ShiningBgImg,
     StartButtonImg,
-    StartImg,
     BalanceBoxImg,
+    StartButtonPressedImg,
+    CuteIcon1Img,
+    CuteIcon2Img,
+    CuteIcon3Img,
+    CuteIcon4Img,
+    CuteIcon6Img,
+    CoinIcon5Img,
 } from "@/assets/imgs";
 import { CoinWrapper } from "../styled/styled";
 import { PageKey, useNavigateTo } from "@/utils/routes";
@@ -20,141 +21,7 @@ import TLoader from "../Common/TLoader";
 import { useBalance } from "@/states/useUserInfo";
 import { RefreshCw } from "react-feather";
 import MenuList from "../MenuList";
-
-const Wrapper = styled.div<{ isNeedStartButton: boolean; isGameListPage: boolean }>`
-    width: 100%;
-    height: 100vh;
-    padding: 20px;
-
-    background: url(${Wave});
-    background-color: ${({ theme }) => theme.Colors.Bg2};
-
-    position: relative;
-    overflow: hidden;
-
-    z-index: 0;
-
-    .header {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 40px;
-        margin-bottom: 10px;
-
-        .text {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 22px;
-            color: white;
-            text-align: center;
-            font-weight: 600;
-            text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.3);
-        }
-
-        .icon {
-            cursor: pointer;
-        }
-    }
-
-    .children {
-        position: relative;
-        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "70vh")};
-        overflow: scroll;
-        z-index: 80;
-
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
-    .start-button {
-        position: absolute;
-        bottom: 90px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
-    }
-
-    .start-text {
-        position: absolute;
-        bottom: 170px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 101;
-        cursor: pointer;
-
-        font-weight: 800;
-        font-size: 30px;
-        color: white;
-        text-shadow: 3px 4px 0px black;
-    }
-
-    .cloud-white {
-        position: absolute;
-        left: -10%;
-        z-index: ${({ isGameListPage }) => (isGameListPage ? "70" : "90")};
-        bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
-    }
-
-    .cloud-green {
-        position: absolute;
-        left: -10%;
-        bottom: 0px;
-        z-index: 4;
-    }
-
-    .balance-box {
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        z-index: 110;
-        transform: translateX(-50%);
-
-        width: 55%;
-
-        .balance-text {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-
-            font-size: 24px;
-            font-weight: 500;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-            color: white;
-
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            .balance-num {
-                text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-            }
-        }
-    }
-`;
-
-const MenuListContent = styled.div`
-    .item {
-        height: 30px;
-        line-height: 30px;
-        margin-bottom: 6px;
-        cursor: pointer;
-        padding: 0 6px;
-        border-radius: 8px;
-
-        :last-child {
-            margin-bottom: 0;
-        }
-
-        :hover {
-            background-color: rgba(202, 202, 202, 0.3);
-        }
-    }
-`;
+import { MenuListContent, Wrapper } from "./styled";
 
 export default function PageLayout({
     header,
@@ -192,7 +59,7 @@ export default function PageLayout({
                     onClick={() => window.history.go(-1)}
                 />
                 <div className="text">{header}</div>
-                <LeaderImg width={"70%"} className="icon" />
+                <LeaderImg width={"70%"} />
                 <MenuList
                     content={
                         <MenuListContent>
@@ -208,13 +75,14 @@ export default function PageLayout({
                         </MenuListContent>
                     }
                 >
-                    <MenuIconImg width={"50px"} />
+                    <MenuIconImg width={"50px"} className="icon" />
                 </MenuList>
             </div>
             <div className="children">{children}</div>
             {isNeedStartButton && (
-                <div>
+                <div className="button-wrapper">
                     <StartButtonImg width="200px" className="start-button" />
+                    <StartButtonPressedImg width="200px" className="start-button-pressed" />
                     <div className="start-text" onClick={() => navigate(PageKey.GameList)}>
                         PLAY
                     </div>
@@ -236,7 +104,17 @@ export default function PageLayout({
                     />
                 </div>
                 <BalanceBoxImg width="100%" />
+                <CoinIcon5Img width="45px" className="coin-icon" />
             </div>
+            {isNeedStartButton && (
+                <div className="icons-wrapper">
+                    <CuteIcon1Img width="30px" style={{ top: "0px", left: "10px" }} />
+                    <CuteIcon2Img width="22px" style={{ top: "30px", right: "10px" }} />
+                    <CuteIcon3Img width="20px" style={{ top: "180px", right: "20px" }} />
+                    <CuteIcon4Img width="26px" style={{ top: "170px", left: "10px" }} />
+                    <CuteIcon6Img width="80px" style={{ top: "70px", left: "10px" }} />
+                </div>
+            )}
         </Wrapper>
     );
 }

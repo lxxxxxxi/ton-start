@@ -23,8 +23,8 @@ instance.interceptors.request.use(
             }
             config.headers["Authorization"] = `Bearer ${token}`;
         }
-        // return config;
-        return Promise.reject();
+        return config;
+        // return Promise.reject();
     },
     error => {
         // do something with request error
