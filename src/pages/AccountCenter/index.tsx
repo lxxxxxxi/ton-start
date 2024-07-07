@@ -32,10 +32,10 @@ export default function AccountCenter() {
             <AccountCenterWrapper>
                 <div className="user-profile">
                     {!user ? (
-                        <>
-                            {/* Please Login By Telegram First */}
-                            {/* <button onClick={() => navigate("/login")}>login</button>{" "} */}
-                        </>
+                        <div className="profile-header">
+                            <div className="avatar"></div>
+                            <div className="user-info"></div>
+                        </div>
                     ) : (
                         <div className="profile-header">
                             <div className="avatar">
@@ -52,7 +52,7 @@ export default function AccountCenter() {
 
                     <div className="actions">
                         <div className="list">
-                            <LottoGirIcon2Img width="120px" />
+                            <LottoGirIcon2Img width="100px" />
                             <span className="text0" onClick={() => navigate(PageKey.PayHistory)}>
                                 充值记录
                             </span>
@@ -61,7 +61,7 @@ export default function AccountCenter() {
                             </span>
                         </div>
                         <div className="list">
-                            <LottoGirlIcon1Img width="120px" />
+                            <LottoGirlIcon1Img width="100px" />
                             <span
                                 className="text0"
                                 onClick={() => navigate(PageKey.WithdrawHistory)}

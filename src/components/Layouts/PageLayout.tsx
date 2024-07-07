@@ -39,7 +39,8 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 100px;
+        height: 40px;
+        margin-bottom: 10px;
 
         .text {
             position: absolute;
@@ -65,7 +66,7 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
 
     .start-button {
         position: absolute;
-        bottom: 180px;
+        bottom: 90px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 10;
@@ -73,35 +74,40 @@ const Wrapper = styled.div<{ isNeedStartButton: boolean }>`
 
     .start-text {
         position: absolute;
-        bottom: 285px;
+        bottom: 170px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 40;
         cursor: pointer;
+
+        font-weight: 800;
+        font-size: 30px;
+        color: white;
+        text-shadow: 3px 4px 0px black;
     }
 
     .cloud-white {
         position: absolute;
         left: -10%;
         z-index: 100;
-        bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "0" : "-40px")};
+        bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
     }
 
     .cloud-green {
         position: absolute;
         left: -10%;
-        bottom: 100px;
+        bottom: 0px;
         z-index: 4;
     }
 
     .balance-box {
         position: absolute;
-        bottom: 0;
+        bottom: -5px;
         left: 50%;
         z-index: 110;
         transform: translateX(-50%);
 
-        width: 60%;
+        width: 55%;
 
         .balance-text {
             display: flex;
@@ -193,14 +199,8 @@ export default function PageLayout({
             <div className="children">{children}</div>
             {isNeedStartButton && (
                 <div>
-                    <StartButtonImg width="250px" className="start-button" />
-                    <StartImg
-                        width="90px"
-                        className="start-text"
-                        onClick={() => {
-                            navigate(PageKey.GameList);
-                        }}
-                    />
+                    <StartButtonImg width="200px" className="start-button" />
+                    <div className="start-text">START</div>
                 </div>
             )}
             {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}

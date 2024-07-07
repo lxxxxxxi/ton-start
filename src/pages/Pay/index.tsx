@@ -33,7 +33,7 @@ import { CoinWrapper } from "@/components/styled/styled";
 export const PayWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     width: 100%;
     border-radius: 8px;
     padding: 20px;

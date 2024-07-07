@@ -30,11 +30,11 @@ export const AccountCenterWrapper = styled.div`
         gap: 10px;
         text-align: center;
         gap: 20px;
-        margin: 10px 0px 30px 0px;
+        margin: 20px 0px 20px 0px;
 
         .avatar {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background-color: #ddd;
             display: flex;
@@ -44,7 +44,7 @@ export const AccountCenterWrapper = styled.div`
             margin-right: 20px;
             overflow: hidden;
             border: 3px solid #341d1a;
-            box-shadow: 2px 2px 4px #8ea3ca;
+            box-shadow: 1px 4px 1px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
@@ -62,15 +62,15 @@ export const AccountCenterWrapper = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 20px;
+        gap: 8px;
 
         .list {
-            width: 100%;
-            height: 100px;
+            width: 95%;
+            height: 90px;
             background: url(${ListBox}) no-repeat center / contain;
             padding-right: 36px;
 
-            font-size: 22px;
+            font-size: 20px;
 
             display: flex;
             align-items: center;
@@ -81,9 +81,9 @@ export const AccountCenterWrapper = styled.div`
             }
 
             .text1 {
-                font-size: 26px;
+                font-size: 24px;
                 color: #341d1a;
-                text-shadow: #ffa826 3px 3px 4px;
+                text-shadow: 2px 2px 1px #ffa826;
                 font-weight: 600;
             }
         }

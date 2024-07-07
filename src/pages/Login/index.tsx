@@ -12,6 +12,7 @@ import {
     StartButtonImg,
     StartImg,
 } from "@/assets/imgs";
+import PageLayout from "@/components/Layouts/PageLayout";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -45,7 +46,7 @@ const Wrapper = styled.div`
 
     .start-button {
         position: absolute;
-        bottom: 180px;
+        bottom: 110px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 10;
@@ -53,30 +54,39 @@ const Wrapper = styled.div`
 
     .start-text {
         position: absolute;
-        bottom: 285px;
+        bottom: 190px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 40;
         cursor: pointer;
+
+        font-weight: 800;
+        font-size: 30px;
+        color: white;
+        text-shadow: 3px 4px 0px black;
     }
 
     .cloud-white {
         position: absolute;
         left: -10%;
-        bottom: 0;
+        bottom: -50px;
         z-index: 12;
     }
 
     .cloud-green {
         position: absolute;
         left: -10%;
-        bottom: 100px;
+        bottom: 0px;
         z-index: 4;
     }
 `;
 
 export default function Login() {
     const navigate = useNavigateTo();
+
+    // useEffect(() => {
+    //     alert(window.Telegram.WebApp.viewportStableHeight);
+    // }, []);
 
     const login = (user: TelegramUser) => {
         if (!user) {
@@ -131,8 +141,9 @@ export default function Login() {
                 <div className="shadow"></div>
             </div>
             <div>
-                <StartButtonImg width="250px" className="start-button" />
-                <StartImg width="90px" className="start-text" onClick={handleLogin} />
+                <StartButtonImg width="200px" className="start-button" />
+                {/* <StartImg width="90px" className="start-text" onClick={handleLogin} /> */}
+                <div className="start-text">START</div>
             </div>
             <Cloud1Img width="110%" className="cloud-white" />
             <Cloud2Img width="110%" className="cloud-green" />
