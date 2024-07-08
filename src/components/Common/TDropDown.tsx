@@ -49,22 +49,26 @@ const DropdownItem = styled.li`
     }
 `;
 
-type Option = {
-    key: number;
+type OptionKey<T extends number | string> = T;
+
+type Option<T extends number | string> = {
+    key: OptionKey<T>;
     label: string;
 };
 
-const TDropdown = ({
+interface TDropdownProps<T extends number | string> {
+    options: Option<T>[];
+    value: OptionKey<T>;
+    changeSelected: (key: OptionKey<T>) => void;
+    placeholder?: string;
+}
+
+const TDropdown = <T extends number | string>({
     options,
     value,
     changeSelected,
     placeholder,
-}: {
-    options: Option[];
-    value: number;
-    changeSelected: (key: number) => void;
-    placeholder?: string;
-}) => {
+}: TDropdownProps<T>) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +76,7 @@ const TDropdown = ({
         setIsOpen(!isOpen);
     };
 
-    const handleOptionClick = (key: number) => {
+    const handleOptionClick = (key: OptionKey<T>) => {
         setIsOpen(false);
         changeSelected(key);
     };

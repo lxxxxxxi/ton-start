@@ -23,7 +23,7 @@ export function useAsyncRequest<T>(
     });
 
     const execute = useCallback(async () => {
-        setState({ data: undefined, error: undefined, loading: true });
+        // setState({ data: undefined, error: undefined, loading: true });
         try {
             const result = await func();
             if (result.status === 200) {

@@ -6,11 +6,13 @@ const ListContainer = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 0 5px 5px 0px;
+
+    font-size: 14px;
 `;
 
 const ListItem = styled.div`
     width: 100%;
-    padding: 15px;
+    padding: 10px;
     margin: 10px 0;
     border-radius: 8px;
     border: 3px solid #422e34;

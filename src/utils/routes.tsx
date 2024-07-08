@@ -9,8 +9,8 @@ import WithdrawHistory from "../pages/WithdrawHistory";
 import { useNavigate } from "react-router-dom";
 
 export enum PageKey {
-    AccountCenter = "/",
-    Login = "/login",
+    AccountCenter = "/account",
+    Login = "/",
     GameList = "/gamelist",
     Pay = "/pay",
     Withdraw = "/withdraw",
@@ -22,12 +22,12 @@ export enum PageKey {
 export const routes = [
     {
         key: PageKey.AccountCenter,
-        path: "/",
+        path: "/account",
         component: <AccountCenter />,
     },
     {
         key: PageKey.Login,
-        path: "/login",
+        path: "/",
         component: <Login />,
     },
     {

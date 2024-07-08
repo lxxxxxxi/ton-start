@@ -5,8 +5,10 @@ import axios from "axios";
 import { useAsyncInitialize } from "../../hooks/useAsyncInitialize";
 import { GameListItem } from "../../utils/interface";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { getBalance, getGameList, playGame } from "../../request/requests";
+import { GameType, getBalance, getGameList, playGame } from "../../request/requests";
 import PageLayout from "@/components/Layouts/PageLayout";
+import TDropdown from "@/components/Common/TDropDown";
+import { useSearchParams } from "react-router-dom";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -18,6 +20,11 @@ const GameListWrapper = styled.div`
 
     .card {
         width: 28%;
+        border: 2px solid #341d1a;
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+
         :hover {
             cursor: pointer;
             transform: scale(1.05);
@@ -28,7 +35,6 @@ const GameListWrapper = styled.div`
             width: 100%;
             aspect-ratio: 1;
             overflow: hidden;
-            border-radius: 10px;
         }
 
         .title {
@@ -80,16 +86,77 @@ const usePollingGameList = () => {
     return { gameList, loading, error };
 };
 
+const GameTypeOptions = [
+    {
+        key: "0",
+        label: "全部",
+    },
+    {
+        key: "1",
+        label: "真人",
+    },
+    {
+        key: "2",
+        label: "捕鱼",
+    },
+    {
+        key: "3",
+        label: "电子",
+    },
+    {
+        key: "4",
+        label: "彩票",
+    },
+    {
+        key: "5",
+        label: "体育",
+    },
+    {
+        key: "6",
+        label: "棋牌",
+    },
+    {
+        key: "7",
+        label: "电竞",
+    },
+];
+
 export default function GameList() {
-    const { data: gameList } = useAsyncRequest<GameListItem[]>(() => getGameList(), []);
+    const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
+
+    const { data: gameList } = useAsyncRequest<GameListItem[]>(
+        () =>
+            getGameList(
+                undefined,
+                selectedTypeOption === "0" ? undefined : (selectedTypeOption as GameType)
+            ),
+        [selectedTypeOption]
+    );
 
     // const { gameList } = usePollingGameList();
 
-    console.log(gameList);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const type = searchParams.get("type") || "0";
+
+    useEffect(() => {
+        if (type && GameTypeOptions.find(item => item.key === type)) {
+            setSelectedTypeOption(type);
+        }
+    }, [type]);
+
+    const handleTypeChange = (key: string) => {
+        setSelectedTypeOption(key);
+        setSearchParams({ type: key });
+    };
 
     return (
         <PageLayout header="游戏中心">
             <GameListWrapper>
+                <TDropdown
+                    value={selectedTypeOption}
+                    changeSelected={handleTypeChange}
+                    options={GameTypeOptions}
+                />
                 {gameList?.map((item, index) => (
                     <div
                         key={index}

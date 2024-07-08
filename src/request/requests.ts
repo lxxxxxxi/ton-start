@@ -54,7 +54,7 @@ export const getBetRecords = (data: BetRecordsParams) => {
 };
 
 type CodeList = "AG" | "PG" | "BBIN" | "BG";
-type GameType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
+export type GameType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
 
 // gameType = 游戏类型：1真人,2捕鱼,3电子,4彩票,5体育,6棋牌,7电竞
 export const getGameList = (code?: CodeList, gametype?: GameType) => {
