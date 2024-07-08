@@ -13,15 +13,10 @@ import {
     StartButtonPressedImg,
     StartImg,
 } from "@/assets/imgs";
-import PageLayout from "@/components/Layouts/PageLayout";
 import { PageLayoutWrapper } from "@/components/Layouts/styled";
 
 export default function Login() {
     const navigate = useNavigateTo();
-
-    // useEffect(() => {
-    //     alert(window.Telegram.WebApp.viewportStableHeight);
-    // }, []);
 
     const login = (user: TelegramUser) => {
         if (!user) {
@@ -52,35 +47,46 @@ export default function Login() {
         }
     };
 
+    const loginByTelegramAuth = () => {
+        const initData = TELE.initData;
+        if (!initData) {
+            console.error("initData is null");
+        } else {
+            loginByTelegramAuthData(initData)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        const result = res.data;
+                        if (result.access_token) {
+                            localStorage.setItem("access_token", result.access_token);
+                            navigate(PageKey.AccountCenter);
+                        } else {
+                            console.log("not get access_token");
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    };
+
     const handleLogin = () => {
-        getTgProfile().then(res => {
-            console.log(res);
-            if (res.status === 200) {
-                navigate(PageKey.AccountCenter);
-            } else {
-                const initData = TELE.initData;
-                if (!initData) {
-                    console.error("initData is null");
+        getTgProfile()
+            .then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    navigate(PageKey.AccountCenter);
                 } else {
-                    loginByTelegramAuthData(initData)
-                        .then(res => {
-                            console.log(res);
-                            if (res.status === 200) {
-                                const result = res.data;
-                                if (result.access_token) {
-                                    localStorage.setItem("access_token", result.access_token);
-                                    navigate(PageKey.AccountCenter);
-                                } else {
-                                    console.log("not get access_token");
-                                }
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
+                    loginByTelegramAuth();
                 }
-            }
-        });
+            })
+            .catch(err => {
+                const responseStatus = err.response?.status;
+                if (responseStatus === 401) {
+                    loginByTelegramAuth();
+                }
+            });
     };
 
     return (

@@ -41,9 +41,10 @@ instance.interceptors.response.use(
         // handle response error
         console.log("Request error:", error);
         const currentPath = window.location.pathname;
-        if (error.response && error.response.status === 401 && !currentPath.includes("login")) {
+        const currentHash = window.location.hash;
+        if (error.response && error.response.status === 401 && currentHash !== "#/") {
             console.log("Unauthorized, redirecting to login");
-            window.location.href = window.location.origin + "/ton-start/#/login";
+            window.location.href = window.location.origin + "/ton-start/#/";
         }
         return Promise.reject(error);
     }
