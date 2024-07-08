@@ -30,3 +30,21 @@ export interface BettingRecord {
     play_type: keyof typeof bettingStatus;
     status: number;
 }
+
+export const AccountOpType = {
+    recharge: "充值",
+    withdraw: "提现",
+    bet: "投注",
+    hongbao: "红包",
+};
+export interface AccountListInfo {
+    amount: number;
+    balance: number;
+    bet_weight: number;
+    created_at: number;
+    op: string; // in 转入  out 转出
+    order_no: string;
+    provider: string; // 游戏提供商
+    remark: string;
+    type: keyof typeof AccountOpType; // recharge 充值，withdraw 提现， bet 投注，hongbao 红包
+}

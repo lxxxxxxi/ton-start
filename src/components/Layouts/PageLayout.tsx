@@ -50,6 +50,11 @@ export default function PageLayout({
         },
         {
             key: "2",
+            name: "账户明细",
+            path: PageKey.AccountList,
+        },
+        {
+            key: "3",
             name: "投注列表",
             path: PageKey.BettingList,
         },

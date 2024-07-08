@@ -28,7 +28,7 @@ export const createWithdrawOrder = (orderData: { address: string; amount: number
     return apiRequest.post("/api/v1/account/create_withdraw_order", orderData);
 };
 
-export const getAccountList = (days: number = 7) => {
+export const getAccountList = (days: number) => {
     return apiRequest.get(`/api/v1/account/list?day=${days}`);
 };
 

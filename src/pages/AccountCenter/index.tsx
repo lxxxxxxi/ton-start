@@ -33,8 +33,6 @@ export default function AccountCenter() {
     };
     useAsyncRequest(getTgProfile, [], getTgProfileCallback);
 
-    const { data: accountList } = useAsyncRequest(getAccountList, []);
-
     return (
         <PageLayout header="个人中心" isNeedStartButton>
             <AccountCenterWrapper>

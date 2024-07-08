@@ -13,6 +13,7 @@ import { formatDate, formatPrice, truncateHash } from "@/utils/format";
 import TText from "@/components/Common/TText";
 
 const BettingListWrapper = styled.div`
+    padding-top: 18px;
     .dropdown-wrapper {
         display: flex;
         justify-content: space-between;
@@ -23,8 +24,10 @@ const BettingListWrapper = styled.div`
 
 const options2 = [
     { key: 1, label: "全部状态", value: 0 },
-    { key: 2, label: "赢", value: 1 },
-    { key: 3, label: "输", value: 2 },
+    { key: 2, label: bettingStatus[1], value: 1 },
+    { key: 3, label: bettingStatus[2], value: 2 },
+    { key: 4, label: bettingStatus[3], value: 3 },
+    { key: 5, label: bettingStatus[4], value: 4 },
 ];
 
 export default function BettingList() {
@@ -34,11 +37,20 @@ export default function BettingList() {
     const selectedStatus = options2.find(item => item.key === selectedStatusOption);
     const selectedDay = CommonDayOptions.find(item => item.key === selectedDayOption);
 
-    const { data: betRecords } = useAsyncRequest<BettingRecord[]>(() =>
-        getBetRecords({
-            // status: selectedStatus?.value,
-            // day: selectedDay?.days,
-        })
+    console.log(selectedStatus);
+
+    console.log(selectedDay);
+
+    const status = options2.find(item => item.key === selectedStatusOption)?.value;
+    const day = CommonDayOptions.find(item => item.key === selectedDayOption)?.days;
+
+    const { data: betRecords } = useAsyncRequest<BettingRecord[]>(
+        () =>
+            getBetRecords({
+                status: status === 0 ? undefined : status,
+                day: day,
+            }),
+        [selectedDayOption, selectedStatusOption]
     );
 
     console.log(betRecords);
