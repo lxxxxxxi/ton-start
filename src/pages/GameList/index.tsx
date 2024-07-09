@@ -45,48 +45,6 @@ const GameListWrapper = styled.div`
     }
 `;
 
-const usePollingGameList = () => {
-    const [gameList, setGameList] = useState<GameListItem[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const codes = ["PG"];
-        const gametypes = ["1", "2", "3", "4", "5", "6"];
-        // const codes = ["AG", "PG", "BBIN", "BG"];
-        // const gametypes = ["1", "2", "3", "4", "5", "6", "7"];
-        const combinations: any[] = [];
-
-        codes.forEach(code => {
-            gametypes.forEach(gametype => {
-                combinations.push({ code, gametype });
-            });
-        });
-
-        const fetchGameLists = async () => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const results = await Promise.all(
-                    combinations.map(({ code, gametype }) => getGameList(code, gametype))
-                );
-
-                const allGameLists = results.map(result => result.data);
-                setGameList(allGameLists.flat());
-            } catch (err) {
-                setError(String(err));
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchGameLists();
-    }, []);
-
-    return { gameList, loading, error };
-};
-
 const GameTypeOptions = [
     {
         key: "0",
@@ -134,8 +92,6 @@ export default function GameList() {
         [selectedTypeOption]
     );
 
-    // const { gameList } = usePollingGameList();
-
     const [searchParams, setSearchParams] = useSearchParams();
     const type = searchParams.get("type") || "0";
 
@@ -158,7 +114,6 @@ export default function GameList() {
                     changeSelected={handleTypeChange}
                     options={GameTypeOptions}
                 />
-                <TLoadingBar text="正在加载游戏列表" />
                 {loading ? (
                     <TLoadingBar text="正在加载游戏列表" />
                 ) : (

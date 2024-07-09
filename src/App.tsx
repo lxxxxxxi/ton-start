@@ -62,6 +62,7 @@ function App() {
                         <FlexBoxCol>
                             {alertState.isVisible && (
                                 <TAlert
+                                    title={alertState.title}
                                     type={alertState.type}
                                     message={alertState.message}
                                     onClose={resetAlertState}

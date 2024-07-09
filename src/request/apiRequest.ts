@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { AxiosRequestHeaders } from "axios";
 import { API_BASE_URL } from "../utils/envs";
+import { TELE } from "@/utils/tele";
+import { loginByTelegramAuthData } from "./requests";
 
 const headers: AxiosRequestHeaders = {
     "Content-Type": "application/json",
@@ -9,7 +11,7 @@ const instance = axios.create({
     baseURL: API_BASE_URL,
     // baseURL: "/pgapi",
     headers,
-    timeout: 5000,
+    timeout: 10000,
 });
 
 // interceptors
@@ -32,6 +34,30 @@ instance.interceptors.request.use(
     }
 );
 
+const loginByTelegramAuth = (loginCallback?: () => void) => {
+    const initData = TELE.initData;
+    if (!initData) {
+        console.error("initData is null");
+    } else {
+        loginByTelegramAuthData(initData)
+            .then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    const result = res.data;
+                    if (result.access_token) {
+                        localStorage.setItem("access_token", result.access_token);
+                        if (loginCallback) loginCallback();
+                    } else {
+                        console.log("not get access_token");
+                    }
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+};
+
 instance.interceptors.response.use(
     response => {
         // handle response data
@@ -44,7 +70,8 @@ instance.interceptors.response.use(
         const currentHash = window.location.hash;
         if (error.response && error.response.status === 401 && currentHash !== "#/") {
             console.log("Unauthorized, redirecting to login");
-            window.location.href = window.location.origin + "/ton-start/#/";
+            // window.location.href = window.location.origin + "/ton-start/#/";
+            loginByTelegramAuth();
         }
         return Promise.reject(error);
     }

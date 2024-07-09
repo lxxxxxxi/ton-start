@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { X } from "react-feather";
 import styled, { keyframes } from "styled-components";
+import TText from "./TText";
 
 const slideInRight = keyframes`
     from {
@@ -12,20 +13,17 @@ const slideInRight = keyframes`
 `;
 
 const AlertWrapper = styled.div`
-    /* width: 100vw; */
+    max-width: 80vw;
     position: fixed;
     right: 0;
     margin: 20px;
     z-index: 9999;
 
-    padding: 10px 15px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 6px 20px 6px 6px;
+    border-radius: 5px;
     animation: ${slideInRight} 0.5s ease-out;
 
-    border: 2px solid #341d1a;
+    border: 3px solid #341d1a;
     box-shadow: 3px 3px 0px #341d1a;
 
     &.alert-success {
@@ -51,6 +49,7 @@ const AlertWrapper = styled.div`
 
 const AlertMessage = styled.span`
     flex: 1;
+    margin-right: 10px;
 `;
 
 const AlertCloseButton = styled.button`
@@ -58,32 +57,39 @@ const AlertCloseButton = styled.button`
     border: none;
     font-size: 20px;
     cursor: pointer;
+
+    position: absolute;
+    top: 6px;
+    right: 0px;
 `;
 
 export type AlertType = "success" | "error" | "info" | "warning";
 
 const TAlert = ({
     type,
+    title,
     message,
     onClose,
 }: {
     type: AlertType;
+    title: string;
     message: string;
     onClose: () => void;
 }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            onClose();
-        }, 3000); // 设置为3秒后自动关闭
+            // onClose();
+        }, 4000); // 设置为3秒后自动关闭
         return () => clearTimeout(timer);
     }, []);
 
     return (
         <AlertWrapper className={`alert-${type}`}>
-            <AlertMessage>{message}</AlertMessage>
+            <AlertMessage>{title}</AlertMessage>
             <AlertCloseButton onClick={onClose}>
-                <X />{" "}
+                <X size={15} />{" "}
             </AlertCloseButton>
+            <TText>{message}</TText>
         </AlertWrapper>
     );
 };

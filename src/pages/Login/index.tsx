@@ -18,36 +18,35 @@ import { PageLayoutWrapper } from "@/components/Layouts/styled";
 export default function Login() {
     const navigate = useNavigateTo();
 
-    const login = (user: TelegramUser) => {
-        if (!user) {
-            throw new Error("Please login by telegram first");
-        }
-        loginByTelegram(user)
-            .then(res => {
-                console.log(res);
-                if (res.status === 200) {
-                    const result = res.data;
-                    if (result.access_token) {
-                        localStorage.setItem("access_token", result.access_token);
-                        navigate(PageKey.AccountCenter);
-                    } else {
-                        console.log("not get access_token");
-                    }
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
-
     const dataOnauth = (user: TelegramUser) => {
+        const login = (user: TelegramUser) => {
+            if (!user) {
+                throw new Error("Please login by telegram first");
+            }
+            loginByTelegram(user)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        const result = res.data;
+                        if (result.access_token) {
+                            localStorage.setItem("access_token", result.access_token);
+                            navigate(PageKey.AccountCenter);
+                        } else {
+                            console.log("not get access_token");
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        };
         if (user) {
             console.log("update user info", user);
             login(user);
         }
     };
 
-    const loginByTelegramAuth = () => {
+    const loginByTelegramAuth = (loginCallback?: () => void) => {
         const initData = TELE.initData;
         if (!initData) {
             console.error("initData is null");
@@ -59,7 +58,7 @@ export default function Login() {
                         const result = res.data;
                         if (result.access_token) {
                             localStorage.setItem("access_token", result.access_token);
-                            navigate(PageKey.AccountCenter);
+                            if (loginCallback) loginCallback();
                         } else {
                             console.log("not get access_token");
                         }
@@ -78,13 +77,13 @@ export default function Login() {
                 if (res.status === 200) {
                     navigate(PageKey.AccountCenter);
                 } else {
-                    loginByTelegramAuth();
+                    loginByTelegramAuth(() => navigate(PageKey.AccountCenter));
                 }
             })
             .catch(err => {
                 const responseStatus = err.response?.status;
                 if (responseStatus === 401) {
-                    loginByTelegramAuth();
+                    loginByTelegramAuth(() => navigate(PageKey.AccountCenter));
                 }
             });
     };

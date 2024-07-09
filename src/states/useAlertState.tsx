@@ -4,6 +4,7 @@ import { AlertType } from "../components/Common/TAlert";
 
 export interface AlertState {
     isVisible: boolean;
+    title: string;
     message: string;
     type: AlertType;
 }
@@ -15,9 +16,10 @@ export const useAlertState = () => {
         setAlertState(initialAlertState);
     };
 
-    const openAlert = (message: string, type: AlertType) => {
+    const openAlert = (type: AlertType, title: string, message: string) => {
         setAlertState({
             isVisible: true,
+            title,
             message,
             type,
         });

@@ -1,19 +1,9 @@
-import { useEffect, useState } from "react";
 import { AccountCenterWrapper } from "./styled";
 import { Button, TButton } from "../../components/Common/TButton";
-import { TBox } from "../../components/Common/TBox";
-import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
-import {
-    getAccountList,
-    loginByTelegram,
-    getTgProfile,
-    getRechargeList,
-    getWithdrawList,
-} from "../../request/requests";
+import { getTgProfile } from "../../request/requests";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import TLoader from "../../components/Common/TLoader";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { LottoGirIcon2Img, LottoGirlIcon1Img } from "@/assets/imgs";
 import { PageKey } from "@/utils/routes";
@@ -38,7 +28,6 @@ export default function AccountCenter() {
     return (
         <PageLayout header="个人中心" isNeedStartButton>
             <AccountCenterWrapper>
-                <TButton onClick={() => openAlert("1243", "success")}>test</TButton>
                 <div className="user-profile">
                     {!user ? (
                         <div className="profile-header">
