@@ -2,15 +2,6 @@ import { useEffect } from "react";
 import { X } from "react-feather";
 import styled, { keyframes } from "styled-components";
 
-const slideInDown = keyframes`
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0);
-    }
-`;
-
 const slideInRight = keyframes`
     from {
         transform: translateX(100%);
@@ -25,36 +16,36 @@ const AlertWrapper = styled.div`
     position: fixed;
     right: 0;
     margin: 20px;
+    z-index: 9999;
 
-    padding: 15px;
+    padding: 10px 15px;
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     animation: ${slideInRight} 0.5s ease-out;
 
+    border: 2px solid #341d1a;
+    box-shadow: 3px 3px 0px #341d1a;
+
     &.alert-success {
         background-color: #d4edda;
         color: #155724;
-        border: 1px solid #c3e6cb;
     }
 
     &.alert-error {
         background-color: #f8d7da;
         color: #721c24;
-        border: 1px solid #f5c6cb;
     }
 
     &.alert-info {
         background-color: #d1ecf1;
         color: #0c5460;
-        border: 1px solid #bee5eb;
     }
 
     &.alert-warning {
         background-color: #fff3cd;
         color: #856404;
-        border: 1px solid #ffeeba;
     }
 `;
 

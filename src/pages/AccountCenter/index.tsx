@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { AccountCenterWrapper } from "./styled";
-import { TButton } from "../../components/Common/TButton";
+import { Button, TButton } from "../../components/Common/TButton";
 import { TBox } from "../../components/Common/TBox";
 import { DollarSign, List, Play, RefreshCw, Upload } from "react-feather";
 import { useNavigate } from "react-router-dom";
-import { useBalance, useUserInfo } from "../../states/useUserInfo";
+import { useUserInfo } from "../../states/useUserInfo";
 import {
     getAccountList,
-    getBalance,
     loginByTelegram,
     getTgProfile,
     getRechargeList,
@@ -19,6 +18,7 @@ import PageLayout from "@/components/Layouts/PageLayout";
 import { LottoGirIcon2Img, LottoGirlIcon1Img } from "@/assets/imgs";
 import { PageKey } from "@/utils/routes";
 import { TelegramUser } from "./TelegramLoginButton";
+import { useAlertState } from "@/states/useAlertState";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
@@ -33,14 +33,18 @@ export default function AccountCenter() {
     };
     useAsyncRequest(getTgProfile, [], getTgProfileCallback);
 
+    const { openAlert } = useAlertState();
+
     return (
         <PageLayout header="个人中心" isNeedStartButton>
             <AccountCenterWrapper>
+                <TButton onClick={() => openAlert("1243", "success")}>test</TButton>
                 <div className="user-profile">
                     {!user ? (
                         <div className="profile-header">
-                            <div className="avatar"></div>
-                            <div className="user-info"></div>
+                            {/* <div className="avatar"></div> */}
+                            {/* <div className="user-info"></div> */}
+                            <TButton onClick={() => navigate(PageKey.Login)}>Login</TButton>
                         </div>
                     ) : (
                         <div className="profile-header">

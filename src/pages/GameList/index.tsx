@@ -9,6 +9,7 @@ import { GameType, getBalance, getGameList, playGame } from "../../request/reque
 import PageLayout from "@/components/Layouts/PageLayout";
 import TDropdown from "@/components/Common/TDropDown";
 import { useSearchParams } from "react-router-dom";
+import TLoadingBar from "@/components/Common/TLoadingBar";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -124,7 +125,7 @@ const GameTypeOptions = [
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
 
-    const { data: gameList } = useAsyncRequest<GameListItem[]>(
+    const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
             getGameList(
                 undefined,
@@ -157,37 +158,42 @@ export default function GameList() {
                     changeSelected={handleTypeChange}
                     options={GameTypeOptions}
                 />
-                {gameList?.map((item, index) => (
-                    <div
-                        key={index}
-                        className="card"
-                        onClick={() => {
-                            console.log(item.code, item.gamecode, item.gametype);
-                            if (item.code && item.gamecode && item.gametype) {
-                                getBalance().then(r => {
-                                    console.log(r.data.balance);
-                                    const balance = r.data.balance;
-                                    if (balance > 10) {
-                                        playGame(item.code, item.gamecode, item.gametype).then(
-                                            res => {
-                                                const url = res.data.url;
-                                                console.log(res, url);
-                                                if (url) {
-                                                    window.open(url);
+                <TLoadingBar text="正在加载游戏列表" />
+                {loading ? (
+                    <TLoadingBar text="正在加载游戏列表" />
+                ) : (
+                    gameList?.map((item, index) => (
+                        <div
+                            key={index}
+                            className="card"
+                            onClick={() => {
+                                console.log(item.code, item.gamecode, item.gametype);
+                                if (item.code && item.gamecode && item.gametype) {
+                                    getBalance().then(r => {
+                                        console.log(r.data.balance);
+                                        const balance = r.data.balance;
+                                        if (balance > 10) {
+                                            playGame(item.code, item.gamecode, item.gametype).then(
+                                                res => {
+                                                    const url = res.data.url;
+                                                    console.log(res, url);
+                                                    if (url) {
+                                                        window.open(url);
+                                                    }
                                                 }
-                                            }
-                                        );
-                                    } else {
-                                        console.log("余额不足10");
-                                    }
-                                });
-                            }
-                        }}
-                    >
-                        <img src={item.img} alt={item.name} />
-                        <div className="title">{item.name}</div>
-                    </div>
-                ))}
+                                            );
+                                        } else {
+                                            console.log("余额不足10");
+                                        }
+                                    });
+                                }
+                            }}
+                        >
+                            <img src={item.img} alt={item.name} />
+                            <div className="title">{item.name}</div>
+                        </div>
+                    ))
+                )}
                 {/* <button
                     onClick={() =>
                         window.open(

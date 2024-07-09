@@ -34,13 +34,6 @@ export default function BettingList() {
     const [selectedDayOption, setSelectedDayOption] = useState<number>(0);
     const [selectedStatusOption, setSelectedStatusOption] = useState<number>(1);
 
-    const selectedStatus = options2.find(item => item.key === selectedStatusOption);
-    const selectedDay = CommonDayOptions.find(item => item.key === selectedDayOption);
-
-    console.log(selectedStatus);
-
-    console.log(selectedDay);
-
     const status = options2.find(item => item.key === selectedStatusOption)?.value;
     const day = CommonDayOptions.find(item => item.key === selectedDayOption)?.days;
 
