@@ -3,6 +3,7 @@ import type { AxiosRequestHeaders } from "axios";
 import { API_BASE_URL } from "../utils/envs";
 import { TELE } from "@/utils/tele";
 import { loginByTelegramAuthData } from "./requests";
+import { AsyncLocalStorage } from "async_hooks";
 
 const headers: AxiosRequestHeaders = {
     "Content-Type": "application/json",

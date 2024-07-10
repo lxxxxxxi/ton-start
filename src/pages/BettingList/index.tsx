@@ -11,6 +11,7 @@ import TList from "@/components/Common/TList";
 import { BettingRecord, bettingStatus } from "@/utils/interface";
 import { formatDate, formatPrice, truncateHash } from "@/utils/format";
 import TText from "@/components/Common/TText";
+import TLoadingBar from "@/components/Common/TLoadingBar";
 
 const BettingListWrapper = styled.div`
     padding-top: 18px;
@@ -37,7 +38,7 @@ export default function BettingList() {
     const status = options2.find(item => item.key === selectedStatusOption)?.value;
     const day = CommonDayOptions.find(item => item.key === selectedDayOption)?.days;
 
-    const { data: betRecords } = useAsyncRequest<BettingRecord[]>(
+    const { data: betRecords, loading } = useAsyncRequest<BettingRecord[]>(
         () =>
             getBetRecords({
                 status: status === 0 ? undefined : status,
@@ -86,6 +87,7 @@ export default function BettingList() {
                         options={options2}
                     />
                 </div>
+                {loading && <TLoadingBar text="加载中" />}
                 <TList list={list}></TList>
             </BettingListWrapper>
         </PageLayout>

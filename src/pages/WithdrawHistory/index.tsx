@@ -17,6 +17,7 @@ import TList from "@/components/Common/TList";
 import { GiftImg } from "@/assets/imgs";
 import TEmptyBox from "@/components/Common/TEmptyBox";
 import { PageKey, useNavigateTo } from "@/utils/routes";
+import TLoadingBar from "@/components/Common/TLoadingBar";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -33,7 +34,7 @@ export default function WithdrawHistory() {
     const [selectedOption, setSelectedOption] = useState<number>(1);
     const navigate = useNavigateTo();
 
-    const { data: withdrawList } = useAsyncRequest<RechargeList[]>(
+    const { data: withdrawList, loading } = useAsyncRequest<RechargeList[]>(
         () => getWithdrawList(selectedOption),
         []
     );
@@ -84,10 +85,12 @@ export default function WithdrawHistory() {
                         </FlexBoxRow>
                     </TButton>
                 </div>
-                {displayList.length > 0 ? (
+                {loading ? (
+                    <TLoadingBar text="正在加载" />
+                ) : displayList.length > 0 ? (
                     <TList list={displayList} />
                 ) : (
-                    <div style={{ paddingTop: "20px" }}>
+                    <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>
                         <TEmptyBox
                             text="去提现"
                             handleClick={() => {

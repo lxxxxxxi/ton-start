@@ -20,6 +20,7 @@ import BigNumber from "bignumber.js";
 import ExchangeRate from "./ExchangeRate";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { CoinWrapper } from "@/components/styled/styled";
+import { PageKey, useNavigateTo } from "@/utils/routes";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -74,6 +75,7 @@ export default function Pay() {
     const [order, setOrder] = useState<{ amount: number; order_no: string } | null>(null);
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
     const [tonConnectUI, setOptions] = useTonConnectUI();
+    const navigate = useNavigateTo();
 
     // console.log("wallet", jettonWalletAddress, wallet);
 
@@ -103,7 +105,7 @@ export default function Pay() {
                 });
             // handleTransfer("2024062702483638032", 136.66202);
         } else {
-            openAlert("请输入有效金额", "warning");
+            openAlert("warning", "金额无效", "请输入有效金额");
         }
     };
 
@@ -159,6 +161,7 @@ export default function Pay() {
         tonConnectUI.sendTransaction(myTransaction).then(res => {
             console.log(res);
             setAmount(0);
+            openAlert("success", "交易提交", "交易提交成功，管理员确认余额后即会更新。");
         });
     };
 
@@ -170,7 +173,7 @@ export default function Pay() {
                 <div className="input">
                     <div className="header">
                         <span>充值金额</span>
-                        <a href="#">充值记录</a>
+                        <a onClick={() => navigate(PageKey.PayHistory)}>充值记录</a>
                     </div>
                     <TNumberInput
                         minNumber={10}

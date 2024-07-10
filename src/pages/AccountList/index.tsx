@@ -1,5 +1,6 @@
 import TDropdown from "@/components/Common/TDropDown";
 import TList from "@/components/Common/TList";
+import TLoadingBar from "@/components/Common/TLoadingBar";
 import TText from "@/components/Common/TText";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { useAsyncRequest } from "@/hooks/useAsyncRequest";
@@ -15,10 +16,10 @@ const AccountListWrapper = styled.div`
 `;
 
 export default function AccountList() {
-    const [selectedOption, setSelectedOption] = useState<number>(1);
+    const [selectedOption, setSelectedOption] = useState<number>(0);
     const dayValue = CommonDayOptions.find(item => item.key === selectedOption)?.days;
 
-    const { data: accountList } = useAsyncRequest<AccountListInfo[]>(
+    const { data: accountList, loading } = useAsyncRequest<AccountListInfo[]>(
         () => getAccountList(dayValue || 7),
         [selectedOption]
     );
@@ -60,6 +61,7 @@ export default function AccountList() {
                     }}
                     options={CommonDayOptions}
                 />
+                {loading && <TLoadingBar text="加载中" />}
                 <TList list={list} />
             </AccountListWrapper>{" "}
         </PageLayout>

@@ -38,14 +38,15 @@ bot.reaction("👍", (ctx) => {
 });
 
 console.log('Configuring bot commands...');
+const domain = "https://84c7-14-154-9-52.ngrok-free.app"
 
 bot.start((ctx) => ctx.reply('Welcome to pocket game!!!', {
     reply_markup: {
-        keyboard: [
+        inline_keyboard: [
             [
                 {
                     text: "开始游戏", web_app: {
-                        url: "https://4a13-14-154-0-21.ngrok-free.app/#/"
+                        url: `${domain}/#/`
                     }
                 },
                 {
@@ -53,22 +54,22 @@ bot.start((ctx) => ctx.reply('Welcome to pocket game!!!', {
                 }], [
                 {
                     text: "棋牌游戏", web_app: {
-                        url: "https://4a13-14-154-0-21.ngrok-free.app/#/gamelist?type=6"
+                        url: `${domain}/#/gamelist?type=6`
                     }
                 },
                 {
                     text: "真人游戏", web_app: {
-                        url: "https://4a13-14-154-0-21.ngrok-free.app/#/gamelist?type=1"
+                        url: `${domain}/#/gamelist?type=1`
                     }
                 }], [
                 {
                     text: "捕鱼游戏", web_app: {
-                        url: "https://4a13-14-154-0-21.ngrok-free.app/#/gamelist?type=2"
+                        url: `${domain}/#/gamelist?type=2`
                     }
                 },
                 {
                     text: "电子游戏", web_app: {
-                        url: "https://4a13-14-154-0-21.ngrok-free.app/#/gamelist?type=3"
+                        url: `${domain}/#/gamelist?type=3`
                     }
                 }
             ],

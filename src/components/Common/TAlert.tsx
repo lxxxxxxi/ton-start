@@ -89,7 +89,9 @@ const TAlert = ({
             <AlertCloseButton onClick={onClose}>
                 <X size={15} />{" "}
             </AlertCloseButton>
-            <TText>{message}</TText>
+            <TText fontSize={"14px"} style={{ opacity: 0.8 }} fontWeight="400">
+                {message}
+            </TText>
         </AlertWrapper>
     );
 };

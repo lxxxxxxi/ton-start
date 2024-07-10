@@ -16,6 +16,7 @@ import TText from "@/components/Common/TText";
 import TList from "@/components/Common/TList";
 import TEmptyBox from "@/components/Common/TEmptyBox";
 import { PageKey, useNavigateTo } from "@/utils/routes";
+import TLoadingBar from "@/components/Common/TLoadingBar";
 
 const BettingListWrapper = styled.div`
     padding: 20px 0px;
@@ -32,7 +33,7 @@ export default function PayHistory() {
     const [selectedOption, setSelectedOption] = useState<number>(0);
     const navigate = useNavigateTo();
 
-    const { data: rechargeList } = useAsyncRequest<RechargeList[]>(
+    const { data: rechargeList, loading } = useAsyncRequest<RechargeList[]>(
         () => getRechargeList(selectedOption),
         [selectedOption]
     );
@@ -85,10 +86,12 @@ export default function PayHistory() {
                         </FlexBoxRow>
                     </TButton>
                 </div>
-                {displayList.length > 0 ? (
+                {loading ? (
+                    <TLoadingBar text="正在加载" />
+                ) : displayList.length > 0 ? (
                     <TList list={displayList} />
                 ) : (
-                    <div style={{ paddingTop: "20px" }}>
+                    <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>
                         <TEmptyBox
                             text="去充值"
                             handleClick={() => {
