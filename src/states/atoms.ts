@@ -6,6 +6,7 @@ export const userInfoAtom = atom<TelegramUser | null>(null);
 export const userBalanceAtom = atom<number | null>(null);
 
 export const initialAlertState: AlertState = {
+    title: "",
     isVisible: false,
     message: "",
     type: "info",
