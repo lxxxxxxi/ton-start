@@ -22,6 +22,7 @@ const GameListWrapper = styled.div`
     .card {
         width: 28%;
         border: 2px solid #341d1a;
+        background-color: #ffffff;
         box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
         border-radius: 10px;
         overflow: hidden;
@@ -48,7 +49,7 @@ const GameListWrapper = styled.div`
 const GameTypeOptions = [
     {
         key: "0",
-        label: "全部",
+        label: "热门",
     },
     {
         key: "1",

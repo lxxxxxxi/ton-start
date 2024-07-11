@@ -8,11 +8,34 @@ const ToolTipContainer = styled.div`
 const ToolTipBox = styled.div<{
     maxWidth: string;
     visible: boolean;
+    direction: "top" | "bottom" | "left" | "right";
 }>`
     position: absolute;
-    top: 30px;
-    right: 10px;
-    margin-top: 24px;
+
+    ${({ direction }) => {
+        switch (direction) {
+            case "top":
+                return css`
+                    bottom: 110%;
+                    left: 50%;
+                    transform: translate(-50%, 0%);
+                `;
+            case "bottom":
+                return css`
+                    top: 30px;
+                    right: 10px;
+                    margin-top: 24px;
+                `;
+            case "left":
+                return css`
+                    right: 100%;
+                `;
+            case "right":
+                return css`
+                    left: 100%;
+                `;
+        }
+    }}
 
     min-width: 150px;
     max-width: ${({ maxWidth }) => maxWidth};
@@ -29,13 +52,15 @@ const ToolTipBox = styled.div<{
     transition: opacity 0.3s, visibility 0.3s;
 `;
 
-const MenuList = ({
+const ToolTips = ({
     content,
+    direction = "bottom",
     trigger = "hover",
     maxWidth = "300px",
     children,
 }: {
     content: React.ReactNode | undefined;
+    direction?: "top" | "bottom" | "left" | "right";
     trigger?: "hover" | "click";
     maxWidth?: string;
     children: React.ReactNode;
@@ -88,6 +113,7 @@ const MenuList = ({
                     className="tooltip-box"
                     visible={visible}
                     maxWidth={maxWidth}
+                    direction={direction}
                 >
                     {content}
                 </ToolTipBox>
@@ -96,4 +122,4 @@ const MenuList = ({
     );
 };
 
-export default MenuList;
+export default ToolTips;

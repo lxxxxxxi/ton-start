@@ -19,9 +19,10 @@ import { CoinWrapper } from "../styled/styled";
 import { PageKey, useNavigateTo } from "@/utils/routes";
 import TLoader from "../Common/TLoader";
 import { useBalance } from "@/states/useUserInfo";
-import { RefreshCw } from "react-feather";
-import MenuList from "../MenuList";
+import { CreditCard, DollarSign, FileText, List, RefreshCw, User } from "react-feather";
+import ToolTips from "../MenuList";
 import { MenuListContent, PageLayoutWrapper } from "./styled";
+import { TButton } from "../Common/TButton";
 
 export default function PageLayout({
     header,
@@ -46,17 +47,32 @@ export default function PageLayout({
         {
             key: "1",
             name: "个人中心",
+            icon: <User size={18} strokeWidth={3} />,
             path: PageKey.AccountCenter,
         },
         {
             key: "2",
             name: "账户明细",
+            icon: <FileText size={18} strokeWidth={3} />,
             path: PageKey.AccountList,
         },
         {
             key: "3",
-            name: "投注列表",
+            name: "投注记录",
+            icon: <List size={18} strokeWidth={3} />,
             path: PageKey.BettingList,
+        },
+        {
+            key: "4",
+            name: "充值记录",
+            icon: <DollarSign size={18} strokeWidth={3} />,
+            path: PageKey.PayHistory,
+        },
+        {
+            key: "5",
+            name: "提现记录",
+            icon: <CreditCard size={18} strokeWidth={3} />,
+            path: PageKey.WithdrawHistory,
         },
     ];
 
@@ -73,7 +89,7 @@ export default function PageLayout({
                 />
                 <div className="text">{header}</div>
                 <LeaderImg width={"70%"} />
-                <MenuList
+                <ToolTips
                     content={
                         <MenuListContent>
                             {menuLists.map(item => (
@@ -82,14 +98,14 @@ export default function PageLayout({
                                     className="item"
                                     onClick={() => navigate(item.path)}
                                 >
-                                    {item.name}
+                                    {item.icon} {item.name}
                                 </div>
                             ))}
                         </MenuListContent>
                     }
                 >
                     <MenuIconImg width={"50px"} className="icon" />
-                </MenuList>
+                </ToolTips>
             </div>
             <div className="children">{children}</div>
             {isNeedStartButton && (
@@ -106,9 +122,31 @@ export default function PageLayout({
             <div className="balance-box">
                 <div className="balance-text">
                     <CoinWrapper>¥</CoinWrapper>
-                    <span className="balance-num">
-                        {isLoadingBalance ? <TLoader /> : balance || 0}
-                    </span>
+                    <ToolTips
+                        direction="top"
+                        content={
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "8px",
+                                    margin: "4px",
+                                }}
+                            >
+                                <TButton
+                                    type="secondary"
+                                    onClick={() => navigate(PageKey.Withdraw)}
+                                >
+                                    去提现{" "}
+                                </TButton>
+                                <TButton onClick={() => navigate(PageKey.Pay)}>去充值</TButton>
+                            </div>
+                        }
+                    >
+                        <span className="balance-num">
+                            {isLoadingBalance ? <TLoader /> : balance || 0}
+                        </span>
+                    </ToolTips>
                     <RefreshCw
                         onClick={fetchAndUpdateUserBalance}
                         width={16}

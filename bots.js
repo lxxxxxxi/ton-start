@@ -38,7 +38,7 @@ bot.reaction("👍", (ctx) => {
 });
 
 console.log('Configuring bot commands...');
-const domain = "https://84c7-14-154-9-52.ngrok-free.app"
+const domain = "https://lxxxxxxi.github.io/ton-start/"
 
 bot.start((ctx) => ctx.reply('Welcome to pocket game!!!', {
     reply_markup: {
@@ -74,10 +74,13 @@ bot.start((ctx) => ctx.reply('Welcome to pocket game!!!', {
                 }
             ],
         ],
-        resize_keyboard: true,
-        one_time_keyboard: true
+        one_time_keyboard: true,
     }
 }));
+
+bot.action("about_us", (ctx) => {
+    ctx.reply("关于我们");
+});
 
 // 启动机器人
 console.log('Launching bot...');

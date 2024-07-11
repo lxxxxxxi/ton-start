@@ -1,8 +1,12 @@
 /* TonConnect UI */
-[data-tc-connect-button="true"] {
+#ton-connect-button > div > tc-root > div {
+    width: 100%;
+}
+[data-tc-connect-button-loading="true"],
+[data-tc-connect-button="true"],
+[data-tc-dropdown-button="true"] {
     border-radius: 10px;
     width: 100%;
-    background-image: linear-gradient(to right, #f7c98d, #f2a43e);
+    background-image: linear-gradient(to right, #f2a43e, #f7c98d);
 }
-
 /* TonConnect UI */

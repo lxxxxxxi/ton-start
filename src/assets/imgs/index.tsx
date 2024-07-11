@@ -9,7 +9,7 @@ import { default as Cloud2 } from "@/assets/imgs/Cloud2.png";
 import { default as StartButton } from "@/assets/imgs/StartButton.png";
 import { default as StartButtonPressed } from "@/assets/imgs/StartButtonPressed.png";
 import { default as ShiningBg } from "@/assets/imgs/ShiningBg.png";
-import { default as LoginBanner } from "@/assets/imgs/LoginBanner.png";
+import { default as LoginBanner } from "@/assets/imgs/LoginBanner.gif";
 import { default as Start } from "@/assets/imgs/Start.png";
 
 import { default as CuteIcon1 } from "@/assets/imgs/CuteIcon1.png";

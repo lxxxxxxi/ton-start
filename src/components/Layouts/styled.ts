@@ -131,6 +131,7 @@ export const PageLayoutWrapper = styled.div<{
             font-weight: 500;
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
             color: white;
+            cursor: pointer;
 
             position: absolute;
             top: 50%;
@@ -184,6 +185,11 @@ export const PageLayoutWrapper = styled.div<{
 
 export const MenuListContent = styled.div`
     .item {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 8px;
+
         height: 30px;
         line-height: 30px;
         margin-bottom: 6px;

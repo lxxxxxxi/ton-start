@@ -3,7 +3,6 @@ import type { AxiosRequestHeaders } from "axios";
 import { API_BASE_URL } from "../utils/envs";
 import { TELE } from "@/utils/tele";
 import { loginByTelegramAuthData } from "./requests";
-import { AsyncLocalStorage } from "async_hooks";
 
 const headers: AxiosRequestHeaders = {
     "Content-Type": "application/json",
@@ -49,7 +48,9 @@ const loginByTelegramAuth = (loginCallback?: () => void) => {
                         localStorage.setItem("access_token", result.access_token);
                         if (loginCallback) loginCallback();
                     } else {
+                        // 如果无法登陆 => 还是跳转到 login
                         console.log("not get access_token");
+                        window.location.href = window.location.origin + "/ton-start/#/";
                     }
                 }
             })

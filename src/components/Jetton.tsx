@@ -18,11 +18,17 @@ export function Jetton() {
             <TonConnectButton style={{ width: "100%", marginBottom: "20px" }} />
             <FlexBoxCol>
                 <FlexBoxRow justify="space-between">
-                    USDT Balance
+                    <TText fontSize="14px" noWrap>
+                        {" "}
+                        USDT Balance{" "}
+                    </TText>
                     <TText color="info">{balance ?? <TLoader size={16} />}</TText>
                 </FlexBoxRow>
                 <FlexBoxRow justify="space-between" gap="20px">
-                    <div style={{ whiteSpace: "nowrap" }}> Wallet Address</div>
+                    <TText fontSize="14px" noWrap>
+                        {" "}
+                        Wallet Address
+                    </TText>
                     <Ellipsis>
                         <TText color="info">{jettonWalletAddress}</TText>
                     </Ellipsis>
