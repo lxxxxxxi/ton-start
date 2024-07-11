@@ -1,5 +1,5 @@
 import { AccountCenterWrapper } from "./styled";
-import { Button, TButton } from "../../components/Common/TButton";
+import { TButton } from "../../components/Common/TButton";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../states/useUserInfo";
 import { getTgProfile } from "../../request/requests";
@@ -9,6 +9,7 @@ import { LottoGirIcon2Img, LottoGirlIcon1Img } from "@/assets/imgs";
 import { PageKey } from "@/utils/routes";
 import { TelegramUser } from "./TelegramLoginButton";
 import { useAlertState } from "@/states/useAlertState";
+import { getTeleUserName } from "@/utils/tele";
 
 export default function AccountCenter() {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function AccountCenter() {
     };
     useAsyncRequest(getTgProfile, [], getTgProfileCallback);
 
-    const { openAlert } = useAlertState();
+    getTeleUserName();
 
     return (
         <PageLayout header="个人中心" isNeedStartButton>
