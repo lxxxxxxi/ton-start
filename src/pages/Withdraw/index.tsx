@@ -16,6 +16,7 @@ import { PayWrapper } from "../Pay";
 import { Jetton } from "@/components/Jetton";
 import { PageKey, useNavigateTo } from "@/utils/routes";
 import { useAlertState } from "@/states/useAlertState";
+import { useModalState } from "@/states/useModalState";
 
 export default function Withdraw() {
     const [amount, setAmount] = useState(10);
@@ -23,6 +24,7 @@ export default function Withdraw() {
     const { balance } = useBalance();
     const navigate = useNavigateTo();
     const { openAlert } = useAlertState();
+    const { openSuccessModal } = useModalState();
 
     const handleComfirm = () => {
         console.log(jettonWalletAddress, amount);
@@ -39,7 +41,14 @@ export default function Withdraw() {
         };
         createWithdrawOrder(orderData).then(res => {
             console.log(res);
-            openAlert("success", "交易提交", "交易提交成功，管理员确认余额后即会更新。");
+            // openAlert("success", "交易提交", "交易提交成功，管理员确认余额后即会更新。");
+            openSuccessModal(
+                "提现申请提交成功!!!",
+                <div>
+                    <div>管理员将尽快完成审核并打款。</div>
+                    <div>如遇问题，请联系客服。</div>
+                </div>
+            );
         });
     };
 

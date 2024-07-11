@@ -8,7 +8,6 @@ import { default as Cloud1 } from "@/assets/imgs/Cloud1.png";
 import { default as Cloud2 } from "@/assets/imgs/Cloud2.png";
 import { default as StartButton } from "@/assets/imgs/StartButton.png";
 import { default as StartButtonPressed } from "@/assets/imgs/StartButtonPressed.png";
-import { default as ShiningBg } from "@/assets/imgs/ShiningBg.png";
 import { default as LoginBanner } from "@/assets/imgs/LoginBanner.gif";
 import { default as Start } from "@/assets/imgs/Start.png";
 
@@ -35,13 +34,13 @@ export { ReactComponent as CoinIcon1 } from "@/assets/imgs/CoinIcon1.svg";
 // img
 export { default as Wave } from "@/assets/imgs/Wave.png";
 export { default as ListBox } from "@/assets/imgs/ListBox.png";
+export { default as ShiningBg } from "@/assets/imgs/ShiningBg.png";
 
 // component
 export const Cloud1Img = ({ ...props }) => <img src={Cloud1} {...props} />;
 export const Cloud2Img = ({ ...props }) => <img src={Cloud2} {...props} />;
 export const StartButtonImg = ({ ...props }) => <img src={StartButton} {...props} />;
 export const StartButtonPressedImg = ({ ...props }) => <img src={StartButtonPressed} {...props} />;
-export const ShiningBgImg = ({ ...props }) => <img src={ShiningBg} {...props} />;
 export const LoginBannerImg = ({ ...props }) => <img src={LoginBanner} {...props} />;
 export const StartImg = ({ ...props }) => <img src={Start} {...props} />;
 export const LeaderImg = ({ ...props }) => <img src={Leader} {...props} />;

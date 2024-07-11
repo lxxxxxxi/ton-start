@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import styled from "styled-components";
-import { loginByTelegramAuthData, loginByTelegram, getTgProfile } from "../../request/requests";
+import { getTgProfile } from "../../request/requests";
 import { PageKey, useNavigateTo } from "../../utils/routes";
 import { Cloud1Img, Cloud2Img, LoginBannerImg } from "@/assets/imgs";
 import { PageLayoutWrapper } from "@/components/Layouts/styled";

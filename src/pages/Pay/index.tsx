@@ -21,6 +21,7 @@ import ExchangeRate from "./ExchangeRate";
 import PageLayout from "@/components/Layouts/PageLayout";
 import { CoinWrapper } from "@/components/styled/styled";
 import { PageKey, useNavigateTo } from "@/utils/routes";
+import { useModalState } from "@/states/useModalState";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -76,8 +77,7 @@ export default function Pay() {
     const { jettonWalletAddress } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
     const [tonConnectUI, setOptions] = useTonConnectUI();
     const navigate = useNavigateTo();
-
-    // console.log("wallet", jettonWalletAddress, wallet);
+    const { openSuccessModal, openLoadingModal } = useModalState();
 
     const handleRecharge = () => {
         // const msg = {
@@ -90,22 +90,25 @@ export default function Pay() {
         // const op = slice.loadUint(32);
         // console.log(slice, op);
         // console.log(!op.eq(new TonWeb.utils.BN(0xf8a7ea5)));
-
-        if (amount >= 10 && amount <= 10000) {
-            createRechargeOrder({ amount })
-                .then(res => {
-                    console.log(res);
-                    if (res.status === 200) {
-                        setOrder(res.data);
-                        handleTransfer(res.data.order_no, res.data.amount);
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-            // handleTransfer("2024062702483638032", 136.66202);
+        if (jettonWalletAddress) {
+            if (amount >= 10 && amount <= 10000) {
+                createRechargeOrder({ amount })
+                    .then(res => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            setOrder(res.data);
+                            handleTransfer(res.data.order_no, res.data.amount);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                // handleTransfer("2024062702483638032", 136.66202);
+            } else {
+                openAlert("warning", "金额无效", "请输入有效金额");
+            }
         } else {
-            openAlert("warning", "金额无效", "请输入有效金额");
+            openAlert("warning", "未连接钱包", "请先连接钱包");
         }
     };
 
@@ -161,7 +164,14 @@ export default function Pay() {
         tonConnectUI.sendTransaction(myTransaction).then(res => {
             console.log(res);
             setAmount(0);
-            openAlert("success", "交易提交", "交易提交成功，管理员确认余额后即会更新。");
+            // openAlert("success", "交易提交", "交易提交成功，管理员确认余额后即会更新。");
+            openSuccessModal(
+                "充值成功!!!",
+                <div>
+                    <div>区块链网络有延迟，请注意余额变化。</div>
+                    <div>如遇问题，请联系客服。</div>
+                </div>
+            );
         });
     };
 

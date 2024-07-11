@@ -10,6 +10,7 @@ import PageLayout from "@/components/Layouts/PageLayout";
 import TDropdown from "@/components/Common/TDropDown";
 import { useSearchParams } from "react-router-dom";
 import TLoadingBar from "@/components/Common/TLoadingBar";
+import { useModalState } from "@/states/useModalState";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -83,6 +84,7 @@ const GameTypeOptions = [
 
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
+    const { openLoadingModal } = useModalState();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
@@ -123,7 +125,12 @@ export default function GameList() {
                             key={index}
                             className="card"
                             onClick={() => {
-                                console.log(item.code, item.gamecode, item.gametype);
+                                openLoadingModal(
+                                    "加载中....",
+                                    <div>游戏正在努力加载中，请稍后。</div>,
+                                    6000
+                                );
+                                // console.log(item.code, item.gamecode, item.gametype);
                                 if (item.code && item.gamecode && item.gametype) {
                                     getBalance().then(r => {
                                         console.log(r.data.balance);
