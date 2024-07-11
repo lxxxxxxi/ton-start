@@ -16,6 +16,7 @@ const ModalWrapper = styled.div`
     z-index: 99999;
     background-image: url(${ShiningBg});
     background-size: cover;
+    background-position: center;
 `;
 
 const ModalContent = styled.div`

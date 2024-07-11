@@ -198,6 +198,17 @@ export default function Pay() {
                     </div>
                 </div>
                 <TButton onClick={handleRecharge}>立即充值</TButton>
+                {/* <TButton
+                    onClick={() => {
+                        openLoadingModal(
+                            "加载中....",
+                            <div>游戏正在努力加载中，请稍后。</div>,
+                            6000
+                        );
+                    }}
+                >
+                    立即充值
+                </TButton> */}
             </PayWrapper>
         </PageLayout>
     );
