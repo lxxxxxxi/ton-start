@@ -1,7 +1,6 @@
-import React from "react";
-import { GiftImg } from "@/assets/imgs";
 import styled from "styled-components";
 import { TButton } from "./TButton";
+import { GiftImg } from "@/assets/imgs";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -34,8 +33,9 @@ export default function TEmptyBox({
 }) {
     return (
         <Wrapper>
+            <GiftImg width={"100%"} />
+
             <div className="shadow-box">
-                <GiftImg width={"100%"} />
                 <div className="button">
                     <TButton onClick={handleClick}>{text}</TButton>
                 </div>

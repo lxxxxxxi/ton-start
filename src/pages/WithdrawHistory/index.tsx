@@ -86,7 +86,7 @@ export default function WithdrawHistory() {
                 </div>
                 {loading ? (
                     <TLoadingBar text="正在加载" />
-                ) : displayList.length > 0 ? (
+                ) : displayList.length > 10 ? (
                     <TList list={displayList} />
                 ) : (
                     <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>

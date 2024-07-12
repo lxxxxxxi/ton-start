@@ -84,7 +84,7 @@ const GameTypeOptions = [
 
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
-    const { openLoadingModal } = useModalState();
+    const { openLoadingModal, openErrorModal } = useModalState();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
@@ -142,6 +142,11 @@ export default function GameList() {
                                                     console.log(res, url);
                                                     if (url) {
                                                         window.open(url);
+                                                    } else {
+                                                        openErrorModal(
+                                                            "游戏加载异常",
+                                                            <div>请联系 TG 管理员</div>
+                                                        );
                                                     }
                                                 }
                                             );

@@ -1,3 +1,5 @@
+import styled, { keyframes } from "styled-components";
+
 import { default as CoinIcon1 } from "@/assets/imgs/CoinIcon1.png";
 import { default as CoinIcon2 } from "@/assets/imgs/CoinIcon2.png";
 import { default as CoinIcon3 } from "@/assets/imgs/CoinIcon3.png";
@@ -27,7 +29,6 @@ import { default as LottoGirlIcon1 } from "@/assets/imgs/LottoGirlIcon1.png";
 import { default as Gift } from "@/assets/imgs/Gift.png";
 import { default as CasinoIcon1 } from "@/assets/imgs/CasinoIcon1.png";
 import { default as CasinoIcon2 } from "@/assets/imgs/CasinoIcon2.png";
-import styled, { keyframes } from "styled-components";
 
 // export ——————————————————
 
@@ -72,7 +73,11 @@ export const MenuIconImg = ({ ...props }) => <img src={MenuIcon} {...props} />;
 export const BalanceBoxImg = ({ ...props }) => <img src={BalanceBox} {...props} />;
 export const LottoGirIcon2Img = ({ ...props }) => <img src={LottoGirIcon2} {...props} />;
 export const LottoGirlIcon1Img = ({ ...props }) => <img src={LottoGirlIcon1} {...props} />;
-export const GiftImg = ({ ...props }) => <img src={Gift} {...props} />;
+export const GiftImg = ({ ...props }) => (
+    <IconWrapper>
+        <img src={Gift} {...props} />
+    </IconWrapper>
+);
 
 export const CuteIcon1Img = ({ ...props }) => <img src={CuteIcon1} {...props} />;
 export const CuteIcon2Img = ({ ...props }) => <img src={CuteIcon2} {...props} />;
