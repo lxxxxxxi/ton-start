@@ -4,6 +4,7 @@ import { PageKey, useNavigateTo } from "../../utils/routes";
 import { Cloud1Img, Cloud2Img, LoginBannerImg } from "@/assets/imgs";
 import { PageLayoutWrapper } from "@/components/Layouts/styled";
 import { loginByTelegramAuth } from "@/request/loginByTelegramAuth";
+import TText from "@/components/Common/TText";
 
 export default function Login() {
     const navigate = useNavigateTo();
@@ -33,7 +34,10 @@ export default function Login() {
     return (
         <PageLayoutWrapper shouldChildUnderCloud={false} isNeedStartButton>
             <div className="login-banner">
-                <LoginBannerImg width="280px" />
+                {/* <LoginBannerImg width="280px" /> */}
+                <TText textAlign="center" fontSize="40px">
+                    Ton <br /> Casino
+                </TText>
                 <div className="shadow"></div>
             </div>
             <Cloud1Img width="110%" className="cloud-white" />

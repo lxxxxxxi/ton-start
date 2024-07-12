@@ -25,6 +25,9 @@ import { default as BalanceBox } from "@/assets/imgs/BalanceBox.png";
 import { default as LottoGirIcon2 } from "@/assets/imgs/LottoGirIcon2.png";
 import { default as LottoGirlIcon1 } from "@/assets/imgs/LottoGirlIcon1.png";
 import { default as Gift } from "@/assets/imgs/Gift.png";
+import { default as CasinoIcon1 } from "@/assets/imgs/CasinoIcon1.png";
+import { default as CasinoIcon2 } from "@/assets/imgs/CasinoIcon2.png";
+import styled, { keyframes } from "styled-components";
 
 // export ——————————————————
 
@@ -35,6 +38,25 @@ export { ReactComponent as CoinIcon1 } from "@/assets/imgs/CoinIcon1.svg";
 export { default as Wave } from "@/assets/imgs/Wave.png";
 export { default as ListBox } from "@/assets/imgs/ListBox.png";
 export { default as ShiningBg } from "@/assets/imgs/ShiningBg.png";
+
+const zoomInOut = keyframes`
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+`;
+
+const IconWrapper = styled.div`
+    display: inline-block;
+    transition: transform 0.5s ease-in-out;
+    animation: ${zoomInOut} 1.2s infinite;
+
+    img {
+        display: block;
+    }
+`;
 
 // component
 export const Cloud1Img = ({ ...props }) => <img src={Cloud1} {...props} />;
@@ -63,3 +85,14 @@ export const CoinIcon2Img = ({ ...props }) => <img src={CoinIcon2} {...props} />
 export const CoinIcon3Img = ({ ...props }) => <img src={CoinIcon3} {...props} />;
 export const CoinIcon4Img = ({ ...props }) => <img src={CoinIcon4} {...props} />;
 export const CoinIcon5Img = ({ ...props }) => <img src={CoinIcon5} {...props} />;
+
+export const CasinoIcon1Img = ({ ...props }) => (
+    <IconWrapper>
+        <img src={CasinoIcon1} {...props} />{" "}
+    </IconWrapper>
+);
+export const CasinoIcon2Img = ({ ...props }) => (
+    <IconWrapper>
+        <img src={CasinoIcon2} {...props} />{" "}
+    </IconWrapper>
+);

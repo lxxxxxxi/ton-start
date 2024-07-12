@@ -5,7 +5,7 @@ import PaginatedList from "../../components/PaginatedList";
 import TDropdown from "../../components/Common/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { getRechargeList } from "../../request/requests";
-import { RechargeList } from "../../utils/interface";
+import { RechargeList, RechargeStatus } from "../../utils/interface";
 import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
@@ -30,7 +30,7 @@ const BettingListWrapper = styled.div`
 `;
 
 export default function PayHistory() {
-    const [selectedOption, setSelectedOption] = useState<number>(0);
+    const [selectedOption, setSelectedOption] = useState<number>(CommonDayOptions[0].key);
     const navigate = useNavigateTo();
 
     const { data: rechargeList, loading } = useAsyncRequest<RechargeList[]>(
@@ -40,26 +40,25 @@ export default function PayHistory() {
 
     console.log(rechargeList);
 
-    const usefulList =
-        rechargeList && rechargeList.length > 0
-            ? rechargeList.filter(item => !!item.transaction_id)
-            : [];
+    const usefulList = rechargeList && rechargeList.length > 0 ? rechargeList : [];
 
     const displayList = usefulList.map(item => {
         return {
             id: item.order_no,
             contentTopLeft: `No.${truncateHash(item.order_no)}`,
-            contentTopRight: `交易ID`,
+            contentTopRight: `交易${RechargeStatus[item.status]}`,
             contentBottomLeft: `充值金额：¥${formatPrice(item.amount)}`,
-            contentBottomRight: (
+            contentBottomRight: item.transaction_id ? (
                 <FlexBoxRow>
-                    {`${truncateHash(item.transaction_id, 7, 10)}`}{" "}
+                    {`${truncateHash(item.transaction_id, 3, 5)}`}{" "}
                     <Copy
                         width={16}
                         cursor={"pointer"}
                         onClick={() => navigator.clipboard.writeText(item.transaction_id)}
                     />
                 </FlexBoxRow>
+            ) : (
+                "-"
             ),
         };
     });
@@ -92,12 +91,12 @@ export default function PayHistory() {
                     <TList list={displayList} />
                 ) : (
                     <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>
-                        <TEmptyBox
+                        {/* <TEmptyBox
                             text="去充值"
                             handleClick={() => {
                                 navigate(PageKey.Pay);
                             }}
-                        />
+                        /> */}
                     </div>
                 )}
                 {/* <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList> */}

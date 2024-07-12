@@ -32,17 +32,16 @@ const options2 = [
 ];
 
 export default function BettingList() {
-    const [selectedDayOption, setSelectedDayOption] = useState<number>(0);
+    const [selectedDayOption, setSelectedDayOption] = useState<number>(CommonDayOptions[0].key);
     const [selectedStatusOption, setSelectedStatusOption] = useState<number>(1);
 
     const status = options2.find(item => item.key === selectedStatusOption)?.value;
-    const day = CommonDayOptions.find(item => item.key === selectedDayOption)?.days;
 
     const { data: betRecords, loading } = useAsyncRequest<BettingRecord[]>(
         () =>
             getBetRecords({
                 status: status === 0 ? undefined : status,
-                day: day,
+                day: selectedDayOption,
             }),
         [selectedDayOption, selectedStatusOption]
     );

@@ -19,10 +19,21 @@ import { CoinWrapper } from "../styled/styled";
 import { PageKey, useNavigateTo } from "@/utils/routes";
 import TLoader from "../Common/TLoader";
 import { useBalance } from "@/states/useUserInfo";
-import { CreditCard, DollarSign, FileText, List, RefreshCw, User } from "react-feather";
+import {
+    CreditCard,
+    DollarSign,
+    FileText,
+    List,
+    RefreshCw,
+    Send,
+    User,
+    UserCheck,
+} from "react-feather";
 import ToolTips from "../MenuList";
 import { MenuListContent, PageLayoutWrapper } from "./styled";
 import { TButton } from "../Common/TButton";
+import TText from "../Common/TText";
+import { useLocation } from "react-router-dom";
 
 export default function PageLayout({
     header,
@@ -33,15 +44,18 @@ export default function PageLayout({
     isNeedStartButton?: boolean;
     children: React.ReactNode;
 }) {
+    const { pathname } = useLocation();
     const navigate = useNavigateTo();
     const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
-    const location = window.location.href;
     const shouldChildUnderCloud =
-        location.includes(PageKey.GameList) ||
-        location.includes(PageKey.BettingList) ||
-        location.includes(PageKey.PayHistory) ||
-        location.includes(PageKey.WithdrawHistory);
+        pathname.includes(PageKey.GameList) ||
+        pathname.includes(PageKey.BettingList) ||
+        pathname.includes(PageKey.PayHistory) ||
+        pathname.includes(PageKey.AccountList) ||
+        pathname.includes(PageKey.WithdrawHistory);
+
+    const isPayPage = pathname == PageKey.Pay;
 
     const menuLists = [
         {
@@ -50,30 +64,49 @@ export default function PageLayout({
             icon: <User size={18} strokeWidth={3} />,
             path: PageKey.AccountCenter,
         },
+        // {
+        //     key: "2",
+        //     name: "账户明细",
+        //     icon: <FileText size={18} strokeWidth={3} />,
+        //     path: PageKey.AccountList,
+        // },
+        // {
+        //     key: "3",
+        //     name: "投注记录",
+        //     icon: <List size={18} strokeWidth={3} />,
+        //     path: PageKey.BettingList,
+        // },
+        // {
+        //     key: "4",
+        //     name: "充值记录",
+        //     icon: <DollarSign size={18} strokeWidth={3} />,
+        //     path: PageKey.PayHistory,
+        // },
+        // {
+        //     key: "5",
+        //     name: "提现记录",
+        //     icon: <CreditCard size={18} strokeWidth={3} />,
+        //     path: PageKey.WithdrawHistory,
+        // },
         {
-            key: "2",
-            name: "账户明细",
-            icon: <FileText size={18} strokeWidth={3} />,
-            path: PageKey.AccountList,
+            key: "8",
+            name: "Tg 客服",
+            icon: <Send size={18} strokeWidth={3} />,
+            path: undefined,
+            link: "https://t.me/xpocketgames",
         },
-        {
-            key: "3",
-            name: "投注记录",
-            icon: <List size={18} strokeWidth={3} />,
-            path: PageKey.BettingList,
-        },
-        {
-            key: "4",
-            name: "充值记录",
-            icon: <DollarSign size={18} strokeWidth={3} />,
-            path: PageKey.PayHistory,
-        },
-        {
-            key: "5",
-            name: "提现记录",
-            icon: <CreditCard size={18} strokeWidth={3} />,
-            path: PageKey.WithdrawHistory,
-        },
+        // {
+        //     // key: "6",
+        //     // name: "查看优惠",
+        //     // icon: < size={18} strokeWidth={3} />,
+        //     // path: PageKey.,
+        // },
+        // {
+        //     // key: "7",
+        //     // name: "推广赚钱",
+        //     // icon: < size={18} strokeWidth={3} />,
+        //     // path: PageKey.,
+        // },
     ];
 
     return (
@@ -96,7 +129,10 @@ export default function PageLayout({
                                 <div
                                     key={item.key}
                                     className="item"
-                                    onClick={() => navigate(item.path)}
+                                    onClick={() => {
+                                        if (item.path) navigate(item.path);
+                                        else if (item.link) window.open(item.link);
+                                    }}
                                 >
                                     {item.icon} {item.name}
                                 </div>
@@ -119,34 +155,17 @@ export default function PageLayout({
             )}
             {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
             <Cloud1Img width="110%" className="cloud-white" />
-            <div className="balance-box">
+            <div className="balance-box" onClick={() => navigate(PageKey.Pay)}>
+                {!isPayPage && (
+                    <TText fontSize="24px" className="recharge">
+                        充值
+                    </TText>
+                )}
                 <div className="balance-text">
                     <CoinWrapper>¥</CoinWrapper>
-                    <ToolTips
-                        direction="top"
-                        content={
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "8px",
-                                    margin: "4px",
-                                }}
-                            >
-                                <TButton
-                                    type="secondary"
-                                    onClick={() => navigate(PageKey.Withdraw)}
-                                >
-                                    去提现{" "}
-                                </TButton>
-                                <TButton onClick={() => navigate(PageKey.Pay)}>去充值</TButton>
-                            </div>
-                        }
-                    >
-                        <span className="balance-num">
-                            {isLoadingBalance ? <TLoader /> : balance || 0}
-                        </span>
-                    </ToolTips>
+                    <span className="balance-num">
+                        {isLoadingBalance ? <TLoader /> : balance || 0}
+                    </span>
                     <RefreshCw
                         onClick={fetchAndUpdateUserBalance}
                         width={16}
@@ -168,4 +187,32 @@ export default function PageLayout({
             )}
         </PageLayoutWrapper>
     );
+}
+
+{
+    /* <ToolTips
+direction="top"
+content={
+    <div
+        style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            margin: "4px",
+        }}
+    >
+        <TButton
+            type="secondary"
+            onClick={() => navigate(PageKey.Withdraw)}
+        >
+            去提现{" "}
+        </TButton>
+        <TButton onClick={() => navigate(PageKey.Pay)}>去充值</TButton>
+    </div>
+}
+>
+<span className="balance-num">
+    {isLoadingBalance ? <TLoader /> : balance || 0}
+</span>
+</ToolTips> */
 }

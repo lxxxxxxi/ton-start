@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PaginatedList from "../../components/PaginatedList";
 import TDropdown from "../../components/Common/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { RechargeList } from "../../utils/interface";
+import { RechargeList, RechargeStatus } from "../../utils/interface";
 import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
@@ -31,7 +31,7 @@ const BettingListWrapper = styled.div`
 `;
 
 export default function WithdrawHistory() {
-    const [selectedOption, setSelectedOption] = useState<number>(1);
+    const [selectedOption, setSelectedOption] = useState<number>(CommonDayOptions[0].key);
     const navigate = useNavigateTo();
 
     const { data: withdrawList, loading } = useAsyncRequest<RechargeList[]>(
@@ -39,18 +39,15 @@ export default function WithdrawHistory() {
         []
     );
 
-    const usefulList =
-        withdrawList && withdrawList.length > 0
-            ? withdrawList.filter(item => !!item.transaction_id)
-            : [];
+    const usefulList = withdrawList && withdrawList.length > 0 ? withdrawList : [];
 
     const displayList = usefulList.map(item => {
         return {
             id: item.order_no,
             contentTopLeft: `No.${item.order_no}`,
-            contentTopRight: `交易ID`,
-            contentBottomLeft: `充值金额：¥${formatPrice(item.amount)}`,
-            contentBottomRight: (
+            contentTopRight: `${RechargeStatus[item.status]}`,
+            contentBottomLeft: `提现金额：¥${formatPrice(item.amount)}`,
+            contentBottomRight: item.transaction_id ? (
                 <FlexBoxRow>
                     {`${truncateHash(item.transaction_id, 7, 10)}`}{" "}
                     <Copy
@@ -59,6 +56,8 @@ export default function WithdrawHistory() {
                         onClick={() => navigator.clipboard.writeText(item.transaction_id)}
                     />
                 </FlexBoxRow>
+            ) : (
+                "-"
             ),
         };
     });
@@ -91,12 +90,12 @@ export default function WithdrawHistory() {
                     <TList list={displayList} />
                 ) : (
                     <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>
-                        <TEmptyBox
+                        {/* <TEmptyBox
                             text="去提现"
                             handleClick={() => {
                                 navigate(PageKey.Withdraw);
                             }}
-                        />
+                        /> */}
                     </div>
                 )}
                 {/* <PaginatedList itemsPerPage={5} data={displayList}></PaginatedList> */}

@@ -78,7 +78,7 @@ const TAlert = ({
 }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            // onClose();
+            onClose();
         }, 4000); // 设置为3秒后自动关闭
         return () => clearTimeout(timer);
     }, []);

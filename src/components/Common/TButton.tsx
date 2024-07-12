@@ -1,25 +1,43 @@
 import styled, { css } from "styled-components";
 
-export const Wrapper = styled.div<{ type: ButtonType }>`
+type ButtonType = "primary" | "secondary";
+type ButtonSize = "small" | "medium" | "large";
+
+const buttonSizeStyles = {
+    small: css`
+        height: 30px;
+        padding: 4px 8px;
+        font-size: 12px;
+    `,
+    medium: css`
+        height: 50px;
+        padding: 8px 16px;
+        font-size: 16px;
+    `,
+    large: css`
+        height: 70px;
+        padding: 12px 24px;
+        font-size: 20px;
+    `,
+};
+
+export const Wrapper = styled.div<{ type: ButtonType; size: ButtonSize }>`
     padding: 0 4px 4px 0px;
 
     .button-shadow-box {
-        height: 50px;
         border-radius: 10px;
         box-shadow: 2px 4px 0px #525791;
 
         .button {
-            height: 100%;
             width: 100%;
             font-weight: 700;
             cursor: pointer;
             pointer-events: inherit;
-
             border: 3px solid #341d1a;
             border-radius: 10px;
-            padding: 8px 16px;
-            font-size: 16px;
             white-space: nowrap;
+
+            ${({ size }) => buttonSizeStyles[size || "medium"]}
 
             ${({ type }) => {
                 switch (type) {
@@ -46,21 +64,23 @@ export const Wrapper = styled.div<{ type: ButtonType }>`
     }
 `;
 
-type ButtonType = "primary" | "secondary";
-
-export const TButton = ({
-    type = "primary",
-    disabled = false,
-    onClick,
-    children,
-}: {
+interface TButtonProps {
     type?: ButtonType;
+    size?: ButtonSize;
     disabled?: boolean;
     onClick?: () => void;
     children?: React.ReactNode;
-}) => {
+}
+
+export const TButton = ({
+    type = "primary",
+    size = "medium",
+    disabled = false,
+    onClick,
+    children,
+}: TButtonProps) => {
     return (
-        <Wrapper type={type}>
+        <Wrapper type={type} size={size}>
             <div className="button-shadow-box">
                 <button className="button" disabled={disabled} onClick={onClick}>
                     {children}

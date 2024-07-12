@@ -29,15 +29,15 @@ export const createWithdrawOrder = (orderData: { address: string; amount: number
 };
 
 export const getAccountList = (days: number) => {
-    return apiRequest.get(`/api/v1/account/list?day=${days}`);
+    return apiRequest.get(`/api/v1/account/list${!!days ? `?day=${days}` : ""}`);
 };
 
 export const getRechargeList = (days: number = 1) => {
-    return apiRequest.get(`/api/v1/account/recharge_list?day=${days}`);
+    return apiRequest.get(`/api/v1/account/recharge_list${!!days ? `?day=${days}` : ""}`);
 };
 
 export const getWithdrawList = (days: number = 1) => {
-    return apiRequest.get(`/api/v1/account/withdraw_list?day=${days}`);
+    return apiRequest.get(`/api/v1/account/withdraw_list${!!days ? `?day=${days}` : ""}`);
 };
 
 interface BetRecordsParams {

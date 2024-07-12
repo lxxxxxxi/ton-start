@@ -5,7 +5,7 @@ import { useUserInfo } from "../../states/useUserInfo";
 import { getTgProfile } from "../../request/requests";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import PageLayout from "@/components/Layouts/PageLayout";
-import { LottoGirIcon2Img, LottoGirlIcon1Img } from "@/assets/imgs";
+import { CasinoIcon1Img, LottoGirIcon2Img, LottoGirlIcon1Img, CasinoIcon2Img } from "@/assets/imgs";
 import { PageKey } from "@/utils/routes";
 import { TelegramUser } from "./TelegramLoginButton";
 import { useAlertState } from "@/states/useAlertState";
@@ -52,29 +52,59 @@ export default function AccountCenter() {
                         </div>
                     )}
 
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: "8px",
+                            margin: "4px",
+                        }}
+                    >
+                        <TButton
+                            size="small"
+                            type="secondary"
+                            onClick={() => navigate(PageKey.Withdraw)}
+                        >
+                            去提现
+                        </TButton>
+                        <TButton size="small" onClick={() => navigate(PageKey.Pay)}>
+                            去充值
+                        </TButton>
+                    </div>
+
                     <div className="actions">
                         <div className="list">
-                            <LottoGirIcon2Img width="100px" />
-                            <span
+                            <LottoGirIcon2Img width="90px" />
+                            {/* <span
                                 className="text text0"
                                 onClick={() => navigate(PageKey.PayHistory)}
                             >
                                 充值记录
-                            </span>
-                            <span className="text text1" onClick={() => navigate(PageKey.Pay)}>
-                                去充值
+                            </span> */}
+                            <CasinoIcon1Img width="40px" />
+                            <span
+                                className="text text1"
+                                onClick={() => navigate(PageKey.BettingList)}
+                            >
+                                {/* 去充值 */}
+                                投注记录
                             </span>
                         </div>
                         <div className="list">
-                            <LottoGirlIcon1Img width="100px" />
-                            <span
+                            <LottoGirlIcon1Img width="90px" />
+                            {/* <span
                                 className="text text0"
                                 onClick={() => navigate(PageKey.WithdrawHistory)}
                             >
                                 提现记录
-                            </span>
-                            <span className="text text1" onClick={() => navigate(PageKey.Withdraw)}>
-                                去提现
+                            </span> */}
+                            <CasinoIcon2Img width="40px" />
+                            <span
+                                className="text text1"
+                                onClick={() => navigate(PageKey.AccountList)}
+                            >
+                                {/* 去提现 */}
+                                账户明细
                             </span>
                         </div>
                     </div>

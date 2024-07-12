@@ -45,10 +45,10 @@ export default function TList({ list }: { list: PaginatedListData[] }) {
                 <ListItem key={index}>
                     <div className="left">
                         <div className="top">{item.contentTopLeft}</div>
-                        <div>{item.contentTopRight}</div>
+                        <div>{item.contentBottomLeft}</div>
                     </div>
                     <div className="right">
-                        <div className="top">{item.contentBottomLeft}</div>
+                        <div className="top">{item.contentTopRight}</div>
                         <div>{item.contentBottomRight}</div>
                     </div>
                 </ListItem>

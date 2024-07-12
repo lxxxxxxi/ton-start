@@ -16,11 +16,10 @@ const AccountListWrapper = styled.div`
 `;
 
 export default function AccountList() {
-    const [selectedOption, setSelectedOption] = useState<number>(0);
-    const dayValue = CommonDayOptions.find(item => item.key === selectedOption)?.days;
+    const [selectedOption, setSelectedOption] = useState<number>(CommonDayOptions[0].key);
 
     const { data: accountList, loading } = useAsyncRequest<AccountListInfo[]>(
-        () => getAccountList(dayValue || 7),
+        () => getAccountList(selectedOption),
         [selectedOption]
     );
 
@@ -33,16 +32,24 @@ export default function AccountList() {
                           <TText noWrap>{`${formatDate(item.created_at * 1000)}`} </TText>
                       ),
                       contentTopRight: (
-                          <TText noWrap> {item.remark ? `${item.remark}` : "-"} </TText>
+                          <TText noWrap textAlign="right">
+                              {`${item.op === "in" ? "+" : "-"} ${formatPrice(item.amount)}`}
+                          </TText>
                       ),
                       contentBottomLeft: (
-                          <TText noWrap textAlign="right">
-                              {`${AccountOpType[item.type]} ${formatPrice(item.amount)}`}{" "}
+                          <TText noWrap>
+                              {`${
+                                  item.type === "bet"
+                                      ? item.op === "in"
+                                          ? "转入"
+                                          : "转出"
+                                      : item.type
+                              }`}{" "}
                           </TText>
                       ),
                       contentBottomRight: (
                           <TText noWrap textAlign="right">
-                              {`操作后余额 ${item.balance}`}{" "}
+                              {`余额 ${item.balance}`}{" "}
                           </TText>
                       ),
                   };

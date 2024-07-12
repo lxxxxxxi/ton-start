@@ -1,6 +1,30 @@
 import { Wave } from "@/assets/imgs";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ZIndexConfig from "./zIndexConfig";
+
+const wobble = keyframes`
+  0%, 16.67%, 100% {
+    transform: rotate(0deg);
+  }
+  8.33% {
+    transform: rotate(-5deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  41.67% {
+    transform: rotate(-5deg);
+  }
+  58.33% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  91.67% {
+    transform: rotate(5deg);
+  }
+`;
 
 export const PageLayoutWrapper = styled.div<{
     isNeedStartButton: boolean;
@@ -44,7 +68,8 @@ export const PageLayoutWrapper = styled.div<{
 
     .children {
         position: relative;
-        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "70vh")};
+        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "100%")};
+        padding-bottom: 120px;
         overflow: scroll;
         z-index: ${ZIndexConfig.children};
 
@@ -119,7 +144,19 @@ export const PageLayoutWrapper = styled.div<{
         z-index: ${ZIndexConfig.balance_box};
         transform: translateX(-50%);
 
-        width: 55%;
+        width: 62%;
+
+        .recharge {
+            position: absolute;
+            top: -15px;
+            left: 45%;
+            z-index: ${ZIndexConfig.icons_wrapper};
+            color: #f2a43e;
+            text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 2px 2px #fff,
+                -2px -2px #fff, 2px -2px #fff, -2px 2px #fff;
+            letter-spacing: 2px;
+            animation: ${wobble} 1.5s infinite;
+        }
 
         .balance-text {
             display: flex;
@@ -134,7 +171,7 @@ export const PageLayoutWrapper = styled.div<{
             cursor: pointer;
 
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%, -50%);
 
