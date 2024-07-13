@@ -39,8 +39,12 @@ export default function Login() {
                 <TBannerText></TBannerText>
                 <div className="shadow"></div>
             </div>
-            <Cloud1Img width="110%" className="cloud-white" />
-            <Cloud2Img width="110%" className="cloud-green" />
+            <div className="footer">
+                <div className="cloud-white-wrapper">
+                    <Cloud1Img width="110%" className="cloud-white" />
+                </div>
+                <Cloud2Img width="110%" className="cloud-green" />
+            </div>
         </PageLayoutWrapper>
     );
 }
