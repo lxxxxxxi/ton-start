@@ -91,6 +91,5 @@ bot.launch({ allowedUpdates: ["message", "message_reaction"] }, () => console.lo
     console.error('Error launching bot:', error);
 });
 
-// 捕获停止信号以优雅地关闭bot
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));

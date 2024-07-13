@@ -197,9 +197,7 @@ export default function PageLayout({
                     </div>
                 )}
                 {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
-                <div className="cloud-white-wrapper">
-                    <Cloud1Img width="100%" className="cloud-white" />
-                </div>
+                <Cloud1Img width="100%" className="cloud-white" />
                 <div className="balance-box" onClick={() => navigate(PageKey.Pay)}>
                     {!isPayPage && (
                         <TText fontSize="24px" className="recharge">

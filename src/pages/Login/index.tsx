@@ -40,9 +40,7 @@ export default function Login() {
                 <div className="shadow"></div>
             </div>
             <div className="footer">
-                <div className="cloud-white-wrapper">
-                    <Cloud1Img width="110%" className="cloud-white" />
-                </div>
+                <Cloud1Img width="110%" className="cloud-white" />
                 <Cloud2Img width="110%" className="cloud-green" />
             </div>
         </PageLayoutWrapper>

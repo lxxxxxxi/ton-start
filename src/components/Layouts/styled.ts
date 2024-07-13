@@ -133,23 +133,14 @@ export const PageLayoutWrapper = styled.div<{
         width: 100%;
         transition: all 1s;
 
-        .cloud-white-wrapper {
-            width: 100%;
-            height: 150px;
+        .cloud-white {
             position: absolute;
             /* left: -10%; */
             z-index: ${({ shouldChildUnderCloud }) =>
-                !shouldChildUnderCloud
-                    ? ZIndexConfig.cloud_white_1
-                    : ZIndexConfig.cloud_white_2};
+                !shouldChildUnderCloud ? ZIndexConfig.cloud_white_1 : ZIndexConfig.cloud_white_2};
+            pointer-events: none;
 
             bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
-
-            .cloud-white {
-                position: absolute;
-                bottom: 0px;
-                z-index: 0;
-            }
         }
 
         .cloud-green {
