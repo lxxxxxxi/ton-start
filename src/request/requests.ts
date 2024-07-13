@@ -103,3 +103,7 @@ export const playGame = (apiCode: string, gameCode: string, gameType: string) =>
 export const getAccountTotal = () => {
     return apiRequest.get(`/api/v1/account/total`);
 };
+
+export const getAccountRemainBetAmount = () => {
+    return apiRequest.get(`/api/v1/account/remain_bet_amount`);
+};
