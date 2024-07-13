@@ -36,7 +36,7 @@ export default function Modal() {
     const { successState, errorState, loadingState, pendingTime } = modalState;
 
     return modalState.isVisible ? (
-        <TModal onClose={closeModal} pendingTime={pendingTime}>
+        <TModal onClose={closeModal} type={modalState.type} pendingTime={pendingTime}>
             {modalState.type === "loading" && loadingState && (
                 <LoadingContent state={loadingState} />
             )}

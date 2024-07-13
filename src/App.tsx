@@ -10,7 +10,6 @@ import TAlert from "./components/Common/TAlert";
 import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
-import TModal from "./components/Common/TModal";
 import Modal from "./components/Modal";
 
 const StyledApp = styled.div`

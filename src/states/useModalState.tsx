@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { initModalState, modalStateAtom } from "./atoms";
 
+export type ModalType = null | "loading" | "success" | "error";
 export interface ModalState {
     isVisible: boolean;
     type: null | "loading" | "success" | "error";
