@@ -10,7 +10,6 @@ import TLoader from "./Common/TLoader";
 import { TonConnectButton } from "@tonconnect/ui-react";
 
 export function Jetton() {
-    const { connected } = useTonConnect();
     const { jettonWalletAddress, balance } = useFaucetJettonContract(USDT_MASTER_ADDRESS);
 
     return (
@@ -22,7 +21,7 @@ export function Jetton() {
                         {" "}
                         USDT Balance{" "}
                     </TText>
-                    <TText color="info">{balance ?? <TLoader size={16} />}</TText>
+                    <TText color="info">{balance || 0}</TText>
                 </FlexBoxRow>
                 <FlexBoxRow justify="space-between" gap="20px">
                     <TText fontSize="14px" noWrap>

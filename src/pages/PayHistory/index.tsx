@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PaginatedList from "../../components/PaginatedList";
 import TDropdown from "../../components/Common/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { getRechargeList } from "../../request/requests";
+import { getAccountTotalRoute, getRechargeList } from "../../request/requests";
 import { RechargeList, RechargeStatus } from "../../utils/interface";
 import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
@@ -38,6 +38,10 @@ export default function PayHistory() {
         [selectedOption]
     );
 
+    const { data: total } = useAsyncRequest(getAccountTotalRoute, []);
+
+    console.log(total);
+
     console.log(rechargeList);
 
     const usefulList = rechargeList && rechargeList.length > 0 ? rechargeList : [];
@@ -45,7 +49,7 @@ export default function PayHistory() {
     const displayList = usefulList.map(item => {
         return {
             id: item.order_no,
-            contentTopLeft: `No.${truncateHash(item.order_no)}`,
+            contentTopLeft: `No.${item.order_no}`,
             contentTopRight: `交易${RechargeStatus[item.status]}`,
             contentBottomLeft: `充值金额：¥${formatPrice(item.amount)}`,
             contentBottomRight: item.transaction_id ? (

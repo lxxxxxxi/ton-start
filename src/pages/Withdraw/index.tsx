@@ -6,7 +6,7 @@ import AppWrapper from "../../components/AppWrapper";
 import ExchangeRate from "../Pay/ExchangeRate";
 import TNumberInput from "../../components/Common/TNumberInput";
 import { createWithdrawOrder } from "../../request/requests";
-import { USDT_MASTER_ADDRESS } from "../../utils/constant";
+import { USDT_MASTER_ADDRESS, WITHDRAW_MIN } from "../../utils/constant";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
 import { useBalance } from "../../states/useUserInfo";
 import { formatPrice } from "../../utils/format";
@@ -31,10 +31,14 @@ export default function Withdraw() {
         if (!jettonWalletAddress) {
             openAlert("warning", "钱包地址无效", "请先连接钱包");
         }
-        if (!amount || amount < 10) {
+        if (!amount || amount < WITHDRAW_MIN) {
             openAlert("warning", "金额无效", "请输入有效的提现金额");
         }
-        if (!jettonWalletAddress || !amount || amount < 10) return;
+        const insufficientBalance = balance !== null && amount > balance;
+        if (insufficientBalance) {
+            openAlert("warning", "余额不足", "可用余额不足");
+        }
+        if (!jettonWalletAddress || !amount || amount < 10 || insufficientBalance) return;
         const orderData = {
             address: jettonWalletAddress,
             amount,
@@ -67,7 +71,6 @@ export default function Withdraw() {
                             minNumber={10}
                             maxNumber={10000}
                             prefix={<CoinWrapper>¥</CoinWrapper>}
-                            placeholder="最低10，最高10000"
                             value={amount}
                             handleValueChange={value => setAmount(value)}
                         />

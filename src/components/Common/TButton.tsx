@@ -5,9 +5,9 @@ type ButtonSize = "small" | "medium" | "large";
 
 const buttonSizeStyles = {
     small: css`
-        height: 30px;
-        padding: 4px 8px;
-        font-size: 12px;
+        height: 40px;
+        padding: 5px 14px;
+        font-size: 14px;
     `,
     medium: css`
         height: 50px;

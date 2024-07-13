@@ -5,7 +5,7 @@ import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
 import { useTonAddress, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
-import { USDT_MASTER_ADDRESS } from "../../utils/constant";
+import { RECHARGE_MAX, RECHARGE_MIN, USDT_MASTER_ADDRESS } from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
 import { Counter } from "../../components/Counter";
 import TNumberInput from "../../components/Common/TNumberInput";
@@ -47,7 +47,7 @@ export const PayWrapper = styled.div`
 
         .header {
             height: 10px;
-            font-size: 12px;
+            font-size: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -56,11 +56,8 @@ export const PayWrapper = styled.div`
 
             a {
                 color: ${({ theme }) => theme.Colors.Text2};
-                text-decoration: none;
-            }
-
-            a:hover {
                 text-decoration: underline;
+                text-underline-offset: 2px;
             }
         }
     }
@@ -91,7 +88,7 @@ export default function Pay() {
         // console.log(slice, op);
         // console.log(!op.eq(new TonWeb.utils.BN(0xf8a7ea5)));
         if (jettonWalletAddress) {
-            if (amount >= 10 && amount <= 10000) {
+            if (amount >= RECHARGE_MIN && amount <= RECHARGE_MAX) {
                 createRechargeOrder({ amount })
                     .then(res => {
                         console.log(res);
@@ -186,8 +183,8 @@ export default function Pay() {
                         <a onClick={() => navigate(PageKey.PayHistory)}>充值记录</a>
                     </div>
                     <TNumberInput
-                        minNumber={10}
-                        maxNumber={10000}
+                        minNumber={RECHARGE_MIN}
+                        maxNumber={RECHARGE_MAX}
                         prefix={<CoinWrapper>¥</CoinWrapper>}
                         placeholder="最低10，最高10000"
                         value={amount}

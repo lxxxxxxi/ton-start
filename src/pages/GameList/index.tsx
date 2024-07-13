@@ -84,7 +84,7 @@ const GameTypeOptions = [
 
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
-    const { openLoadingModal, openErrorModal } = useModalState();
+    const { openLoadingModal, openErrorModal, closeModal } = useModalState();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
@@ -128,7 +128,7 @@ export default function GameList() {
                                 openLoadingModal(
                                     "加载中....",
                                     <div>游戏正在努力加载中，请稍后。</div>,
-                                    6000
+                                    60000
                                 );
                                 // console.log(item.code, item.gamecode, item.gametype);
                                 if (item.code && item.gamecode && item.gametype) {
@@ -139,9 +139,10 @@ export default function GameList() {
                                             playGame(item.code, item.gamecode, item.gametype).then(
                                                 res => {
                                                     const url = res.data.url;
-                                                    console.log(res, url);
+                                                    console.log(url);
                                                     if (url) {
                                                         window.open(url);
+                                                        closeModal();
                                                     } else {
                                                         openErrorModal(
                                                             "游戏加载异常",

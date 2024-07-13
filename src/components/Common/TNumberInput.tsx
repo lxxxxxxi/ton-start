@@ -56,15 +56,25 @@ const TNumberInput = ({
     handleValueChange: (value: number) => void;
     minNumber?: number;
     maxNumber: number;
-    placeholder: string;
+    placeholder?: string;
 }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = parseFloat(e.target.value);
-        if (!inputValue) return;
-        if (inputValue > maxNumber) {
+        let inputValue = e.target.value;
+
+        if (inputValue.startsWith("0") && inputValue.length > 1) {
+            inputValue = inputValue.replace(/^0+/, "");
+        }
+
+        const parsedValue = Number(inputValue);
+
+        // console.log(inputValue, parsedValue);
+
+        if (isNaN(parsedValue)) {
+            handleValueChange(0);
+        } else if (parsedValue > maxNumber) {
             handleValueChange(maxNumber);
         } else {
-            handleValueChange(inputValue);
+            handleValueChange(parsedValue);
         }
     };
 

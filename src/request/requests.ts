@@ -3,6 +3,7 @@ import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import apiRequest from "./apiRequest";
 import axios from "axios";
 import { errorMonitor } from "events";
+import { API_BASE_URL2 } from "@/utils/envs";
 
 export const getExchangeRate = () => {
     return axios.get("https://api.coinbase.com/v2/exchange-rates?currency=USDT");
@@ -97,4 +98,9 @@ export const playGame = (apiCode: string, gameCode: string, gameType: string) =>
             isMobile: isMobile() ? 1 : 0, // 0 电脑板 1手机版 默认 1
         },
     });
+};
+
+export const getAccountTotalRoute = () => {
+    return apiRequest.get(`/api/v1/account/total`);
+    // return axios.get(`${BASE_URL}account/total`);
 };

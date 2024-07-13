@@ -27,7 +27,7 @@ export default function AccountCenter() {
     getTeleUserName();
 
     return (
-        <PageLayout header="个人中心" isNeedStartButton>
+        <PageLayout header="我的" isNeedStartButton>
             <AccountCenterWrapper>
                 <div className="user-profile">
                     {!user ? (

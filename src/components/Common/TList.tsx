@@ -17,9 +17,12 @@ const ListItem = styled.div`
     border-radius: 8px;
     border: 3px solid #422e34;
     box-shadow: 3px 4px 0px #422e34;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.05rem;
+    }
 
     .top {
         margin-bottom: 10px;
@@ -43,13 +46,13 @@ export default function TList({ list }: { list: PaginatedListData[] }) {
         <ListContainer>
             {list.map((item, index) => (
                 <ListItem key={index}>
-                    <div className="left">
-                        <div className="top">{item.contentTopLeft}</div>
-                        <div>{item.contentBottomLeft}</div>
+                    <div className="row top">
+                        <div className="left">{item.contentTopLeft}</div>
+                        <div className="right">{item.contentTopRight}</div>
                     </div>
-                    <div className="right">
-                        <div className="top">{item.contentTopRight}</div>
-                        <div>{item.contentBottomRight}</div>
+                    <div className="row">
+                        <div className="left">{item.contentBottomLeft}</div>
+                        <div className="right">{item.contentBottomRight}</div>
                     </div>
                 </ListItem>
             ))}

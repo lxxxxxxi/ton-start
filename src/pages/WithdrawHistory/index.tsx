@@ -36,7 +36,7 @@ export default function WithdrawHistory() {
 
     const { data: withdrawList, loading } = useAsyncRequest<RechargeList[]>(
         () => getWithdrawList(selectedOption),
-        []
+        [selectedOption]
     );
 
     const usefulList = withdrawList && withdrawList.length > 0 ? withdrawList : [];
@@ -86,7 +86,7 @@ export default function WithdrawHistory() {
                 </div>
                 {loading ? (
                     <TLoadingBar text="正在加载" />
-                ) : displayList.length > 10 ? (
+                ) : displayList.length > 0 ? (
                     <TList list={displayList} />
                 ) : (
                     <div style={{ paddingTop: "20px", width: "70%", margin: "0 auto" }}>

@@ -21,6 +21,15 @@ const SuccessContent = ({ state }: { state: { title: string; content: React.Reac
     );
 };
 
+const ErrorContent = ({ state }: { state: { title: string; content: React.ReactNode } }) => {
+    return (
+        <div>
+            <h1>{state.title}</h1>
+            {state.content}
+        </div>
+    );
+};
+
 export default function Modal() {
     const { modalState, closeModal } = useModalState();
 
@@ -34,6 +43,7 @@ export default function Modal() {
             {modalState.type === "success" && successState && (
                 <SuccessContent state={successState} />
             )}
+            {modalState.type === "error" && errorState && <SuccessContent state={errorState} />}
         </TModal>
     ) : null;
 }

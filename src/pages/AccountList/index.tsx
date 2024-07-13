@@ -43,7 +43,7 @@ export default function AccountList() {
                                       ? item.op === "in"
                                           ? "转入"
                                           : "转出"
-                                      : item.type
+                                      : AccountOpType[item.type]
                               }`}{" "}
                           </TText>
                       ),

@@ -211,10 +211,9 @@ export const PageLayoutWrapper = styled.div<{
         transform: translate(-50%, -50%);
 
         .shadow {
-            width: 300px;
+            width: 280px;
             height: 36px;
-            background-color: #f3ac47;
-            opacity: 20%;
+            background-color: rgba(0, 0, 0, 0.07);
             border-radius: 100%;
         }
     }

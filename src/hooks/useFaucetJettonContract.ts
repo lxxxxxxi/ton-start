@@ -6,10 +6,11 @@ import { Address, OpenedContract } from "ton-core";
 import FaucetJettonWallet from "../contracts/faucetJettonWallet";
 import { useQuery } from "@tanstack/react-query";
 import { useTonWallet } from "@tonconnect/ui-react";
+import { useEffect, useState } from "react";
 
 export function useFaucetJettonContract(jettonMasterAddress: string) {
     const { wallet, sender } = useTonConnect();
-    const walletInstance = useTonWallet();
+    const [cachedBalance, setCachedBalance] = useState<string | null>(null);
 
     const { client } = useTonClient();
     if (!jettonMasterAddress) {
@@ -40,8 +41,14 @@ export function useFaucetJettonContract(jettonMasterAddress: string) {
             if (!jwContract) return null;
             return (await jwContract.getBalance()).toString();
         },
-        { refetchInterval: 3000 }
+        { refetchInterval: 5000 }
     );
+
+    useEffect(() => {
+        if (data !== null && data !== undefined) {
+            setCachedBalance(data);
+        }
+    }, [data]);
 
     return {
         mint: () => {
@@ -57,6 +64,6 @@ export function useFaucetJettonContract(jettonMasterAddress: string) {
             );
         },
         jettonWalletAddress: jwContract?.address.toString(),
-        balance: isFetching ? null : data,
+        balance: isFetching ? cachedBalance : data,
     };
 }
