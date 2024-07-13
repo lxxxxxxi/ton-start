@@ -9,7 +9,7 @@ import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
 import { Copy } from "react-feather";
 import { FlexBoxRow } from "../../components/styled/styled";
-import { getWithdrawList } from "@/request/requests";
+import { getAccountTotal, getWithdrawList } from "@/request/requests";
 import PageLayout from "@/components/Layouts/PageLayout";
 import TText from "@/components/Common/TText";
 import { TButton } from "@/components/Common/TButton";
@@ -39,6 +39,8 @@ export default function WithdrawHistory() {
         [selectedOption]
     );
 
+    const { data: total } = useAsyncRequest(getAccountTotal, []);
+
     const usefulList = withdrawList && withdrawList.length > 0 ? withdrawList : [];
 
     const displayList = usefulList.map(item => {
@@ -62,8 +64,6 @@ export default function WithdrawHistory() {
         };
     });
 
-    const cumulativeRechargeAmount = usefulList.reduce((pre, item) => item.amount + pre, 0);
-
     return (
         <PageLayout header="提现记录">
             <BettingListWrapper>
@@ -80,7 +80,7 @@ export default function WithdrawHistory() {
                             <TText fontSize="12px" color="#d0d0d0">
                                 累计提现{" "}
                             </TText>{" "}
-                            ¥ {formatPrice(cumulativeRechargeAmount)}
+                            ¥ {formatPrice(total?.withdraw || 0)}
                         </FlexBoxRow>
                     </TButton>
                 </div>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PaginatedList from "../../components/PaginatedList";
 import TDropdown from "../../components/Common/TDropDown";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
-import { getAccountTotalRoute, getRechargeList } from "../../request/requests";
+import { getAccountTotal, getRechargeList } from "../../request/requests";
 import { RechargeList, RechargeStatus } from "../../utils/interface";
 import { formatPrice, truncateHash } from "../../utils/format";
 import { CommonDayOptions } from "../../utils/common";
@@ -38,9 +38,7 @@ export default function PayHistory() {
         [selectedOption]
     );
 
-    const { data: total } = useAsyncRequest(getAccountTotalRoute, []);
-
-    console.log(total);
+    const { data: total } = useAsyncRequest(getAccountTotal, []);
 
     console.log(rechargeList);
 
@@ -67,8 +65,6 @@ export default function PayHistory() {
         };
     });
 
-    const cumulativeRechargeAmount = usefulList.reduce((pre, item) => item.amount + pre, 0);
-
     return (
         <PageLayout header="充值记录">
             <BettingListWrapper>
@@ -85,7 +81,7 @@ export default function PayHistory() {
                             <TText fontSize="12px" color="#d0d0d0">
                                 累计充值{" "}
                             </TText>{" "}
-                            ¥ {formatPrice(cumulativeRechargeAmount)}
+                            ¥ {formatPrice(total?.recharge || 0)}
                         </FlexBoxRow>
                     </TButton>
                 </div>

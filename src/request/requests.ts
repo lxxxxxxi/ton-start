@@ -100,7 +100,6 @@ export const playGame = (apiCode: string, gameCode: string, gameType: string) =>
     });
 };
 
-export const getAccountTotalRoute = () => {
+export const getAccountTotal = () => {
     return apiRequest.get(`/api/v1/account/total`);
-    // return axios.get(`${BASE_URL}account/total`);
 };
