@@ -52,7 +52,6 @@ export const PageLayoutWrapper = styled.div<{
         padding: 0px 20px;
 
         transition: all 1s;
-        transform: translateY(0);
 
         .text {
             position: absolute;
