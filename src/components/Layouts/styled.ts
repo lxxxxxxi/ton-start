@@ -32,7 +32,7 @@ export const PageLayoutWrapper = styled.div<{
 }>`
     width: 100%;
     height: 100dvh;
-    padding: 20px;
+    padding: 14px 0px;
 
     background: url(${Wave});
     background-color: ${({ theme }) => theme.Colors.Bg2};
@@ -49,15 +49,19 @@ export const PageLayoutWrapper = styled.div<{
         align-items: center;
         height: 40px;
         margin-bottom: 10px;
+        padding: 0px 20px;
+
+        transition: all 1s;
+        transform: translateY(0);
 
         .text {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 22px;
+            font-size: 20px;
             color: white;
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
             text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.3);
         }
 
@@ -68,10 +72,13 @@ export const PageLayoutWrapper = styled.div<{
 
     .children {
         position: relative;
-        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "100%")};
+        height: ${({ isNeedStartButton }) => (isNeedStartButton ? "auto" : "96%")};
         padding-bottom: 120px;
         overflow: scroll;
         z-index: ${ZIndexConfig.children};
+        padding: 0px 20px;
+
+        transition: all 1s;
 
         ::-webkit-scrollbar {
             display: none;
@@ -122,81 +129,97 @@ export const PageLayoutWrapper = styled.div<{
         }
     }
 
-    .cloud-white {
-        position: absolute;
-        left: -10%;
-        z-index: ${({ shouldChildUnderCloud }) =>
-            !shouldChildUnderCloud ? ZIndexConfig.cloud_white_1 : ZIndexConfig.cloud_white_2};
-        bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
-    }
+    .footer {
+        width: 100%;
+        transition: all 1s;
 
-    .cloud-green {
-        position: absolute;
-        left: -10%;
-        bottom: 0px;
-        z-index: ${ZIndexConfig.cloud_green};
-    }
-
-    .balance-box {
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        z-index: ${ZIndexConfig.balance_box};
-        transform: translateX(-50%);
-
-        width: 62%;
-
-        .recharge {
+        .cloud-white-wrapper {
+            width: 100%;
+            height: 150px;
             position: absolute;
-            top: -15px;
-            left: 45%;
-            z-index: ${ZIndexConfig.icons_wrapper};
-            color: #f2a43e;
-            text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 2px 2px #fff,
-                -2px -2px #fff, 2px -2px #fff, -2px 2px #fff;
-            letter-spacing: 2px;
-            animation: ${wobble} 1.5s infinite;
-        }
+            /* left: -10%; */
+            z-index: ${({ shouldChildUnderCloud }) =>
+                !shouldChildUnderCloud
+                    ? ZIndexConfig.cloud_white_1
+                    : ZIndexConfig.cloud_white_2};
 
-        .balance-text {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
+            bottom: ${({ isNeedStartButton }) => (isNeedStartButton ? "-70px" : "-80px")};
 
-            font-size: 24px;
-            font-weight: 500;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-            color: white;
-            cursor: pointer;
-
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            .balance-num {
-                text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+            .cloud-white {
+                position: absolute;
+                bottom: 0px;
+                z-index: 0;
             }
         }
 
-        .coin-icon {
+        .cloud-green {
+            position: absolute;
+            left: -10%;
+            bottom: 0px;
+            z-index: ${ZIndexConfig.cloud_green};
+        }
+
+        .balance-box {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            z-index: ${ZIndexConfig.balance_box};
+            transform: translateX(-50%);
+
+            width: 62%;
+
+            .recharge {
+                position: absolute;
+                top: -15px;
+                left: 45%;
+                z-index: ${ZIndexConfig.icons_wrapper};
+                color: #f2a43e;
+                text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 2px 2px #fff,
+                    -2px -2px #fff, 2px -2px #fff, -2px 2px #fff;
+                letter-spacing: 2px;
+                animation: ${wobble} 1.5s infinite;
+            }
+
+            .balance-text {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+
+                font-size: 24px;
+                font-weight: 500;
+                text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+                color: white;
+                cursor: pointer;
+
+                position: absolute;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                .balance-num {
+                    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+                }
+            }
+
+            .coin-icon {
+                position: absolute;
+                bottom: 0px;
+                left: -10px;
+            }
+        }
+
+        .icons-wrapper {
             position: absolute;
             bottom: 0px;
-            left: -10px;
-        }
-    }
+            left: 0px;
+            width: 100%;
+            height: 200px;
+            z-index: ${ZIndexConfig.icons_wrapper};
 
-    .icons-wrapper {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-        height: 200px;
-        z-index: ${ZIndexConfig.icons_wrapper};
-
-        img {
-            position: absolute;
+            img {
+                position: absolute;
+            }
         }
     }
 
@@ -216,6 +239,21 @@ export const PageLayoutWrapper = styled.div<{
             background-color: rgba(0, 0, 0, 0.07);
             border-radius: 100%;
         }
+    }
+
+    .header-hidden {
+        transition: all 1s;
+        transform: translateY(-200%);
+    }
+
+    .footer-hidden {
+        transition: all 2s;
+        transform: translateY(300px);
+    }
+
+    .children-full {
+        transition: all 1s;
+        transform: translateY(-40px);
     }
 `;
 

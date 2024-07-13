@@ -72,7 +72,7 @@ export default function BettingList() {
             : [];
 
     return (
-        <PageLayout header="投注记录">
+        <PageLayout header="投注记录" isNeedHidden>
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown

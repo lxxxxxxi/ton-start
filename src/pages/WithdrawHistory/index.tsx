@@ -65,7 +65,7 @@ export default function WithdrawHistory() {
     });
 
     return (
-        <PageLayout header="提现记录">
+        <PageLayout header="提现记录" isNeedHidden>
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown

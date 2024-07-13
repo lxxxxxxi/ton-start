@@ -66,7 +66,7 @@ export default function PayHistory() {
     });
 
     return (
-        <PageLayout header="充值记录">
+        <PageLayout header="充值记录" isNeedHidden>
             <BettingListWrapper>
                 <div className="dropdown-wrapper">
                     <TDropdown

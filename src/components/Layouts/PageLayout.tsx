@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     BackIconImg,
     LeaderImg,
@@ -38,10 +38,12 @@ import { useLocation } from "react-router-dom";
 export default function PageLayout({
     header,
     isNeedStartButton = false,
+    isNeedHidden = false,
     children,
 }: {
     header: string;
     isNeedStartButton?: boolean;
+    isNeedHidden?: boolean;
     children: React.ReactNode;
 }) {
     const { pathname } = useLocation();
@@ -109,19 +111,57 @@ export default function PageLayout({
         // },
     ];
 
+    const childrenRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const [lastScrollTop, setLastScrollTop] = useState(0);
+
+    useEffect(() => {
+        if (isNeedHidden) {
+            if (childrenRef.current && footerRef.current && headerRef.current) {
+                const handleScroll = () => {
+                    if (!childrenRef.current || !footerRef.current || !headerRef.current) return;
+                    const currentScrollTop = childrenRef.current.scrollTop;
+                    if (currentScrollTop > lastScrollTop) {
+                        // 用户正在向下滚动
+                        footerRef.current.classList.add("footer-hidden");
+                        headerRef.current.classList.add("header-hidden");
+                        childrenRef.current.classList.add("children-full");
+                    } else {
+                        // 用户正在向上滚动
+                        footerRef.current.classList.remove("footer-hidden");
+                        headerRef.current.classList.remove("header-hidden");
+                        childrenRef.current.classList.remove("children-full");
+                    }
+                    setLastScrollTop(currentScrollTop);
+                };
+
+                if (childrenRef.current) {
+                    childrenRef.current.addEventListener("scroll", handleScroll);
+                }
+
+                return () => {
+                    if (childrenRef.current) {
+                        childrenRef.current.removeEventListener("scroll", handleScroll);
+                    }
+                };
+            }
+        }
+    }, [lastScrollTop]);
+
     return (
         <PageLayoutWrapper
             isNeedStartButton={isNeedStartButton}
             shouldChildUnderCloud={shouldChildUnderCloud}
         >
-            <div className="header">
+            <div className="header" ref={headerRef}>
                 <BackIconImg
-                    width={"50px"}
+                    width={"48px"}
                     className="icon"
                     onClick={() => window.history.go(-1)}
                 />
                 <div className="text">{header}</div>
-                <LeaderImg width={"70%"} />
+                <LeaderImg width={"58%"} />
                 <ToolTips
                     content={
                         <MenuListContent>
@@ -140,79 +180,57 @@ export default function PageLayout({
                         </MenuListContent>
                     }
                 >
-                    <MenuIconImg width={"50px"} className="icon" />
+                    <MenuIconImg width={"46px"} className="icon" />
                 </ToolTips>
             </div>
-            <div className="children">{children}</div>
-            {isNeedStartButton && (
-                <div className="button-wrapper">
-                    <StartButtonImg width="200px" className="start-button" />
-                    <StartButtonPressedImg width="200px" className="start-button-pressed" />
-                    <div className="start-text" onClick={() => navigate(PageKey.GameList)}>
-                        PLAY
-                    </div>
-                </div>
-            )}
-            {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
-            <Cloud1Img width="110%" className="cloud-white" />
-            <div className="balance-box" onClick={() => navigate(PageKey.Pay)}>
-                {!isPayPage && (
-                    <TText fontSize="24px" className="recharge">
-                        充值
-                    </TText>
-                )}
-                <div className="balance-text">
-                    <CoinWrapper>¥</CoinWrapper>
-                    <span className="balance-num">
-                        {isLoadingBalance ? <TLoader /> : balance || 0}
-                    </span>
-                    <RefreshCw
-                        onClick={fetchAndUpdateUserBalance}
-                        width={16}
-                        strokeWidth={4}
-                        style={{ cursor: "pointer" }}
-                    />
-                </div>
-                <BalanceBoxImg width="100%" />
-                <CoinIcon5Img width="45px" className="coin-icon" />
+            <div className="children" ref={childrenRef}>
+                {children}
             </div>
-            {isNeedStartButton && (
-                <div className="icons-wrapper">
-                    <CuteIcon1Img width="30px" style={{ top: "0px", left: "10px" }} />
-                    <CuteIcon2Img width="22px" style={{ top: "30px", right: "10px" }} />
-                    <CuteIcon3Img width="20px" style={{ top: "180px", right: "20px" }} />
-                    <CuteIcon4Img width="26px" style={{ top: "170px", left: "10px" }} />
-                    <CuteIcon6Img width="80px" style={{ top: "70px", left: "10px" }} />
+            <div className="footer" ref={footerRef}>
+                {isNeedStartButton && (
+                    <div className="button-wrapper">
+                        <StartButtonImg width="200px" className="start-button" />
+                        <StartButtonPressedImg width="200px" className="start-button-pressed" />
+                        <div className="start-text" onClick={() => navigate(PageKey.GameList)}>
+                            PLAY
+                        </div>
+                    </div>
+                )}
+                {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
+                <div className="cloud-white-wrapper">
+                    <Cloud1Img width="100%" className="cloud-white" />
                 </div>
-            )}
+                <div className="balance-box" onClick={() => navigate(PageKey.Pay)}>
+                    {!isPayPage && (
+                        <TText fontSize="24px" className="recharge">
+                            充值
+                        </TText>
+                    )}
+                    <div className="balance-text">
+                        <CoinWrapper>¥</CoinWrapper>
+                        <span className="balance-num">
+                            {isLoadingBalance ? <TLoader /> : balance || 0}
+                        </span>
+                        <RefreshCw
+                            onClick={fetchAndUpdateUserBalance}
+                            width={16}
+                            strokeWidth={4}
+                            style={{ cursor: "pointer" }}
+                        />
+                    </div>
+                    <BalanceBoxImg width="100%" />
+                    <CoinIcon5Img width="45px" className="coin-icon" />
+                </div>
+                {isNeedStartButton && (
+                    <div className="icons-wrapper">
+                        <CuteIcon1Img width="30px" style={{ top: "0px", left: "10px" }} />
+                        <CuteIcon2Img width="22px" style={{ top: "30px", right: "10px" }} />
+                        <CuteIcon3Img width="20px" style={{ top: "180px", right: "20px" }} />
+                        <CuteIcon4Img width="26px" style={{ top: "170px", left: "10px" }} />
+                        <CuteIcon6Img width="80px" style={{ top: "70px", left: "10px" }} />
+                    </div>
+                )}
+            </div>
         </PageLayoutWrapper>
     );
-}
-
-{
-    /* <ToolTips
-direction="top"
-content={
-    <div
-        style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            margin: "4px",
-        }}
-    >
-        <TButton
-            type="secondary"
-            onClick={() => navigate(PageKey.Withdraw)}
-        >
-            去提现{" "}
-        </TButton>
-        <TButton onClick={() => navigate(PageKey.Pay)}>去充值</TButton>
-    </div>
-}
->
-<span className="balance-num">
-    {isLoadingBalance ? <TLoader /> : balance || 0}
-</span>
-</ToolTips> */
 }

@@ -59,7 +59,7 @@ export default function AccountList() {
     console.log(accountList);
 
     return (
-        <PageLayout header="账户明细">
+        <PageLayout header="账户明细" isNeedHidden>
             <AccountListWrapper>
                 <TDropdown
                     value={selectedOption}

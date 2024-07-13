@@ -8,9 +8,11 @@ import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { GameType, getBalance, getGameList, playGame } from "../../request/requests";
 import PageLayout from "@/components/Layouts/PageLayout";
 import TDropdown from "@/components/Common/TDropDown";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TLoadingBar from "@/components/Common/TLoadingBar";
 import { useModalState } from "@/states/useModalState";
+import { TButton } from "@/components/Common/TButton";
+import { PageKey } from "@/utils/routes";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -85,6 +87,7 @@ const GameTypeOptions = [
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
     const { openLoadingModal, openErrorModal, closeModal } = useModalState();
+    const navigate = useNavigate();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
@@ -110,7 +113,7 @@ export default function GameList() {
     };
 
     return (
-        <PageLayout header="游戏中心">
+        <PageLayout header="游戏中心" isNeedHidden>
             <GameListWrapper>
                 <TDropdown
                     value={selectedTypeOption}
@@ -152,7 +155,15 @@ export default function GameList() {
                                                 }
                                             );
                                         } else {
-                                            console.log("余额不足10");
+                                            openErrorModal(
+                                                "余额不足",
+                                                <TButton
+                                                    size="small"
+                                                    onClick={() => navigate(PageKey.Pay)}
+                                                >
+                                                    去充值
+                                                </TButton>
+                                            );
                                         }
                                     });
                                 }
