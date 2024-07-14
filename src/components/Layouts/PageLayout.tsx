@@ -62,7 +62,7 @@ export default function PageLayout({
     const menuLists = [
         {
             key: "1",
-            name: "个人中心",
+            name: "我的",
             icon: <User size={18} strokeWidth={3} />,
             path: PageKey.AccountCenter,
         },

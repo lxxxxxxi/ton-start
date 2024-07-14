@@ -44,7 +44,7 @@ export default function AccountList() {
                                           ? "转入"
                                           : "转出"
                                       : AccountOpType[item.type]
-                              }`}{" "}
+                              } ${item.source ? `(${item.source})` : ""}`}{" "}
                           </TText>
                       ),
                       contentBottomRight: (

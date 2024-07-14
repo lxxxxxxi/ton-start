@@ -25,10 +25,10 @@ const AnimatedText = styled.h1`
     font-size: 58px;
     margin: 10px 0;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 400;
     text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
     display: inline-block;
-    white-space: normal;
+    white-space: nowrap;
 `;
 
 const AnimatedChar = styled.span`
