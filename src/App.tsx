@@ -5,20 +5,12 @@ import { FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
-import { Route, HashRouter as Router, Routes, useLocation } from "react-router-dom";
+import { Route, HashRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import TAlert from "./components/Common/TAlert";
 import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
 import Modal from "./components/Modal";
-import { useEffect } from "react";
-import {
-    TELE_BACKBUTTON,
-    TELE_MAINBUTTON,
-    TELE_POPUPPARAMS,
-    TELE_SETTINGSBUTTON,
-    useTelegramWebApp,
-} from "./utils/tele";
 
 const StyledApp = styled.div`
     background-color: ${({ theme }) => theme.Colors.Bg1};
@@ -33,14 +25,6 @@ const AppContainer = styled.div`
 
 function App() {
     const { alertState, resetAlertState } = useAlertState();
-    const { ready, expand, showSettingsButton, showBackButton } = useTelegramWebApp();
-
-    useEffect(() => {
-        ready();
-        expand();
-        // showBackButton();
-        // showSettingsButton();
-    }, []);
 
     return (
         <ThemeProvider theme={theme}>

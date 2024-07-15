@@ -6,6 +6,7 @@ export const loginByTelegramAuth = (loginCallback?: () => void) => {
     const initData = TELE.initData;
     if (!initData) {
         console.error("initData is null");
+        window.location.href = window.location.origin + "/ton-start/#/";
     } else {
         loginByTelegramAuthData(initData)
             .then(res => {
@@ -19,7 +20,6 @@ export const loginByTelegramAuth = (loginCallback?: () => void) => {
                         // 如果无法登陆 => 还是跳转到 login
                         console.log("not get access_token");
                         window.location.href = window.location.origin + "/ton-start/#/";
-                        // 如果在登陆页面登录失败呢？
                     }
                 }
             })

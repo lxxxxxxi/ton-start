@@ -13,6 +13,7 @@ import TLoadingBar from "@/components/Common/TLoadingBar";
 import { useModalState } from "@/states/useModalState";
 import { TButton } from "@/components/Common/TButton";
 import { PageKey } from "@/utils/routes";
+import { useTelegramWebApp } from "@/utils/tele";
 
 const GameListWrapper = styled.div`
     display: flex;
@@ -111,6 +112,13 @@ export default function GameList() {
         setSelectedTypeOption(key);
         setSearchParams({ type: key });
     };
+
+    const { ready, expand, showSettingsButton, showBackButton, setBackButtonCallback } =
+        useTelegramWebApp();
+
+    useEffect(() => {
+        setBackButtonCallback(() => navigate(-1));
+    }, []);
 
     return (
         <PageLayout header="游戏中心" isNeedHidden>

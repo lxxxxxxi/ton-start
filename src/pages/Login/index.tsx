@@ -12,7 +12,7 @@ export default function Login() {
 
     useEffect(() => {
         handleLogin();
-        // localStorage.setItem("xixiliuooo_access_token", "21004641-3706-42ac-a9f1-53cfb2b4afc8");
+        // localStorage.setItem("xixiliuooo_access_token", "");
     }, []);
 
     const handleLogin = () => {

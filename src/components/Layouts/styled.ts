@@ -128,7 +128,6 @@ export const PageLayoutWrapper = styled.div<{
     }
 
     .footer {
-        width: 100%;
         transition: all 1s;
 
         .cloud-white {
@@ -143,7 +142,7 @@ export const PageLayoutWrapper = styled.div<{
 
         .cloud-green {
             position: absolute;
-            left: -10%;
+            /* left: -10%; */
             bottom: 0px;
             z-index: ${ZIndexConfig.cloud_green};
         }

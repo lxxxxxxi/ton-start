@@ -35,6 +35,7 @@ import { TButton } from "../Common/TButton";
 import TText from "../Common/TText";
 import { useLocation } from "react-router-dom";
 import TCoinIcon from "../Common/TCoinIcon";
+import { useTelegramWebApp } from "@/utils/tele";
 
 export default function PageLayout({
     header,

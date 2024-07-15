@@ -31,7 +31,11 @@ export const useTelegramWebApp = () => {
         TELE_BACKBUTTON.show();
     };
 
-    return { ready, expand, showPopup, showSettingsButton, showBackButton };
+    const setBackButtonCallback = (callback: () => void) => {
+        TELE_BACKBUTTON.onClick(callback);
+    };
+
+    return { ready, expand, showPopup, showSettingsButton, showBackButton, setBackButtonCallback };
 };
 
 export const getTeleUserName = () => {
