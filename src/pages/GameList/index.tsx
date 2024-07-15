@@ -20,7 +20,7 @@ const GameListWrapper = styled.div`
     justify-content: space-between;
     gap: 10px;
     row-gap: 20px;
-    padding: 20px 10px;
+    padding: 0px 10px;
 
     .card {
         width: 28%;

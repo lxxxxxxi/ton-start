@@ -34,6 +34,7 @@ import { MenuListContent, PageLayoutWrapper } from "./styled";
 import { TButton } from "../Common/TButton";
 import TText from "../Common/TText";
 import { useLocation } from "react-router-dom";
+import TCoinIcon from "../Common/TCoinIcon";
 
 export default function PageLayout({
     header,
@@ -113,27 +114,21 @@ export default function PageLayout({
 
     const childrenRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const [lastScrollTop, setLastScrollTop] = useState(0);
 
     useEffect(() => {
         if (isNeedHidden) {
-            if (childrenRef.current && footerRef.current && headerRef.current) {
+            if (childrenRef.current && footerRef.current) {
                 const handleScroll = () => {
-                    if (!childrenRef.current || !footerRef.current || !headerRef.current) return;
+                    if (!childrenRef.current || !footerRef.current) return;
                     const currentScrollTop = childrenRef.current.scrollTop;
-                    if (currentScrollTop > lastScrollTop) {
-                        // 用户正在向下滚动
-                        footerRef.current.classList.add("footer-hidden");
-                        headerRef.current.classList.add("header-hidden");
-                        childrenRef.current.classList.add("children-full");
-                    } else {
-                        // 用户正在向上滚动
+                    // console.log(currentScrollTop);
+                    if (currentScrollTop <= 100) {
                         footerRef.current.classList.remove("footer-hidden");
-                        headerRef.current.classList.remove("header-hidden");
                         childrenRef.current.classList.remove("children-full");
+                    } else {
+                        footerRef.current.classList.add("footer-hidden");
+                        childrenRef.current.classList.add("children-full");
                     }
-                    setLastScrollTop(currentScrollTop);
                 };
 
                 if (childrenRef.current) {
@@ -147,14 +142,14 @@ export default function PageLayout({
                 };
             }
         }
-    }, [lastScrollTop]);
+    }, []);
 
     return (
         <PageLayoutWrapper
             isNeedStartButton={isNeedStartButton}
             shouldChildUnderCloud={shouldChildUnderCloud}
         >
-            <div className="header" ref={headerRef}>
+            {/* <div className="header" ref={headerRef}>
                 <BackIconImg
                     width={"48px"}
                     className="icon"
@@ -182,7 +177,7 @@ export default function PageLayout({
                 >
                     <MenuIconImg width={"46px"} className="icon" />
                 </ToolTips>
-            </div>
+            </div> */}
             <div className="children" ref={childrenRef}>
                 {children}
             </div>
@@ -198,9 +193,13 @@ export default function PageLayout({
                 )}
                 {isNeedStartButton && <Cloud2Img width="110%" className="cloud-green" />}
                 <Cloud1Img width="100%" className="cloud-white" />
-                <div className="balance-box" onClick={() => navigate(PageKey.Pay)}>
+                <div className="balance-box">
                     {!isPayPage && (
-                        <TText fontSize="24px" className="recharge">
+                        <TText
+                            fontSize="24px"
+                            className="recharge"
+                            onClick={() => navigate(PageKey.Pay)}
+                        >
                             充值
                         </TText>
                     )}
@@ -215,6 +214,9 @@ export default function PageLayout({
                             strokeWidth={4}
                             style={{ cursor: "pointer" }}
                         />
+                    </div>
+                    <div className="user-center" onClick={() => navigate(PageKey.AccountCenter)}>
+                        <TCoinIcon type="user" />
                     </div>
                     <BalanceBoxImg width="100%" />
                     <CoinIcon5Img width="45px" className="coin-icon" />

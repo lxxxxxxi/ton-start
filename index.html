@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,19 +16,26 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="node_modules/eruda/eruda.js"></script>
   <script>eruda.init();</script>
   <script type="text/javascript">
-    function onTelegramAuth(user) {
-      alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-    }
     (function () {
       var src = '//cdn.jsdelivr.net/npm/eruda';
       if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
       document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
       document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
     })();
+
+    (function () {
+      const tele = window.Telegram.WebApp;
+      tele.ready()
+      tele.expand(); //Expands the app on the users' phone to 100% height
+      tele.BackButton.show();
+      tele.SettingsButton.show();
+      tele.setHeaderColor("#fcf6e2")
+      tele.setBackgroundColor("#fcf6e2")
+      tele.enableClosingConfirmation()
+    })()
   </script>
 </body>
 

@@ -32,7 +32,6 @@ export const PageLayoutWrapper = styled.div<{
 }>`
     width: 100%;
     height: 100dvh;
-    padding: 14px 0px;
 
     background: url(${Wave});
     background-color: ${({ theme }) => theme.Colors.Bg2};
@@ -197,6 +196,12 @@ export const PageLayoutWrapper = styled.div<{
                 bottom: 0px;
                 left: -10px;
             }
+
+            .user-center {
+                position: absolute;
+                bottom: 12px;
+                right: -20px;
+            }
         }
 
         .icons-wrapper {
@@ -242,8 +247,8 @@ export const PageLayoutWrapper = styled.div<{
     }
 
     .children-full {
-        transition: all 1s;
-        transform: translateY(-40px);
+        /* transition: all 1s; */
+        /* transform: translateY(-40px); */
     }
 `;
 

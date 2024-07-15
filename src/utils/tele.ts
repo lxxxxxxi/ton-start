@@ -1,7 +1,38 @@
 export const TELE = window.Telegram.WebApp;
 
-export const TELE_MAINBUTTON = TELE.MainButton;
 export const TELE_INITDATA = TELE.initData;
+export const TELE_POPUPPARAMS = TELE.PopupParams;
+export const TELE_MAINBUTTON = TELE.MainButton;
+export const TELE_BACKBUTTON = TELE.BackButton;
+export const TELE_SETTINGSBUTTON = TELE.SettingsButton;
+
+export const useTelegramWebApp = () => {
+    const showPopup = (title: string, message: string) => {
+        TELE.showPopup({
+            title,
+            message,
+            buttons: [{ type: "close" }],
+        });
+    };
+
+    const ready = () => {
+        TELE.ready();
+    };
+
+    const expand = () => {
+        TELE.expand();
+    };
+
+    const showSettingsButton = () => {
+        TELE_SETTINGSBUTTON.show();
+    };
+
+    const showBackButton = () => {
+        TELE_BACKBUTTON.show();
+    };
+
+    return { ready, expand, showPopup, showSettingsButton, showBackButton };
+};
 
 export const getTeleUserName = () => {
     const initdata = TELE_INITDATA;

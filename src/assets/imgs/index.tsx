@@ -10,8 +10,6 @@ import { default as Cloud1 } from "@/assets/imgs/Cloud1.png";
 import { default as Cloud2 } from "@/assets/imgs/Cloud2.png";
 import { default as StartButton } from "@/assets/imgs/StartButton.png";
 import { default as StartButtonPressed } from "@/assets/imgs/StartButtonPressed.png";
-import { default as LoginBanner } from "@/assets/imgs/LoginBanner.gif";
-import { default as Start } from "@/assets/imgs/Start.png";
 
 import { default as CuteIcon1 } from "@/assets/imgs/CuteIcon1.png";
 import { default as CuteIcon2 } from "@/assets/imgs/CuteIcon2.png";
@@ -29,6 +27,7 @@ import { default as LottoGirlIcon1 } from "@/assets/imgs/LottoGirlIcon1.png";
 import { default as Gift } from "@/assets/imgs/Gift.png";
 import { default as CasinoIcon1 } from "@/assets/imgs/CasinoIcon1.png";
 import { default as CasinoIcon2 } from "@/assets/imgs/CasinoIcon2.png";
+import { User } from "react-feather";
 
 // export ——————————————————
 
@@ -39,6 +38,7 @@ export { ReactComponent as CoinIcon1 } from "@/assets/imgs/CoinIcon1.svg";
 export { default as Wave } from "@/assets/imgs/Wave.png";
 export { default as ListBox } from "@/assets/imgs/ListBox.png";
 export { default as ShiningBg } from "@/assets/imgs/ShiningBg.png";
+export { default as CoinIconWrapper } from "@/assets/imgs/CoinIconWrapper.png";
 
 const zoomInOut = keyframes`
   0%, 100% {
@@ -64,8 +64,6 @@ export const Cloud1Img = ({ ...props }) => <img src={Cloud1} {...props} />;
 export const Cloud2Img = ({ ...props }) => <img src={Cloud2} {...props} />;
 export const StartButtonImg = ({ ...props }) => <img src={StartButton} {...props} />;
 export const StartButtonPressedImg = ({ ...props }) => <img src={StartButtonPressed} {...props} />;
-export const LoginBannerImg = ({ ...props }) => <img src={LoginBanner} {...props} />;
-export const StartImg = ({ ...props }) => <img src={Start} {...props} />;
 export const LeaderImg = ({ ...props }) => <img src={Leader} {...props} />;
 export const QuestionIconImg = ({ ...props }) => <img src={QuestionIcon} {...props} />;
 export const BackIconImg = ({ ...props }) => <img src={BackIcon} {...props} />;
