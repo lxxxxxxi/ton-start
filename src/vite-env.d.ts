@@ -1,7 +1,14 @@
 /// <reference types="vite/client" />
-interface Window {
-    Telegram: any;
+
+import { Telegram } from "@twa-dev/types";
+
+declare global {
+    interface Window {
+        Telegram: Telegram;
+    }
 }
+
+window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
 
 // src/@types/svg.d.ts
 declare module "*.svg" {

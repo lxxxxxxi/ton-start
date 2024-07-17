@@ -2526,21 +2526,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@twa-dev/sdk@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@twa-dev/sdk@npm:6.4.2"
+"@twa-dev/sdk@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@twa-dev/sdk@npm:7.0.0"
   dependencies:
-    "@twa-dev/types": ^6.4.2
+    "@twa-dev/types": ^7.0.0
   peerDependencies:
     react: ">=16.0.0"
-  checksum: b3ea5445e427f3ee8d5c47a205df9670787ba5b6c383c08a170d0c45b39c3f1da58b2a18db966048decc3c92557e2ddb9548f0a5d226b9abe98e5f9f83be8f39
+  checksum: d7b855d5fde863a306b2d95f5421757e4c9f7df3aa8eeb9b59f90d53c2c8dbd635d955f20adbabc2a7cbec886fe44b9374486a96359e211ebb28cf3818995275
   languageName: node
   linkType: hard
 
-"@twa-dev/types@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@twa-dev/types@npm:6.4.2"
-  checksum: c2a39d8e90136c00ac87294f9704197f0d4b81a6a9ed2c557809d18252f9c465b1aa465d7ae9c173b4399a0009f8b4f51d1cab5fb49ad4ccc6a538cae8c627e0
+"@twa-dev/types@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@twa-dev/types@npm:7.0.0"
+  checksum: 3f3da1e22717322be2844fdc208eb8b061a16ef27b1eb4f8330f6fcb64228b34cd571b4a2f95254224a37dbde1c04b1e7ed92ce530456444c3f458386f412104
   languageName: node
   linkType: hard
 
@@ -6164,7 +6164,7 @@ __metadata:
     "@svgr/rollup": ^8.1.0
     "@tanstack/react-query": ^4.24.4
     "@tonconnect/ui-react": ^2.0.0-beta.2
-    "@twa-dev/sdk": ^6.4.2
+    "@twa-dev/sdk": ^7.0.0
     "@types/node": ^18.11.18
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
