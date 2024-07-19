@@ -1,14 +1,17 @@
-import AccountCenter from "../pages/AccountCenter";
-import GameList from "../pages/GameList";
-import Pay from "../pages/Pay";
-import Withdraw from "../pages/Withdraw";
-import Login from "../pages/Login";
-import BettingList from "../pages/BettingList";
-import PayHistory from "../pages/PayHistory";
-import WithdrawHistory from "../pages/WithdrawHistory";
+import { lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
-import AccountList from "@/pages/AccountList";
-import GameDetails from "@/pages/Game";
+
+// 动态导入页面组件
+const AccountCenter = lazy(() => import("../pages/AccountCenter"));
+const GameList = lazy(() => import("../pages/GameList"));
+const Pay = lazy(() => import("../pages/Pay"));
+const Withdraw = lazy(() => import("../pages/Withdraw"));
+const Login = lazy(() => import("../pages/Login"));
+const BettingList = lazy(() => import("../pages/BettingList"));
+const PayHistory = lazy(() => import("../pages/PayHistory"));
+const WithdrawHistory = lazy(() => import("../pages/WithdrawHistory"));
+const AccountList = lazy(() => import("@/pages/AccountList"));
+const GameDetails = lazy(() => import("@/pages/Game"));
 
 export enum PageKey {
     AccountCenter = "/account",
@@ -23,56 +26,98 @@ export enum PageKey {
     WithdrawHistory = "/withdraw/history",
 }
 
+const Loading = () => <div>Loading...</div>;
+
 export const routes = [
     {
         key: PageKey.AccountCenter,
         path: "/account",
-        component: <AccountCenter />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <AccountCenter />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.Login,
         path: "/",
-        component: <Login />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <Login />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.GameList,
         path: "/gamelist",
-        component: <GameList />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <GameList />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.Game,
         path: "/game",
-        component: <GameDetails />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <GameDetails />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.AccountList,
         path: "/accountlist",
-        component: <AccountList />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <AccountList />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.Pay,
         path: "/pay",
-        component: <Pay />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <Pay />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.Withdraw,
         path: "/withdraw",
-        component: <Withdraw />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <Withdraw />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.BettingList,
         path: "/bettinglist",
-        component: <BettingList />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <BettingList />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.PayHistory,
         path: "/pay/history",
-        component: <PayHistory />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <PayHistory />
+            </Suspense>
+        ),
     },
     {
         key: PageKey.WithdrawHistory,
         path: "/withdraw/history",
-        component: <WithdrawHistory />,
+        component: (
+            <Suspense fallback={<Loading />}>
+                <WithdrawHistory />
+            </Suspense>
+        ),
     },
 ];
 

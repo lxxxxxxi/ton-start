@@ -15,7 +15,6 @@ import { useHandlePlayGame } from "@/request/loginByTelegramAuth";
 export default function AccountCenter() {
     const navigate = useNavigateTo();
     const { user, updateUserInfo } = useUserInfo();
-    const [game, setGame] = useState<GameListItem>();
     const [searchParams] = useSearchParams();
 
     const code = searchParams.get("code");
@@ -33,28 +32,13 @@ export default function AccountCenter() {
 
     const hanldePlayGame = useHandlePlayGame();
 
-    const { data: gameList } = useAsyncRequest<GameListItem[]>(() => getGameList(), []);
-
-    useEffect(() => {
-        if (code && gamecode && gametype && gameList) {
-            const game = gameList.find(
-                item =>
-                    item.code === code && item.gamecode === gamecode && item.gametype === gametype
-            );
-            if (game) {
-                setGame(game);
-            }
-        }
-    }, [gameList]);
-
     return (
         <PageLayout
             header="我的"
             isNeedStartButton
             handlePlay={() => {
-                if (game) {
-                    console.log(game);
-                    hanldePlayGame(game.code, game.gamecode, game.gametype);
+                if (code && gamecode && gametype) {
+                    hanldePlayGame(code, gamecode, gametype);
                 } else {
                     navigate(PageKey.GameList);
                 }

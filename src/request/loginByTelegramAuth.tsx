@@ -43,16 +43,22 @@ export const useHandlePlayGame = () => {
                 console.log(r.data.balance);
                 const balance = r.data.balance;
                 if (balance > 10) {
-                    playGame(code, gamecode, gametype).then(res => {
-                        const url = res.data.url;
-                        console.log(url);
-                        if (url) {
-                            window.open(url);
+                    playGame(code, gamecode, gametype)
+                        .then(res => {
+                            const url = res.data.url;
+                            console.log(url);
+                            if (url) {
+                                window.open(url);
+                                closeModal();
+                            } else {
+                                openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
+                                navigate(PageKey.GameList);
+                            }
+                        })
+                        .catch(err => {
                             closeModal();
-                        } else {
-                            openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
-                        }
-                    });
+                            navigate(PageKey.GameList);
+                        });
                 } else {
                     openErrorModal(
                         "余额不足",
