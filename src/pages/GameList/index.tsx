@@ -138,6 +138,35 @@ export default function GameList() {
         game.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const hanldePlayGame = (code: string, gamecode: string, gametype: string) => {
+        openLoadingModal("加载中....", <div>游戏正在努力加载中，请稍后。</div>, 60000);
+        if (code && gamecode && gametype) {
+            getBalance().then(r => {
+                console.log(r.data.balance);
+                const balance = r.data.balance;
+                if (balance > 10) {
+                    playGame(code, gamecode, gametype).then(res => {
+                        const url = res.data.url;
+                        console.log(url);
+                        if (url) {
+                            window.open(url);
+                            closeModal();
+                        } else {
+                            openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
+                        }
+                    });
+                } else {
+                    openErrorModal(
+                        "余额不足",
+                        <TButton size="small" onClick={() => navigate(PageKey.Pay)}>
+                            去充值
+                        </TButton>
+                    );
+                }
+            });
+        }
+    };
+
     return (
         <PageLayout header="游戏中心" isNeedHidden>
             <GameListWrapper>
@@ -168,47 +197,10 @@ export default function GameList() {
                                 key={index}
                                 className="card"
                                 onClick={() => {
-                                    openLoadingModal(
-                                        "加载中....",
-                                        <div>游戏正在努力加载中，请稍后。</div>,
-                                        60000
-                                    );
-                                    // console.log(item.code, item.gamecode, item.gametype);
-                                    if (item.code && item.gamecode && item.gametype) {
-                                        getBalance().then(r => {
-                                            console.log(r.data.balance);
-                                            const balance = r.data.balance;
-                                            if (balance > 10) {
-                                                playGame(
-                                                    item.code,
-                                                    item.gamecode,
-                                                    item.gametype
-                                                ).then(res => {
-                                                    const url = res.data.url;
-                                                    console.log(url);
-                                                    if (url) {
-                                                        window.open(url);
-                                                        closeModal();
-                                                    } else {
-                                                        openErrorModal(
-                                                            "游戏加载异常",
-                                                            <div>请联系 TG 管理员</div>
-                                                        );
-                                                    }
-                                                });
-                                            } else {
-                                                openErrorModal(
-                                                    "余额不足",
-                                                    <TButton
-                                                        size="small"
-                                                        onClick={() => navigate(PageKey.Pay)}
-                                                    >
-                                                        去充值
-                                                    </TButton>
-                                                );
-                                            }
-                                        });
-                                    }
+                                    hanldePlayGame(item.code, item.gamecode, item.gametype);
+                                    // navigate(
+                                    //     `/game?code=${item.code}&gamecode=${item.gamecode}&gametype=${item.gametype}`
+                                    // );
                                 }}
                             >
                                 <img src={item.img} alt={item.name} />

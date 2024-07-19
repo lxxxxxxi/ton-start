@@ -8,11 +8,13 @@ import PayHistory from "../pages/PayHistory";
 import WithdrawHistory from "../pages/WithdrawHistory";
 import { useNavigate } from "react-router-dom";
 import AccountList from "@/pages/AccountList";
+import GameDetails from "@/pages/Game";
 
 export enum PageKey {
     AccountCenter = "/account",
     Login = "/",
     GameList = "/gamelist",
+    Game = "/game",
     AccountList = "/accountlist",
     Pay = "/pay",
     Withdraw = "/withdraw",
@@ -36,6 +38,11 @@ export const routes = [
         key: PageKey.GameList,
         path: "/gamelist",
         component: <GameList />,
+    },
+    {
+        key: PageKey.Game,
+        path: "/game",
+        component: <GameDetails />,
     },
     {
         key: PageKey.AccountList,
