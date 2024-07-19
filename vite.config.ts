@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
                 "@": path.resolve(__dirname, "./src"),
             },
         },
-        plugins: [react(), svgr(), nodePolyfills(), erudaPlugin()],
+        plugins: [react(), svgr(), nodePolyfills()],
         base: process.env.VITE_GITHUB_REPOSITORY,
         esbuild: {
             drop: mode === "prod" ? ["console", "debugger"] : [],
