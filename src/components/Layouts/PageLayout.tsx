@@ -42,11 +42,13 @@ export default function PageLayout({
     isNeedStartButton = false,
     isNeedHidden = false,
     children,
+    handlePlay,
 }: {
     header: string;
     isNeedStartButton?: boolean;
     isNeedHidden?: boolean;
     children: React.ReactNode;
+    handlePlay?: () => void;
 }) {
     const { pathname } = useLocation();
     const navigate = useNavigateTo();
@@ -148,11 +150,11 @@ export default function PageLayout({
                 {children}
             </div>
             <div className="footer" ref={footerRef}>
-                {isNeedStartButton && (
+                {isNeedStartButton && handlePlay && (
                     <div className="button-wrapper">
                         <StartButtonImg width="200px" className="start-button" />
                         <StartButtonPressedImg width="200px" className="start-button-pressed" />
-                        <div className="start-text" onClick={() => navigate(PageKey.GameList)}>
+                        <div className="start-text" onClick={handlePlay}>
                             PLAY
                         </div>
                     </div>

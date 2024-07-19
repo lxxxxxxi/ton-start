@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AppWrapper from "../../components/AppWrapper";
 import styled from "styled-components";
-import axios from "axios";
-import { useAsyncInitialize } from "../../hooks/useAsyncInitialize";
 import { GameListItem } from "../../utils/interface";
 import { useAsyncRequest } from "../../hooks/useAsyncRequest";
 import { GameType, getBalance, getGameList, playGame } from "../../request/requests";
@@ -10,12 +7,10 @@ import PageLayout from "@/components/Layouts/PageLayout";
 import TDropdown from "@/components/Common/TDropDown";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import TLoadingBar from "@/components/Common/TLoadingBar";
-import { useModalState } from "@/states/useModalState";
-import { TButton } from "@/components/Common/TButton";
-import { PageKey } from "@/utils/routes";
 import { useTelegramWebApp } from "@/utils/tele";
 import TInput from "@/components/Common/TInput";
 import { Search } from "react-feather";
+import { useHandlePlayGame } from "@/request/loginByTelegramAuth";
 
 const GameListWrapper = styled.div`
     .game-header {
@@ -102,8 +97,9 @@ export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    const { openLoadingModal, openErrorModal, closeModal } = useModalState();
     const navigate = useNavigate();
+
+    const hanldePlayGame = useHandlePlayGame();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
         () =>
@@ -137,35 +133,6 @@ export default function GameList() {
     const filteredGameList = gameList?.filter(game =>
         game.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
-    const hanldePlayGame = (code: string, gamecode: string, gametype: string) => {
-        openLoadingModal("加载中....", <div>游戏正在努力加载中，请稍后。</div>, 60000);
-        if (code && gamecode && gametype) {
-            getBalance().then(r => {
-                console.log(r.data.balance);
-                const balance = r.data.balance;
-                if (balance > 10) {
-                    playGame(code, gamecode, gametype).then(res => {
-                        const url = res.data.url;
-                        console.log(url);
-                        if (url) {
-                            window.open(url);
-                            closeModal();
-                        } else {
-                            openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
-                        }
-                    });
-                } else {
-                    openErrorModal(
-                        "余额不足",
-                        <TButton size="small" onClick={() => navigate(PageKey.Pay)}>
-                            去充值
-                        </TButton>
-                    );
-                }
-            });
-        }
-    };
 
     return (
         <PageLayout header="游戏中心" isNeedHidden>
