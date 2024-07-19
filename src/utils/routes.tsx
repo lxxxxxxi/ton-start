@@ -1,3 +1,4 @@
+import { Dots } from "@/components/Common/TLoadingBar";
 import { lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +27,11 @@ export enum PageKey {
     WithdrawHistory = "/withdraw/history",
 }
 
-const Loading = () => <div>Loading...</div>;
+const Loading = () => (
+    <div style={{ textAlign: "center" }}>
+        <Dots>Loading</Dots>
+    </div>
+);
 
 export const routes = [
     {
