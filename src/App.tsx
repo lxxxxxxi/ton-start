@@ -4,7 +4,6 @@ import styled, { ThemeProvider } from "styled-components";
 import { FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
-import "@twa-dev/sdk";
 import { Route, HashRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import TAlert from "./components/Common/TAlert";
 import { useAlertState } from "./states/useAlertState";

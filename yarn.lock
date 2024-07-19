@@ -2526,24 +2526,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@twa-dev/sdk@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@twa-dev/sdk@npm:7.0.0"
-  dependencies:
-    "@twa-dev/types": ^7.0.0
-  peerDependencies:
-    react: ">=16.0.0"
-  checksum: d7b855d5fde863a306b2d95f5421757e4c9f7df3aa8eeb9b59f90d53c2c8dbd635d955f20adbabc2a7cbec886fe44b9374486a96359e211ebb28cf3818995275
-  languageName: node
-  linkType: hard
-
-"@twa-dev/types@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@twa-dev/types@npm:7.0.0"
-  checksum: 3f3da1e22717322be2844fdc208eb8b061a16ef27b1eb4f8330f6fcb64228b34cd571b4a2f95254224a37dbde1c04b1e7ed92ce530456444c3f458386f412104
-  languageName: node
-  linkType: hard
-
 "@types/estree@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/estree@npm:1.0.0"
@@ -6164,7 +6146,6 @@ __metadata:
     "@svgr/rollup": ^8.1.0
     "@tanstack/react-query": ^4.24.4
     "@tonconnect/ui-react": ^2.0.0-beta.2
-    "@twa-dev/sdk": ^7.0.0
     "@types/node": ^18.11.18
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10

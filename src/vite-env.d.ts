@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { Telegram } from "@twa-dev/types";
+import { Telegram } from "./utils/twa-types";
 
 declare global {
     interface Window {

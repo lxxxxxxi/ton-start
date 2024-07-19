@@ -32,7 +32,6 @@ import { User } from "react-feather";
 // export ——————————————————
 
 // svg
-export { ReactComponent as CoinIcon1 } from "@/assets/imgs/CoinIcon1.svg";
 
 // img
 export { default as Wave } from "@/assets/imgs/Wave.png";
