@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TInput from "../../components/Common/TInput";
 import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
 import { useTonAddress, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";

@@ -6,6 +6,7 @@ const DropdownContainer = styled.div`
     position: relative;
     width: 100%;
     padding-right: 3px;
+    height: 50px;
 `;
 
 const DropdownButton = styled.button`

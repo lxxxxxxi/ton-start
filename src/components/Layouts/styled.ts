@@ -154,7 +154,7 @@ export const PageLayoutWrapper = styled.div<{
             z-index: ${ZIndexConfig.balance_box};
             transform: translateX(-50%);
 
-            width: 62%;
+            width: 54%;
 
             .recharge {
                 position: absolute;
@@ -166,6 +166,7 @@ export const PageLayoutWrapper = styled.div<{
                     -2px -2px #fff, 2px -2px #fff, -2px 2px #fff;
                 letter-spacing: 2px;
                 animation: ${wobble} 1.5s infinite;
+                cursor: pointer;
             }
 
             .balance-text {
@@ -198,8 +199,9 @@ export const PageLayoutWrapper = styled.div<{
 
             .user-center {
                 position: absolute;
-                bottom: 12px;
+                bottom: 10px;
                 right: -20px;
+                cursor: pointer;
             }
         }
 

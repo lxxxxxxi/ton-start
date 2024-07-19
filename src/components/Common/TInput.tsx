@@ -1,48 +1,67 @@
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const InputContainer = styled.div`
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 5px 16px;
-    background-color: #fff;
+const TextInput = styled.input<{ hasSuffix: boolean }>`
+    width: 100%;
     height: 50px;
-`;
-
-const Prefix = styled.span`
-    margin-right: 8px;
-    color: #888;
-    display: flex;
-    align-items: center;
-`;
-
-const StyledInput = styled.input`
-    border: none;
-    outline: none;
-    flex: 1;
+    padding: 8px 16px;
+    background-color: #fff;
+    border: 3px solid #341d1a;
+    border-radius: 10px;
     font-size: 16px;
-    color: #333;
+    font-weight: 600;
+    box-shadow: 2px 4px 0px #525791;
+    text-shadow: 2px 2px 1px #bebebf;
+    outline: none;
 
-    ::placeholder {
-        color: #cdcdcd;
+    padding-right: ${props => (props.hasSuffix ? "40px" : "16px")};
+
+    &:focus {
+        border-color: #525791;
+        box-shadow: 2px 4px 0px #341d1a;
     }
 `;
 
-const TInput = ({
-    prefix,
-    placeholder,
-    ...props
-}: {
-    prefix: React.ReactNode;
-    placeholder: string;
-    props?: InputHTMLAttributes<HTMLInputElement>;
-}) => (
-    <InputContainer>
-        {prefix && <Prefix>{prefix}</Prefix>}
-        <StyledInput placeholder={placeholder} {...props} />
-    </InputContainer>
-);
+const TextInputWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    padding-right: 3px;
+`;
 
-export default TInput;
+const SuffixIcon = styled.span`
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+`;
+
+const TextInputField = ({
+    value,
+    onChange,
+    placeholder,
+    suffixIcon,
+}: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+    suffixIcon?: React.ReactNode;
+}) => {
+    return (
+        <TextInputWrapper>
+            <TextInput
+                type="text"
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                hasSuffix={Boolean(suffixIcon)}
+            />
+            {suffixIcon && <SuffixIcon>{suffixIcon}</SuffixIcon>}
+        </TextInputWrapper>
+    );
+};
+
+export default TextInputField;

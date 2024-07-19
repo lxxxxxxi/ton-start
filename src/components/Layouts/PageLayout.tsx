@@ -60,6 +60,7 @@ export default function PageLayout({
         pathname.includes(PageKey.WithdrawHistory);
 
     const isPayPage = pathname == PageKey.Pay;
+    const isGameListPage = pathname == PageKey.GameList;
 
     const menuLists = [
         {
@@ -68,30 +69,6 @@ export default function PageLayout({
             icon: <User size={18} strokeWidth={3} />,
             path: PageKey.AccountCenter,
         },
-        // {
-        //     key: "2",
-        //     name: "账户明细",
-        //     icon: <FileText size={18} strokeWidth={3} />,
-        //     path: PageKey.AccountList,
-        // },
-        // {
-        //     key: "3",
-        //     name: "投注记录",
-        //     icon: <List size={18} strokeWidth={3} />,
-        //     path: PageKey.BettingList,
-        // },
-        // {
-        //     key: "4",
-        //     name: "充值记录",
-        //     icon: <DollarSign size={18} strokeWidth={3} />,
-        //     path: PageKey.PayHistory,
-        // },
-        // {
-        //     key: "5",
-        //     name: "提现记录",
-        //     icon: <CreditCard size={18} strokeWidth={3} />,
-        //     path: PageKey.WithdrawHistory,
-        // },
         {
             key: "8",
             name: "Tg 客服",
@@ -99,18 +76,6 @@ export default function PageLayout({
             path: undefined,
             link: "https://t.me/xpocketgames",
         },
-        // {
-        //     // key: "6",
-        //     // name: "查看优惠",
-        //     // icon: < size={18} strokeWidth={3} />,
-        //     // path: PageKey.,
-        // },
-        // {
-        //     // key: "7",
-        //     // name: "推广赚钱",
-        //     // icon: < size={18} strokeWidth={3} />,
-        //     // path: PageKey.,
-        // },
     ];
 
     const childrenRef = useRef<HTMLDivElement>(null);

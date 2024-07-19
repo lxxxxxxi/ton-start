@@ -14,38 +14,51 @@ import { useModalState } from "@/states/useModalState";
 import { TButton } from "@/components/Common/TButton";
 import { PageKey } from "@/utils/routes";
 import { useTelegramWebApp } from "@/utils/tele";
+import TInput from "@/components/Common/TInput";
+import { Search } from "react-feather";
 
 const GameListWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-    row-gap: 20px;
-    padding: 0px 10px;
+    .game-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
 
-    .card {
-        width: 28%;
-        border: 2px solid #341d1a;
-        background-color: #ffffff;
-        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
-        overflow: hidden;
-
-        :hover {
-            cursor: pointer;
-            transform: scale(1.05);
-            transition: all 0.3s;
+        .search {
+            width: 60%;
         }
+        .type {
+            width: 40%;
+        }
+    }
+    .list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(28%, 1fr));
+        gap: 20px;
+        padding: 20px 4px;
 
-        img {
-            width: 100%;
-            aspect-ratio: 1;
+        .card {
+            border: 2px solid #341d1a;
+            background-color: #ffffff;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
             overflow: hidden;
-        }
 
-        .title {
-            text-align: center;
-            font-size: 14px;
+            :hover {
+                cursor: pointer;
+                transform: scale(1.05);
+                transition: all 0.3s;
+            }
+
+            img {
+                width: 100%;
+                aspect-ratio: 1;
+                overflow: hidden;
+            }
+
+            .title {
+                text-align: center;
+                font-size: 14px;
+            }
         }
     }
 `;
@@ -87,6 +100,8 @@ const GameTypeOptions = [
 
 export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
     const { openLoadingModal, openErrorModal, closeModal } = useModalState();
     const navigate = useNavigate();
 
@@ -113,42 +128,62 @@ export default function GameList() {
         setSearchParams({ type: key });
     };
 
-    const { ready, expand, showSettingsButton, showBackButton, setBackButtonCallback } =
-        useTelegramWebApp();
+    const { setBackButtonCallback } = useTelegramWebApp();
 
     useEffect(() => {
         setBackButtonCallback(() => navigate(-1));
     }, []);
 
+    const filteredGameList = gameList?.filter(game =>
+        game.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <PageLayout header="游戏中心" isNeedHidden>
             <GameListWrapper>
-                <TDropdown
-                    value={selectedTypeOption}
-                    changeSelected={handleTypeChange}
-                    options={GameTypeOptions}
-                />
+                <div className="game-header">
+                    <div className="search">
+                        <TInput
+                            placeholder="Search...."
+                            suffixIcon={<Search size={"20px"} />}
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+                    <div className="type">
+                        <TDropdown
+                            value={selectedTypeOption}
+                            changeSelected={handleTypeChange}
+                            options={GameTypeOptions}
+                        />
+                    </div>
+                </div>
+
                 {loading ? (
                     <TLoadingBar text="正在加载游戏列表" />
                 ) : (
-                    gameList?.map((item, index) => (
-                        <div
-                            key={index}
-                            className="card"
-                            onClick={() => {
-                                openLoadingModal(
-                                    "加载中....",
-                                    <div>游戏正在努力加载中，请稍后。</div>,
-                                    60000
-                                );
-                                // console.log(item.code, item.gamecode, item.gametype);
-                                if (item.code && item.gamecode && item.gametype) {
-                                    getBalance().then(r => {
-                                        console.log(r.data.balance);
-                                        const balance = r.data.balance;
-                                        if (balance > 10) {
-                                            playGame(item.code, item.gamecode, item.gametype).then(
-                                                res => {
+                    <div className="list">
+                        {filteredGameList?.map((item, index) => (
+                            <div
+                                key={index}
+                                className="card"
+                                onClick={() => {
+                                    openLoadingModal(
+                                        "加载中....",
+                                        <div>游戏正在努力加载中，请稍后。</div>,
+                                        60000
+                                    );
+                                    // console.log(item.code, item.gamecode, item.gametype);
+                                    if (item.code && item.gamecode && item.gametype) {
+                                        getBalance().then(r => {
+                                            console.log(r.data.balance);
+                                            const balance = r.data.balance;
+                                            if (balance > 10) {
+                                                playGame(
+                                                    item.code,
+                                                    item.gamecode,
+                                                    item.gametype
+                                                ).then(res => {
                                                     const url = res.data.url;
                                                     console.log(url);
                                                     if (url) {
@@ -160,37 +195,28 @@ export default function GameList() {
                                                             <div>请联系 TG 管理员</div>
                                                         );
                                                     }
-                                                }
-                                            );
-                                        } else {
-                                            openErrorModal(
-                                                "余额不足",
-                                                <TButton
-                                                    size="small"
-                                                    onClick={() => navigate(PageKey.Pay)}
-                                                >
-                                                    去充值
-                                                </TButton>
-                                            );
-                                        }
-                                    });
-                                }
-                            }}
-                        >
-                            <img src={item.img} alt={item.name} />
-                            <div className="title">{item.name}</div>
-                        </div>
-                    ))
+                                                });
+                                            } else {
+                                                openErrorModal(
+                                                    "余额不足",
+                                                    <TButton
+                                                        size="small"
+                                                        onClick={() => navigate(PageKey.Pay)}
+                                                    >
+                                                        去充值
+                                                    </TButton>
+                                                );
+                                            }
+                                        });
+                                    }
+                                }}
+                            >
+                                <img src={item.img} alt={item.name} />
+                                <div className="title">{item.name}</div>
+                            </div>
+                        ))}
+                    </div>
                 )}
-                {/* <button
-                    onClick={() =>
-                        window.open(
-                            "https://gci.b777752.com/forwardGame.do?params=bJJ7qozamLJ8HT+4YobGbMqkB+eu7hBfgAedn3FjxE+cyQt9NHV4ou6oOphVMWsfs3cgf2GQZe/fAIXXYfMw5Qn7gjhDzWEXFrUu7bviteDPaj6mIDZr4Qw60MmanxKYT4IogWHJAacbAVwNhztEh38khiZRwJ2XkFXA4NTjbJEbt9Cp19hYaZ9vqISxZLD1I/QkRa/Pd4bxYPMawFA+XqQtbguQ0nfsqsreL5SNx4vNWcMlFciVIjtnjDaT5hK8q0TNZejwye15SitNKDxo9JtfZtHjpcr17l1L022MuII=&key=3ea8e2ba833fe0fa4564f13fd2025822"
-                        )
-                    }
-                >
-                    open
-                </button> */}
             </GameListWrapper>
         </PageLayout>
     );
