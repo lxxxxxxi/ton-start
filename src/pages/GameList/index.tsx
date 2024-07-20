@@ -7,7 +7,6 @@ import PageLayout from "@/components/Layouts/PageLayout";
 import TDropdown from "@/components/Common/TDropDown";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import TLoadingBar from "@/components/Common/TLoadingBar";
-import { useTelegramWebApp } from "@/utils/tele";
 import TInput from "@/components/Common/TInput";
 import { Search } from "react-feather";
 import { useHandlePlayGame } from "@/request/loginByTelegramAuth";
@@ -97,8 +96,6 @@ export default function GameList() {
     const [selectedTypeOption, setSelectedTypeOption] = useState<string>("0");
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    const navigate = useNavigate();
-
     const hanldePlayGame = useHandlePlayGame();
 
     const { data: gameList, loading } = useAsyncRequest<GameListItem[]>(
@@ -123,12 +120,6 @@ export default function GameList() {
         setSelectedTypeOption(key);
         setSearchParams({ type: key });
     };
-
-    const { setBackButtonCallback } = useTelegramWebApp();
-
-    useEffect(() => {
-        setBackButtonCallback(() => navigate(-1));
-    }, []);
 
     const filteredGameList = gameList?.filter(game =>
         game.name.toLowerCase().includes(searchQuery.toLowerCase())

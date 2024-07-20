@@ -10,6 +10,8 @@ import { useAlertState } from "./states/useAlertState";
 import { routes } from "./utils/routes";
 import { theme } from "./utils/theme";
 import Modal from "./components/Modal";
+import { useEffect } from "react";
+import { useTelegramWebApp } from "@/utils/tele";
 
 const StyledApp = styled.div`
     background-color: ${({ theme }) => theme.Colors.Bg1};
@@ -24,6 +26,12 @@ const AppContainer = styled.div`
 
 function App() {
     const { alertState, resetAlertState } = useAlertState();
+    const { setBackButtonCallback } = useTelegramWebApp();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setBackButtonCallback(() => navigate(-1));
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
