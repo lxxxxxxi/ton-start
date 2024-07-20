@@ -33,7 +33,7 @@ import ToolTips from "../MenuList";
 import { MenuListContent, PageLayoutWrapper } from "./styled";
 import { TButton } from "../Common/TButton";
 import TText from "../Common/TText";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TCoinIcon from "../Common/TCoinIcon";
 import { useTelegramWebApp } from "@/utils/tele";
 
@@ -63,6 +63,13 @@ export default function PageLayout({
 
     const isPayPage = pathname == PageKey.Pay;
     const isGameListPage = pathname == PageKey.GameList;
+
+    const { setBackButtonCallback } = useTelegramWebApp();
+
+    const navigateTo = useNavigate();
+    useEffect(() => {
+        setBackButtonCallback(() => navigateTo(-1));
+    }, []);
 
     const menuLists = [
         {

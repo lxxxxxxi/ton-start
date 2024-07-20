@@ -26,12 +26,6 @@ const AppContainer = styled.div`
 
 function App() {
     const { alertState, resetAlertState } = useAlertState();
-    const { setBackButtonCallback } = useTelegramWebApp();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        setBackButtonCallback(() => navigate(-1));
-    }, []);
 
     return (
         <ThemeProvider theme={theme}>
