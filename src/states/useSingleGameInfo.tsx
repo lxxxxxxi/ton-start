@@ -1,5 +1,7 @@
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { singleGameInfoAtom } from "./atoms";
 
 export interface SingleGameInfo {
     code: string;
@@ -8,10 +10,14 @@ export interface SingleGameInfo {
 }
 
 export const useSingleGameInfo = () => {
-    const [gameInfo, setGameInfo] = useState<SingleGameInfo | null>(null);
+    const [gameInfo, setGameInfo] = useAtom<SingleGameInfo | null>(singleGameInfoAtom);
     const [searchParams] = useSearchParams();
 
+    console.log("gameInfo", gameInfo);
+
     const initGameInfo = () => {
+        if (gameInfo) return null;
+
         const code = searchParams.get("code");
         const gamecode = searchParams.get("gamecode");
         const gametype = searchParams.get("gametype");

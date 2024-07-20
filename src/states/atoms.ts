@@ -25,4 +25,4 @@ export const initModalState: ModalState = {
 };
 export const modalStateAtom = atom<ModalState>(initModalState);
 
-export const gameInfoAtom = atom<SingleGameInfo | null>(null);
+export const singleGameInfoAtom = atom<SingleGameInfo | null>(null);
