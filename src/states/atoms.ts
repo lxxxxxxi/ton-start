@@ -2,6 +2,7 @@ import { atom } from "jotai";
 import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import { AlertState } from "./useAlertState";
 import { ModalState } from "./useModalState";
+import { SingleGameInfo } from "./useSingleGameInfo";
 
 export const userInfoAtom = atom<TelegramUser | null>(null);
 export const userBalanceAtom = atom<number | null>(null);
@@ -23,3 +24,5 @@ export const initModalState: ModalState = {
     loadingState: null,
 };
 export const modalStateAtom = atom<ModalState>(initModalState);
+
+export const gameInfoAtom = atom<SingleGameInfo | null>(null);

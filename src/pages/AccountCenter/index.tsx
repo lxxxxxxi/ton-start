@@ -11,15 +11,17 @@ import { TelegramUser } from "./TelegramLoginButton";
 import { GameListItem } from "@/utils/interface";
 import { useEffect, useState } from "react";
 import { useHandlePlayGame } from "@/request/loginByTelegramAuth";
+import { useSingleGameInfo } from "@/states/useSingleGameInfo";
 
 export default function AccountCenter() {
     const navigate = useNavigateTo();
     const { user, updateUserInfo } = useUserInfo();
-    const [searchParams] = useSearchParams();
+    const { gameInfo, initGameInfo } = useSingleGameInfo();
+    const hanldePlayGame = useHandlePlayGame();
 
-    const code = searchParams.get("code");
-    const gamecode = searchParams.get("gamecode");
-    const gametype = searchParams.get("gametype");
+    useEffect(() => {
+        initGameInfo();
+    }, []);
 
     const getTgProfileCallback = (data: TelegramUser) => {
         if (data.id) {
@@ -30,14 +32,13 @@ export default function AccountCenter() {
     };
     useAsyncRequest(getTgProfile, [], getTgProfileCallback);
 
-    const hanldePlayGame = useHandlePlayGame();
-
     return (
         <PageLayout
             header="我的"
             isNeedStartButton
             handlePlay={() => {
-                if (code && gamecode && gametype) {
+                if (gameInfo) {
+                    const { code, gamecode, gametype } = gameInfo;
                     hanldePlayGame(code, gamecode, gametype);
                 } else {
                     navigate(PageKey.GameList);

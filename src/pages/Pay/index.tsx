@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
@@ -21,6 +21,7 @@ import PageLayout from "@/components/Layouts/PageLayout";
 import { CoinWrapper } from "@/components/styled/styled";
 import { PageKey, useNavigateTo } from "@/utils/routes";
 import { useModalState } from "@/states/useModalState";
+import { useSingleGameInfo } from "@/states/useSingleGameInfo";
 
 // {
 //     "address": "0:6ed9e9ed8d806f91c9afec2497b70c19d2b5e002f387106b8444877040887ae1",
@@ -74,6 +75,11 @@ export default function Pay() {
     const [tonConnectUI, setOptions] = useTonConnectUI();
     const navigate = useNavigateTo();
     const { openSuccessModal, openLoadingModal } = useModalState();
+    const { initGameInfo } = useSingleGameInfo();
+
+    useEffect(() => {
+        initGameInfo();
+    }, []);
 
     const handleRecharge = () => {
         // const msg = {
