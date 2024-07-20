@@ -54,6 +54,19 @@ export default function PageLayout({
     const navigate = useNavigateTo();
     const { balance, loading: isLoadingBalance, fetchAndUpdateUserBalance } = useBalance();
 
+    // State to keep track of clicks
+    const [clickCounter, setClickCounter] = useState(0);
+
+    const handleCoinClick = () => {
+        const newCount = clickCounter + 1;
+        setClickCounter(newCount);
+
+        if (newCount === 10) {
+            window.enableEruda();
+            setClickCounter(0);
+        }
+    };
+
     const shouldChildUnderCloud =
         pathname.includes(PageKey.GameList) ||
         pathname.includes(PageKey.BettingList) ||
@@ -179,7 +192,7 @@ export default function PageLayout({
                         </TText>
                     )}
                     <div className="balance-text">
-                        <CoinWrapper>¥</CoinWrapper>
+                        <CoinWrapper onClick={handleCoinClick}>¥</CoinWrapper>
                         <span className="balance-num">
                             {isLoadingBalance ? <TLoader /> : balance || 0}
                         </span>

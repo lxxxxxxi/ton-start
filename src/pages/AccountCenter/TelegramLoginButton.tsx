@@ -27,6 +27,7 @@ declare global {
         TelegramLoginWidget: {
             dataOnauth: (user: TelegramUser) => void;
         };
+        enableEruda: () => void;
     }
 }
 
