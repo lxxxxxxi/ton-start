@@ -4,7 +4,12 @@ import { TButton } from "../../components/Common/TButton";
 import AppWrapper from "../../components/AppWrapper";
 import { useTonAddress, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useFaucetJettonContract } from "../../hooks/useFaucetJettonContract";
-import { RECHARGE_MAX, RECHARGE_MIN, USDT_MASTER_ADDRESS } from "../../utils/constant";
+import {
+    RECHARGE_MAX,
+    RECHARGE_MIN,
+    USDT_DECIMALS,
+    USDT_MASTER_ADDRESS,
+} from "../../utils/constant";
 import { Jetton } from "../../components/Jetton";
 import { Counter } from "../../components/Counter";
 import TNumberInput from "../../components/Common/TNumberInput";
@@ -126,7 +131,7 @@ export default function Pay() {
         const TRANSFER = 0xf8a7ea5; // transfer operation code
         const destinationAddress = Address.parse(DESTINATION_ADDRESS);
 
-        const amountToTransfer = Math.floor(amount * 10 ** 9);
+        const amountToTransfer = Math.floor(amount * 10 ** USDT_DECIMALS);
 
         if (!jettonWalletAddress || !orderNo || !destinationAddress) {
             throw new Error(
