@@ -3,7 +3,6 @@ import { TelegramUser } from "../pages/AccountCenter/TelegramLoginButton";
 import apiRequest from "./apiRequest";
 import axios from "axios";
 import { errorMonitor } from "events";
-import { API_BASE_URL2 } from "@/utils/envs";
 
 export const getExchangeRate = () => {
     return axios.get("https://api.coinbase.com/v2/exchange-rates?currency=USDT");
