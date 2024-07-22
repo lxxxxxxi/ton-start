@@ -11,6 +11,15 @@ export function useTonClient() {
     return {
         client: useAsyncInitialize(async () => {
             if (!network) return;
+
+            console.log(
+                network,
+                await getHttpEndpoint({
+                    network: "testnet",
+                    // network: "mainnet",
+                })
+            );
+
             return new TonClient({
                 endpoint: await getHttpEndpoint({
                     network: network === CHAIN.MAINNET ? "mainnet" : "testnet",

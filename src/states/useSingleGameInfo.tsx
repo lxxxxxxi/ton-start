@@ -13,8 +13,6 @@ export const useSingleGameInfo = () => {
     const [gameInfo, setGameInfo] = useAtom<SingleGameInfo | null>(singleGameInfoAtom);
     const [searchParams] = useSearchParams();
 
-    console.log("gameInfo", gameInfo);
-
     const initGameInfo = () => {
         if (gameInfo) return null;
 

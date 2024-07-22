@@ -30,6 +30,7 @@ export function useFaucetJettonContract(jettonMasterAddress: string) {
         const jettonWalletAddress = await faucetJettonContract!.getWalletAddress(
             Address.parse(wallet!)
         );
+
         return client!.open(
             new FaucetJettonWallet(Address.parse(jettonWalletAddress))
         ) as OpenedContract<FaucetJettonWallet>;
@@ -53,15 +54,6 @@ export function useFaucetJettonContract(jettonMasterAddress: string) {
     return {
         mint: () => {
             faucetJettonContract?.sendMintFromFaucet(sender, Address.parse(wallet!));
-        },
-        transfer: (toAddress: string) => {
-            jwContract?.sendTransfer(
-                sender,
-                Address.parse(toAddress!),
-                1,
-                Address.parse(jwContract?.address.toString()!),
-                "comment text"
-            );
         },
         jettonWalletAddress: jwContract?.address.toString(),
         balance: isFetching ? cachedBalance : data,
