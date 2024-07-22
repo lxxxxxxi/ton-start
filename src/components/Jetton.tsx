@@ -16,12 +16,14 @@ export function Jetton() {
     const [balanceByApi, setBalanceByApi] = useState<number>(0);
 
     const fetchBalance = async (jettonWalletAddress?: string) => {
+        console.log("jettonWalletAddress", jettonWalletAddress);
         if (!jettonWalletAddress) return null;
         try {
             const res = await axios.get(
                 `https://tonapi.io/v2/blockchain/accounts/${jettonWalletAddress}/methods/get_wallet_data`
             );
             const balance = res?.data?.decoded?.balance;
+            console.log("balance", balance);
             if (balance) setBalanceByApi(balance);
         } catch (err) {
             console.log(err);
@@ -30,7 +32,7 @@ export function Jetton() {
 
     useEffect(() => {
         fetchBalance(jettonWalletAddress);
-    }, []);
+    }, [jettonWalletAddress]);
 
     const balanceByApiFormat = balanceByApi / 10 ** USDT_DECIMALS;
 
