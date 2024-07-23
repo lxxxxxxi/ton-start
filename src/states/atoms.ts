@@ -26,3 +26,5 @@ export const initModalState: ModalState = {
 export const modalStateAtom = atom<ModalState>(initModalState);
 
 export const singleGameInfoAtom = atom<SingleGameInfo | null>(null);
+
+export const gameUrlAtom = atom<string | null>(null);

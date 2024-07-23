@@ -26,7 +26,7 @@ export enum PageKey {
     BettingList = "/bettinglist",
     PayHistory = "/pay/history",
     WithdrawHistory = "/withdraw/history",
-    Play = "play",
+    Play = "/play",
 }
 
 const Loading = () => (

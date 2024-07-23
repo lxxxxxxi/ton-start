@@ -18,8 +18,7 @@ export default function AccountCenter() {
     const { user, updateUserInfo } = useUserInfo();
     const { gameInfo, initGameInfo } = useSingleGameInfo();
 
-    const [url, setUrl] = useState<string>("");
-    const hanldePlayGame = useHandlePlayGame(u => setUrl(u));
+    const hanldePlayGame = useHandlePlayGame();
 
     useEffect(() => {
         initGameInfo();
@@ -115,7 +114,7 @@ export default function AccountCenter() {
                     </div>
                 </div>
 
-                <div onClick={() => window.open(url)}>window.open</div>
+                {/* <div onClick={() => window.open(url)}>window.open</div> */}
             </AccountCenterWrapper>
         </PageLayout>
     );

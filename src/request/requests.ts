@@ -94,7 +94,7 @@ export const playGame = (apiCode: string, gameCode: string, gameType: string) =>
             apiCode,
             gameCode,
             gameType,
-            isMobile: isMobile() ? 1 : 0, // 0 电脑板 1手机版 默认 1
+            isMobile: 1, // 0 电脑板 1手机版 默认 1
         },
     });
 };

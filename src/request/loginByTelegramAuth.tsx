@@ -4,6 +4,7 @@ import { setAccessToken } from "@/utils/accessToken";
 import { TButton } from "@/components/Common/TButton";
 import { useModalState } from "@/states/useModalState";
 import { PageKey, useNavigateTo } from "@/utils/routes";
+import { useGameUrl } from "@/states/useGameUrl";
 
 export const loginByTelegramAuth = (loginCallback?: () => void) => {
     const initData = TELE.initData;
@@ -33,6 +34,7 @@ export const loginByTelegramAuth = (loginCallback?: () => void) => {
 };
 
 export const useHandlePlayGame = (callback?: (url: string) => void) => {
+    const { openGame } = useGameUrl();
     const navigate = useNavigateTo();
     const { openLoadingModal, openErrorModal, closeModal } = useModalState();
 
@@ -49,7 +51,8 @@ export const useHandlePlayGame = (callback?: (url: string) => void) => {
                             console.log(url);
                             if (url) {
                                 if (callback) callback(url);
-                                window.open(url);
+                                openGame(url);
+                                // window.open(url);
                                 closeModal();
                             } else {
                                 openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
