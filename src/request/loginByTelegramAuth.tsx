@@ -32,7 +32,7 @@ export const loginByTelegramAuth = (loginCallback?: () => void) => {
     }
 };
 
-export const useHandlePlayGame = () => {
+export const useHandlePlayGame = (callback?: (url: string) => void) => {
     const navigate = useNavigateTo();
     const { openLoadingModal, openErrorModal, closeModal } = useModalState();
 
@@ -42,12 +42,13 @@ export const useHandlePlayGame = () => {
             getBalance().then(r => {
                 console.log(r.data.balance);
                 const balance = r.data.balance;
-                if (balance > 10) {
+                if (balance > 5) {
                     playGame(code, gamecode, gametype)
                         .then(res => {
                             const url = res.data.url;
                             console.log(url);
                             if (url) {
+                                if (callback) callback(url);
                                 window.open(url);
                                 closeModal();
                             } else {
