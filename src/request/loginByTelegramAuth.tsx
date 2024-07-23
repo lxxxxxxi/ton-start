@@ -1,4 +1,4 @@
-import { TELE } from "@/utils/tele";
+import { TELE, useTelegramWebApp } from "@/utils/tele";
 import { getBalance, loginByTelegramAuthData, playGame } from "./requests";
 import { setAccessToken } from "@/utils/accessToken";
 import { TButton } from "@/components/Common/TButton";
@@ -36,7 +36,8 @@ export const loginByTelegramAuth = (loginCallback?: () => void) => {
 export const useHandlePlayGame = (callback?: (url: string) => void) => {
     const { openGame } = useGameUrl();
     const navigate = useNavigateTo();
-    const { openLoadingModal, openErrorModal, closeModal } = useModalState();
+    const { openLoadingModal, openErrorModal, closeModal, openSuccessModal } = useModalState();
+    const { showMainButton } = useTelegramWebApp();
 
     const hanldePlayGame = (code: string, gamecode: string, gametype: string) => {
         openLoadingModal("加载中....", <div>游戏正在努力加载中，请稍后。</div>, 60000);
@@ -53,7 +54,9 @@ export const useHandlePlayGame = (callback?: (url: string) => void) => {
                                 if (callback) callback(url);
                                 openGame(url);
                                 // window.open(url);
-                                closeModal();
+                                // closeModal();
+                                openSuccessModal("游戏加载成功", <div></div>);
+                                showMainButton("开始游戏", () => window.open(url));
                             } else {
                                 openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
                                 navigate(PageKey.GameList);
