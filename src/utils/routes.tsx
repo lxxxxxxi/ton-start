@@ -1,4 +1,5 @@
 import { Dots } from "@/components/Common/TLoadingBar";
+import Play from "@/pages/Play";
 import { lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,6 +26,7 @@ export enum PageKey {
     BettingList = "/bettinglist",
     PayHistory = "/pay/history",
     WithdrawHistory = "/withdraw/history",
+    Play = "play",
 }
 
 const Loading = () => (
@@ -121,6 +123,15 @@ export const routes = [
         component: (
             <Suspense fallback={<Loading />}>
                 <WithdrawHistory />
+            </Suspense>
+        ),
+    },
+    {
+        key: PageKey.Play,
+        path: "/play",
+        component: (
+            <Suspense fallback={<Loading />}>
+                <Play />
             </Suspense>
         ),
     },
