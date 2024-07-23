@@ -52,7 +52,7 @@ export default function AccountCenter() {
                         <div className="profile-header">
                             {/* <div className="avatar"></div> */}
                             {/* <div className="user-info"></div> */}
-                            <TButton onClick={() => navigate(PageKey.Login)}>Login</TButton>
+                            {/* <TButton onClick={() => navigate(PageKey.Login)}>Login</TButton> */}
                         </div>
                     ) : (
                         <div className="profile-header">
