@@ -114,17 +114,7 @@ export default function AccountCenter() {
                     </div>
                 </div>
 
-                <div
-                    onClick={() => {
-                        setTimeout(() => {
-                            window.open("https://example.com");
-                        }, 1000);
-                    }}
-                >
-                    window.open(delay 1s)
-                </div>
-
-                <div
+                <a
                     onClick={() => {
                         setTimeout(() => {
                             window.open("https://example.com");
@@ -132,28 +122,7 @@ export default function AccountCenter() {
                     }}
                 >
                     window.open(delay 5s)
-                </div>
-
-                <div
-                    onClick={() => {
-                        setTimeout(() => {
-                            window.open("https://example.com");
-                        }, 1000);
-                    }}
-                >
-                    window.open(delay 10s)
-                </div>
-
-                <div
-                    onClick={() => {
-                        setTimeout(() => {
-                            const tele = window.Telegram.WebApp;
-                            tele.openLink("https://example.com");
-                        }, 1000);
-                    }}
-                >
-                    openLink(delay 1s)
-                </div>
+                </a>
 
                 <div
                     onClick={() => {
@@ -164,17 +133,6 @@ export default function AccountCenter() {
                     }}
                 >
                     openLink(delay 5s)
-                </div>
-
-                <div
-                    onClick={() => {
-                        setTimeout(() => {
-                            const tele = window.Telegram.WebApp;
-                            tele.openLink("https://example.com");
-                        }, 1000);
-                    }}
-                >
-                    openLink(delay 10s)
                 </div>
             </AccountCenterWrapper>
         </PageLayout>
