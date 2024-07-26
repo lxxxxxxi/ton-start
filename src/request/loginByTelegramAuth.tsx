@@ -39,40 +39,45 @@ export const useHandlePlayGame = () => {
     const hanldePlayGame = (code: string, gamecode: string, gametype: string) => {
         openLoadingModal("加载中....", <div>游戏正在努力加载中，请稍后。</div>, 60000);
         if (code && gamecode && gametype) {
-            getBalance().then(r => {
-                console.log("balance", r.data.balance);
-                const balance = r.data.balance;
-                if (balance > 0) {
-                    const url = `https://tg888.club/api/v1/game/xplay?token=${getAccessToken()}&apiCode=${code}&gameType=${gametype}&gameCode=${gamecode}`;
-                    console.log("Open", url);
-                    // window.open(url);
-                    TELE.openLink(url)
-                    closeModal();
-                    // playGame(code, gamecode, gametype)
-                    //     .then(res => {
-                    //         const url = res.data.url;
-                    //         console.log(url);
-                    //         if (url) {
-                    //             window.open(url);
-                    //             closeModal();
-                    //         } else {
-                    //             openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
-                    //             navigate(PageKey.GameList);
-                    //         }
-                    //     })
-                    //     .catch(err => {
-                    //         closeModal();
-                    //         navigate(PageKey.GameList);
-                    //     });
-                } else {
-                    openErrorModal(
-                        "余额不足",
-                        <TButton size="small" onClick={() => navigate(PageKey.Pay)}>
-                            去充值
-                        </TButton>
-                    );
-                }
-            });
+            const url = `https://tg888.club/api/v1/game/xplay?token=${getAccessToken()}&apiCode=${code}&gameType=${gametype}&gameCode=${gamecode}`;
+            console.log("Open", url);
+            // window.open(url);
+            TELE.openLink(url);
+
+            // getBalance().then(r => {
+            //     console.log("balance", r.data.balance);
+            //     const balance = r.data.balance;
+            //     if (balance > 0) {
+            //         const url = `https://tg888.club/api/v1/game/xplay?token=${getAccessToken()}&apiCode=${code}&gameType=${gametype}&gameCode=${gamecode}`;
+            //         console.log("Open", url);
+            //         // window.open(url);
+            //         TELE.openLink(url)
+            //         closeModal();
+            //         // playGame(code, gamecode, gametype)
+            //         //     .then(res => {
+            //         //         const url = res.data.url;
+            //         //         console.log(url);
+            //         //         if (url) {
+            //         //             window.open(url);
+            //         //             closeModal();
+            //         //         } else {
+            //         //             openErrorModal("游戏加载异常", <div>请联系 TG 管理员</div>);
+            //         //             navigate(PageKey.GameList);
+            //         //         }
+            //         //     })
+            //         //     .catch(err => {
+            //         //         closeModal();
+            //         //         navigate(PageKey.GameList);
+            //         //     });
+            //     } else {
+            //         openErrorModal(
+            //             "余额不足",
+            //             <TButton size="small" onClick={() => navigate(PageKey.Pay)}>
+            //                 去充值
+            //             </TButton>
+            //         );
+            //     }
+            // });
         }
     };
 
