@@ -113,27 +113,6 @@ export default function AccountCenter() {
                         </div>
                     </div>
                 </div>
-
-                <a
-                    onClick={() => {
-                        setTimeout(() => {
-                            window.open("https://example.com");
-                        }, 5000);
-                    }}
-                >
-                    window.open(delay 5s)
-                </a>
-
-                <div
-                    onClick={() => {
-                        setTimeout(() => {
-                            const tele = window.Telegram.WebApp;
-                            tele.openLink("https://example.com");
-                        }, 5000);
-                    }}
-                >
-                    openLink(delay 5s)
-                </div>
             </AccountCenterWrapper>
         </PageLayout>
     );
