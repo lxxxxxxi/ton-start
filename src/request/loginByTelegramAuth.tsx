@@ -45,7 +45,8 @@ export const useHandlePlayGame = () => {
                 if (balance > 0) {
                     const url = `https://tg888.club/api/v1/game/xplay?token=${getAccessToken()}&apiCode=${code}&gameType=${gametype}&gameCode=${gamecode}`;
                     console.log("Open", url);
-                    window.open(url);
+                    // window.open(url);
+                    TELE.openLink(url)
                     closeModal();
                     // playGame(code, gamecode, gametype)
                     //     .then(res => {
